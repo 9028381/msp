@@ -9,7 +9,7 @@
 
 #include "ti/devices/msp/m0p/mspm0g350x.h"
 #include "ti/driverlib/dl_gpio.h"
-#include "C:/ti/mspm0_sdk_2_01_00_03/examples/nortos/LP_MSPM0G3507/driverlib/empty/ti_msp_dl_config.h"
+#include "empty/ti_msp_dl_config.h"
 #include <stdint.h>
 
 int32_t M_F_L_cur = 0;

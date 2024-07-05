@@ -9,7 +9,7 @@
 #ifndef __GYROSCOPE_H__
 #define __GYROSCOPE_H__
 
-#include "C:/ti/mspm0_sdk_2_01_00_03/examples/nortos/LP_MSPM0G3507/driverlib/empty/ti_msp_dl_config.h"
+#include "empty/ti_msp_dl_config.h"
 
 enum gyroscope
 {
