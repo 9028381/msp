@@ -9,6 +9,7 @@ struct Pid {
   unsigned char index;
   unsigned char len;
   int sum;
+  unsigned int sum_max;
 };
 typedef struct Pid Pid;
 
@@ -19,6 +20,7 @@ typedef struct Pid Pid;
  * @param ki Integral gain of the PID controller
  * @param kd Derivative gain of the PID controller
  * @param integral_length Length of the integral.
+ * @param integral_max max of the integral.
  * must in range[0, PID_DATA_LOOP_LENGTH_MAX], see <config.h>.
  *
  * @notice:
@@ -42,7 +44,7 @@ typedef struct Pid Pid;
  * ```
  */
 void pid_init(Pid *pid, float kp, float ki, float kd,
-              unsigned char integral_length);
+              unsigned char integral_length, unsigned int integral_max);
 
 /**
  * @brief Computes the PID control value.
