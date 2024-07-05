@@ -10,32 +10,23 @@
 #include "motor.h"
 #include "control-center.h"
 #include "encounter.h"
-#include "pid-yuan.h"
-#include "pid.h"
+#include "printTo.h"
 #include "ti/driverlib/dl_comp.h"
 #include "ti/driverlib/dl_gpio.h"
-#include "printTo.h"
+#include "utils/pid.h"
 
 #define MAX_P 9999
 
-PID M_F_L_PID;
-PID M_F_R_PID;
-PID M_B_L_PID;
-PID M_B_R_PID;
-struct pid_data m_fl_pid;
-struct pid_data m_fr_pid;
-struct pid_data m_bl_pid;
-struct pid_data m_br_pid;
+Pid M_F_L_PID;
+Pid M_F_R_PID;
+Pid M_B_L_PID;
+Pid M_B_R_PID;
 
 void init_PID() {
-  initPID(&M_F_L_PID, 1, 1, 1, 5, 50);
-  initPID(&M_F_R_PID, 10, 10, 10, 5, 50);
-  initPID(&M_B_L_PID, 10, 10, 10, 5, 50);
-  initPID(&M_B_R_PID, 10, 10, 10, 5, 50);
-  //   pid_init(&m_fl_pid, 0, 10, 10, 10, 5);
-  //   pid_init(&m_fr_pid, 0, 10, 10, 10, 5);
-  //   pid_init(&m_bl_pid, 0, 10, 10, 10, 5);
-  //   pid_init(&m_br_pid, 0, 10, 10, 10, 5);
+  pid_init(&M_F_L_PID, 1, 1, 1, 5, 50);
+  pid_init(&M_F_R_PID, 10, 10, 10, 5, 50);
+  pid_init(&M_B_L_PID, 10, 10, 10, 5, 50);
+  pid_init(&M_B_R_PID, 10, 10, 10, 5, 50);
 }
 
 int32_t get_speed(enum MOTOR M) {
@@ -131,11 +122,11 @@ int32_t set_confine(int32_t num) {
 } // 设置占空比的范围不超过 MAX_P
 
 void pid_keep_speed() {
-  M_F_L_P += returnPID(&M_F_L_PID, M_F_L_cur, M_F_L_tar);
-  M_F_R_P += returnPID(&M_F_R_PID, M_F_R_cur, M_F_R_tar);
-  M_B_L_P += returnPID(&M_B_L_PID, M_B_L_cur, M_B_L_tar);
-  M_B_R_P += returnPID(&M_B_R_PID, M_B_R_cur, M_B_R_tar);
-	printTo(1, "%d\r\n", M_F_L_P);
+  M_F_L_P += pid_compute(&M_F_L_PID, M_F_L_tar, M_F_L_cur);
+  M_F_R_P += pid_compute(&M_F_R_PID, M_F_R_tar, M_F_R_cur);
+  M_B_L_P += pid_compute(&M_B_L_PID, M_B_L_tar, M_B_L_cur);
+  M_B_R_P += pid_compute(&M_B_R_PID, M_B_R_tar, M_B_R_cur);
+  printTo(1, "%d\r\n", M_F_L_P);
   //   pid_set_target(&m_fl_pid, M_F_L_tar);
   //   M_F_L_P += pid_inc(&m_fl_pid, M_F_L_cur);
   //   pid_set_target(&m_fr_pid, M_F_R_tar);
