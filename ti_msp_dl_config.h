@@ -134,21 +134,6 @@ extern "C" {
 
 
 
-
-/* Defines for I2C_1 */
-#define I2C_1_INST                                                          I2C1
-#define I2C_1_INST_IRQHandler                                    I2C1_IRQHandler
-#define I2C_1_INST_INT_IRQN                                        I2C1_INT_IRQn
-#define GPIO_I2C_1_SDA_PORT                                                GPIOA
-#define GPIO_I2C_1_SDA_PIN                                        DL_GPIO_PIN_16
-#define GPIO_I2C_1_IOMUX_SDA                                     (IOMUX_PINCM38)
-#define GPIO_I2C_1_IOMUX_SDA_FUNC                      IOMUX_PINCM38_PF_I2C1_SDA
-#define GPIO_I2C_1_SCL_PORT                                                GPIOA
-#define GPIO_I2C_1_SCL_PIN                                        DL_GPIO_PIN_15
-#define GPIO_I2C_1_IOMUX_SCL                                     (IOMUX_PINCM37)
-#define GPIO_I2C_1_IOMUX_SCL_FUNC                      IOMUX_PINCM37_PF_I2C1_SCL
-
-
 /* Defines for UART_2 */
 #define UART_2_INST                                                        UART2
 #define UART_2_INST_IRQHandler                                  UART2_IRQHandler
@@ -309,12 +294,21 @@ extern "C" {
 /* Port definition for Pin Group IIC_GYR */
 #define IIC_GYR_PORT                                                     (GPIOA)
 
-/* Defines for SDA: GPIOA.0 with pinCMx 1 on package pin 33 */
-#define IIC_GYR_SDA_PIN                                          (DL_GPIO_PIN_0)
-#define IIC_GYR_SDA_IOMUX                                         (IOMUX_PINCM1)
-/* Defines for SCL: GPIOA.1 with pinCMx 2 on package pin 34 */
-#define IIC_GYR_SCL_PIN                                          (DL_GPIO_PIN_1)
-#define IIC_GYR_SCL_IOMUX                                         (IOMUX_PINCM2)
+/* Defines for SDA_GYR: GPIOA.0 with pinCMx 1 on package pin 33 */
+#define IIC_GYR_SDA_GYR_PIN                                      (DL_GPIO_PIN_0)
+#define IIC_GYR_SDA_GYR_IOMUX                                     (IOMUX_PINCM1)
+/* Defines for SCL_GYR: GPIOA.1 with pinCMx 2 on package pin 34 */
+#define IIC_GYR_SCL_GYR_PIN                                      (DL_GPIO_PIN_1)
+#define IIC_GYR_SCL_GYR_IOMUX                                     (IOMUX_PINCM2)
+/* Port definition for Pin Group IIC */
+#define IIC_PORT                                                         (GPIOA)
+
+/* Defines for SCL: GPIOA.15 with pinCMx 37 on package pin 8 */
+#define IIC_SCL_PIN                                             (DL_GPIO_PIN_15)
+#define IIC_SCL_IOMUX                                            (IOMUX_PINCM37)
+/* Defines for SDA: GPIOA.16 with pinCMx 38 on package pin 9 */
+#define IIC_SDA_PIN                                             (DL_GPIO_PIN_16)
+#define IIC_SDA_IOMUX                                            (IOMUX_PINCM38)
 
 /* clang-format on */
 
@@ -325,7 +319,6 @@ void SYSCFG_DL_SYSCTL_init(void);
 void SYSCFG_DL_M_PWM_init(void);
 void SYSCFG_DL_SERVO_init(void);
 void SYSCFG_DL_TIMER_INT_init(void);
-void SYSCFG_DL_I2C_1_init(void);
 void SYSCFG_DL_UART_2_init(void);
 void SYSCFG_DL_UART_1_init(void);
 void SYSCFG_DL_UART_4_init(void);
