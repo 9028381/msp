@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct Status status;
+
 void log_uprintf(enum Uart uart, const char *format, ...) {
   va_list args;
   va_start(args, format);
