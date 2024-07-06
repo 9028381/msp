@@ -23,5 +23,22 @@
 #define IIC_SDA_READ (bool)DL_GPIO_readPins(GYR_PORT, IIC_GYR_SDA_PIN)
 #define IIC_SCL_READ (bool)DL_GPIO_readPins(GYR_PORT, IIC_GYR_SCL_PIN)
 
+extern uint8_t IIC_DATA;
+
+extern void IIC_init(void);
+extern void IIC_start(void);
+extern void IIC_stop(void);
+extern void IIC_ACK(void);
+extern void IIC_NACK(void);
+extern unsigned char Check_ACK(void);
+extern void IIC_Send_Byte(uint8_t Data);
+extern unsigned char IIC_Read_Byte(uint8_t ack);
+extern void IIC_reset(void);
+extern uint8_t IIC_Read(uint8_t addr, uint8_t len, uint8_t *buf);
+extern uint8_t IIC_Read_To_Mem(uint8_t addr, uint8_t reg, uint8_t len, uint8_t *buf);
+extern uint8_t IIC_Write(uint8_t addr, uint8_t len, uint8_t *buf);
+extern uint8_t IIC_Write_To_Mem(uint8_t addr, uint8_t reg, uint8_t len, uint8_t *buf);
+
+#define IIC_delay delay_cycles(20000);
 
 #endif
