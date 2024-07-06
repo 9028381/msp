@@ -10,7 +10,6 @@
 #include "motor.h"
 #include "control-center.h"
 #include "encounter.h"
-#include "printTo.h"
 #include "ti/driverlib/dl_comp.h"
 #include "ti/driverlib/dl_gpio.h"
 #include "utils/pid.h"
