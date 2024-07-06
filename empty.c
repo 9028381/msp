@@ -41,7 +41,7 @@
 
 #include "control-center.h"
 #include "encounter.h"
-#include "gy901.h"
+#include "gyroscope.h"
 #include "motor.h"
 #include "pid.h"
 #include "servo.h"
@@ -105,15 +105,7 @@ void TIMER_INT_INST_IRQHandler(void) {
     // M_F_L_cur = get_speed(M_F_L);
     // M_F_R_cur = get_speed(M_F_R);
     // pid_keep_speed();
-    // printTo(1, "%d\r\n", M_F_L_cur);
-    // printTo(1, "%f\r\n", Get_gyr_value(gyr_z_yaw));
-    PRINTLN("Hello World");
-    INFO("%d", M_F_L_cur);
-    // log_uprintf(uart1, "%f\r\n", 3.14);
-
-    // uart_send(uart1, "Hello World!\r\n\n\n", 15);
-    // uart_send(uart1, "AAAAAAAAAAA\r\n\n\n", 15);
-    // uart_send(uart1, "BBBBBBBBBBB\r\n\n\n", 15);
+    PRINTLN("%f\r\n", Get_gyr_value(gyr_x_roll));
 
     break;
   default:
