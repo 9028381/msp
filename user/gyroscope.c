@@ -1,12 +1,13 @@
 #include "gyroscope.h"
 #include "gyr_iic.h"
+#include "ti/driverlib/m0p/dl_core.h"
 
 #define GYR_ADDR 0x50
 
 float Get_gyr_value(enum gyroscope key) {
   uint8_t buf[2];
 
-  IIC_Read_To_Mem(GYR_ADDR, key, 2, buf);
+  GYR_IIC_Read_To_Mem(GYR_ADDR, key, 2, buf);
   float value = (short)(((short)buf[1] << 8) | buf[0]);
 
   switch (key) {
@@ -25,29 +26,21 @@ float Get_gyr_value(enum gyroscope key) {
   }
 }
 
-/*
-void GYR_calibrate() {
-  uint8_t cmd_calibrate = 0x01;
-  uint8_t cmd_work = 0x00;
-
-  IIC_Write_To_Mem(GYR_ADDR, 0x01, 1, &cmd_calibrate);
-  delay_ms(100);
-  cmd_calibrate = 0x07;
-  IIC_Write_To_Mem(GYR_ADDR, 0x01, 1, &cmd_calibrate);
-  delay_ms(100);
-  IIC_Write_To_Mem(GYR_ADDR, 0x01, 1, &cmd_work);
+void GYR_unlock() {
+  uint8_t buf[5] = {0xff, 0xaa, 0x69, 0x88, 0xb5};
+  GYR_IIC_Write(GYR_ADDR, 5, buf);
 }
-*/
 
-/*
-void GYR_set0() {
-  uint8_t cmd_set0 = 0x04;
-  uint8_t cmd_work = 0x00;
-  uint8_t cmd_unlock[2] = {0x88, 0xB5};
-
-  IIC_Write_To_Mem(GYR_ADDR, 0x69, 2, cmd_unlock);
-  IIC_Write_To_Mem(GYR_ADDR, 0x01, 1, &cmd_work);
-  delay_ms(200);
-  IIC_Write_To_Mem(GYR_ADDR, 0x01, 1, &cmd_set0);
+void GYR_save() {
+  uint8_t buf[5] = {0xff, 0xaa, 0x00, 0x00, 0x00};
+  GYR_IIC_Write(GYR_ADDR, 5, buf);
 }
-*/
+
+void GYR_set0(enum gyroscope tar) {
+  if (tar == gyr_y_pitch) {
+    GYR_unlock();
+    uint8_t buf[5] = {0xff, 0xaa, 0x01, 0x40, 0x00};
+    GYR_IIC_Write(GYR_ADDR, 5, buf);
+    GYR_save();
+  }
+}

@@ -2,7 +2,7 @@
  * @Author: zl 2293721550@qq.com
  * @Date: 2024-06-17 17:13:16
  * @LastEditors: zl 2293721550@qq.com
- * @LastEditTime: 2024-07-06 11:19:36
+ * @LastEditTime: 2024-07-06 19:59:08
  * @FilePath: \empty\empty.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置
  * 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
@@ -41,18 +41,22 @@
 
 #include "control-center.h"
 #include "encounter.h"
+#include "gw_gray.h"
 #include "gyroscope.h"
+#include "iic.h"
 #include "motor.h"
-#include "pid.h"
 #include "servo.h"
 #include "stdlib.h"
+#include "string.h"
 #include "ti/devices/msp/m0p/mspm0g350x.h"
 #include "ti/driverlib/dl_dma.h"
 #include "ti/driverlib/dl_gpio.h"
 #include "ti/driverlib/dl_timerg.h"
 #include "ti/driverlib/m0p/dl_core.h"
 #include "ti_msp_dl_config.h"
+#include "user/gyroscope.h"
 #include "user/servo.h"
+#include "user/status/status.h"
 #include "utils/log.h"
 #include <stdio.h>
 
@@ -62,6 +66,11 @@ int main(void) {
   //
   init_encounter();
   // init_PID();
+  status_init();
+
+  NVIC_ClearPendingIRQ(UART_1_INST_INT_IRQN);
+  NVIC_EnableIRQ(UART_1_INST_INT_IRQN); // 使能 接收中断
+
   NVIC_EnableIRQ(TIMER_INT_INST_INT_IRQN);
   DL_TimerG_startCounter(TIMER_INT_INST);
   //
@@ -70,9 +79,7 @@ int main(void) {
   M_F_R_tar = 200;
 
   //	DL_SYSCTL_enableSleepOssnExit();
-
   while (1) {
-    delay_cycles(99999999);
   }
 }
 
@@ -102,10 +109,34 @@ void GROUP1_IRQHandler(void) {
 void TIMER_INT_INST_IRQHandler(void) {
   switch (DL_TimerG_getPendingInterrupt(TIMER_INT_INST)) {
   case DL_TIMER_IIDX_ZERO:
+    status_next();
+
     // M_F_L_cur = get_speed(M_F_L);
     // M_F_R_cur = get_speed(M_F_R);
     // pid_keep_speed();
-    PRINTLN("%f\r\n", Get_gyr_value(gyr_x_roll));
+    // TRACE(Get_gyr_value(gyr_x_roll), "%f");
+    // TRACE(Get_gyr_value(gyr_x_roll), "%f");
+    // TRACE(status.times, "%u");
+    //		    TRACE(1, "%d");
+    // TRACE("HELLO", "%s");
+    //TRACE(Get_gyr_value(gyr_y_pitch), "%f");
+
+    break;
+  default:
+    break;
+  }
+}
+
+uint8_t gEchoData = 0;
+
+void UART_1_INST_IRQHandler(void) {
+  switch (
+      DL_UART_Main_getPendingInterrupt(UART_1_INST)) { // 串口的RX接收到了数据
+  case DL_UART_MAIN_IIDX_RX:
+
+    gEchoData = DL_UART_Main_receiveData(UART_1_INST); // 存数据
+    DL_UART_Main_transmitData(UART_1_INST, gEchoData); // 串口的TX发送数据
+//		DL_UART_transmitDataBlocking(UART_1_INST, gEchoData);
 
     break;
   default:

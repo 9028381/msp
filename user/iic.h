@@ -5,10 +5,6 @@
 #include "ti/driverlib/dl_gpio.h"
 #include "empty/ti_msp_dl_config.h"
 
-#define GYR_PORT IIC_GYR_PORT
-#define GYR_SDA IIC_GYR_SDA_PIN
-#define GYR_SCL IIC_GYR_SCL_PIN
-
 #define IIC_SCL_OUT DL_GPIO_initDigitalOutput(IIC_SCL_IOMUX)
 #define IIC_SCL_IN DL_GPIO_initDigitalInput(IIC_SCL_IOMUX)
 #define IIC_SDA_OUT DL_GPIO_initDigitalOutput(IIC_SDA_IOMUX)
@@ -37,8 +33,10 @@ extern void IIC_reset(void);
 extern uint8_t IIC_Read(uint8_t addr, uint8_t len, uint8_t *buf);
 extern uint8_t IIC_Read_To_Mem(uint8_t addr, uint8_t reg, uint8_t len, uint8_t *buf);
 extern uint8_t IIC_Write(uint8_t addr, uint8_t len, uint8_t *buf);
-extern uint8_t IIC_Write_To_Mem(uint8_t addr, uint8_t reg, uint8_t len, uint8_t *buf);
+extern uint8_t IIC_Write_To_Mem(uint8_t addr, uint8_t reg, uint8_t len,
+                                uint8_t *buf);
+extern void IIC_Scan(void);
 
-#define IIC_delay delay_cycles(20000);
+#define IIC_delay delay_cycles(2000);
 
 #endif

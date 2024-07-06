@@ -1,4 +1,6 @@
-#include "gyr_iic.h"
+#include "iic.h"
+#include "ti/driverlib/m0p/dl_core.h"
+#include "utils/log.h"
 
 uint8_t IIC_DATA;
 /********************************************************
@@ -158,6 +160,7 @@ void IIC_Send_Byte(uint8_t Data) {
     } else {
       IIC_SDA_LOW;
     }
+		IIC_delay;
     Data <<= 1;
     IIC_SCL_HIGH;
     IIC_delay;
@@ -271,4 +274,19 @@ uint8_t IIC_Write(uint8_t addr, uint8_t len, uint8_t *buf) {
   IIC_NACK();
   IIC_stop();
   return 0;
+}
+
+void IIC_Scan(void) {
+  uint8_t addr = 0;
+  for (addr = 0; addr < 255; addr++) {
+    IIC_start();
+    IIC_Send_Byte((addr << 1) | 0x00);
+    if (Check_ACK()) {
+      PRINTF("OK-%d\r\n", addr);
+    } else {
+      PRINTF("NO-%d\r\n", addr);
+    }
+    IIC_stop();
+    delay_cycles(100000);
+  }
 }
