@@ -44,7 +44,6 @@
 #include "gy901.h"
 #include "motor.h"
 #include "pid.h"
-#include "printTo.h"
 #include "servo.h"
 #include "stdlib.h"
 #include "ti/devices/msp/m0p/mspm0g350x.h"
@@ -55,6 +54,7 @@
 #include "ti_msp_dl_config.h"
 #include "user/servo.h"
 #include <stdio.h>
+#include "utils/log.h"
 
 int main(void) {
   SYSCFG_DL_init();
@@ -107,6 +107,14 @@ void TIMER_INT_INST_IRQHandler(void) {
     // pid_keep_speed();
     // printTo(1, "%d\r\n", M_F_L_cur);
     // printTo(1, "%f\r\n", Get_gyr_value(gyr_z_yaw));
+		  log_uprintf(uart1, "Hello World!\r\n");
+	  log_uprintf(uart1, "%d\r\n", M_F_L_cur);
+	//log_uprintf(uart1, "%f\r\n", 3.14);
+	
+	  //uart_send(uart1, "Hello World!\r\n\n\n", 15);
+		//uart_send(uart1, "AAAAAAAAAAA\r\n\n\n", 15);
+		//uart_send(uart1, "BBBBBBBBBBB\r\n\n\n", 15);
+
     break;
   default:
     break;

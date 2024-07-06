@@ -127,7 +127,6 @@ void pid_keep_speed() {
   M_F_R_P += pid_compute(&M_F_R_PID, M_F_R_tar, M_F_R_cur);
   M_B_L_P += pid_compute(&M_B_L_PID, M_B_L_tar, M_B_L_cur);
   M_B_R_P += pid_compute(&M_B_R_PID, M_B_R_tar, M_B_R_cur);
-  printTo(1, "%d\r\n", M_F_L_P);
   //   pid_set_target(&m_fl_pid, M_F_L_tar);
   //   M_F_L_P += pid_inc(&m_fl_pid, M_F_L_cur);
   //   pid_set_target(&m_fr_pid, M_F_R_tar);
