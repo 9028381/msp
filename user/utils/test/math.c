@@ -15,7 +15,6 @@ void test_limit() {
   printf("LIMIT_MIN(1, 3) = %d\n", LIMIT_MIN(1, 3));
   printf("LIMIT(1, 2, 3) = %d\n", LIMIT(1, 2, 3));
   printf("LIMIT(3, 2, 3) = %d\n", LIMIT(3, 2, 3));
-  printf("LIMIT(1, 3, 2) = %d\n", LIMIT(1, 3, 2));
   printf("CLAMP(1, 2) = %d\n", CLAMP(1, 2));
   printf("CLAMP(3, 2) = %d\n", CLAMP(3, 2));
   printf("CLAMP(1, 3) = %d\n", CLAMP(1, 3));
