@@ -4,6 +4,8 @@
 #define PI 3.14159265358979323846
 #define E 2.71828182845904523536
 
+#define ABS(x) ((x) >= 0 ? (x) : -(x))
+
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define LIMIT_MAX(x, max) MIN(x, max)
