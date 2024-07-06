@@ -8,6 +8,6 @@ enum Uart {
   uart4,
 };
 
-void uart_send(enum Uart uart, const void *src, unsigned int len);
+void uart_dma_send(enum Uart uart, const void *src, unsigned int len);
 
 #endif // !__UART_H__

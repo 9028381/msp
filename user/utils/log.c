@@ -14,5 +14,5 @@ void log_uprintf(enum Uart uart, const char *format, ...) {
       vsnprintf(buf[abbuf], LOG_FORMAT_BUF_LENGTH - 1, format, args);
   va_end(args);
 
-  uart_send(uart, buf[abbuf], len);
+  uart_dma_send(uart, buf[abbuf], len);
 }

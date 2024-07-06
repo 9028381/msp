@@ -10,7 +10,7 @@
   DL_DMA_setTransferSize(DMA, channel, len);                                   \
   DL_DMA_enableChannel(DMA, channel);
 
-void uart_send(enum Uart uart, const void *src, unsigned int len) {
+void uart_dma_send(enum Uart uart, const void *src, unsigned int len) {
   switch (uart) {
   case uart1:
     UART_DMA_SEND(DMA_CH1_CHAN_ID, src, len, &UART_1_INST->TXDATA);
