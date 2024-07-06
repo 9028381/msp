@@ -5,8 +5,13 @@
 
 #define DEV
 
+/******* STATUS ******/
+#define STATUS_FREQ 20
+
+/******** PID ********/
 #define PID_DATA_LOOP_LENGTH_MAX 40
 
+/******** LOG ********/
 #ifdef DEV
 #define LOG_ENABLE
 #endif // DEV
