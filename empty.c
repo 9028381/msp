@@ -2,9 +2,10 @@
  * @Author: zl 2293721550@qq.com
  * @Date: 2024-06-17 17:13:16
  * @LastEditors: zl 2293721550@qq.com
- * @LastEditTime: 2024-07-04 20:47:26
+ * @LastEditTime: 2024-07-06 10:21:34
  * @FilePath: \empty\empty.c
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置
+ * 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 /*
  * Copyright (c) 2021, Texas Instruments Incorporated
@@ -38,44 +39,47 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "ti/devices/msp/m0p/mspm0g350x.h"
-#include "ti/driverlib/dl_gpio.h"
-#include "ti/driverlib/dl_timerg.h"
-#include "ti_msp_dl_config.h"
-#include "printTo.h"
+#include "control-center.h"
 #include "encounter.h"
-#include "pid.h"
 #include "gy901.h"
 #include "motor.h"
-#include <stdio.h>
+#include "pid.h"
+#include "printTo.h"
+#include "servo.h"
 #include "stdlib.h"
-#include "control-center.h"
+#include "ti/devices/msp/m0p/mspm0g350x.h"
+#include "ti/driverlib/dl_dma.h"
+#include "ti/driverlib/dl_gpio.h"
+#include "ti/driverlib/dl_timerg.h"
+#include "ti/driverlib/m0p/dl_core.h"
+#include "ti_msp_dl_config.h"
+#include "user/servo.h"
+#include <stdio.h>
 
-int main(void)
-{
+int main(void) {
   SYSCFG_DL_init();
 
-//  init_encounter();
-//  init_PID();
-//	NVIC_EnableIRQ(TIMER_INT_INST_INT_IRQN);
-//  DL_TimerG_startCounter(TIMER_INT_INST);
+  //
+  init_encounter();
+  // init_PID();
+  NVIC_EnableIRQ(TIMER_INT_INST_INT_IRQN);
+  DL_TimerG_startCounter(TIMER_INT_INST);
+  //
+  //
+  M_F_L_tar = 200;
+  M_F_R_tar = 200;
 
-//	
-//	
-//        M_F_L_tar = -20;
-//	M_F_R_tar = 20;
+  //	DL_SYSCTL_enableSleepOssnExit();
 
-//	DL_SYSCTL_enableSleepOnExit();
-
-    while (1) {
-			printTo(1, "%f\r\n", Get_gyr_value(gyr_x_roll));
-			delay_cycles(1600000);
-    }
+  while (1) {
+    delay_cycles(99999999);
+  }
 }
 
 void GROUP1_IRQHandler(void) {
   uint32_t gpioA = DL_GPIO_getEnabledInterruptStatus(GPIOA, M1_M1_CH1_PIN);
-  uint32_t gpioB = DL_GPIO_getEnabledInterruptStatus(GPIOB, M2_M2_CH1_PIN | M3_M3_CH1_PIN | M4_M4_CH1_PIN);
+  uint32_t gpioB = DL_GPIO_getEnabledInterruptStatus(
+      GPIOB, M2_M2_CH1_PIN | M3_M3_CH1_PIN | M4_M4_CH1_PIN);
 
   if ((gpioA & M1_M1_CH1_PIN) == M1_M1_CH1_PIN) {
     M1_CH1_INT();
@@ -89,22 +93,22 @@ void GROUP1_IRQHandler(void) {
     M3_CH1_INT();
     DL_GPIO_clearInterruptStatus(GPIOB, M3_M3_CH1_PIN);
   }
-  if ((gpioB & M4_M4_CH1_PIN) == M4_M4_CH1_PIN){
+  if ((gpioB & M4_M4_CH1_PIN) == M4_M4_CH1_PIN) {
     M4_CH1_INT();
     DL_GPIO_clearInterruptStatus(GPIOB, M4_M4_CH1_PIN);
   }
 }
 
-
 void TIMER_INT_INST_IRQHandler(void) {
   switch (DL_TimerG_getPendingInterrupt(TIMER_INT_INST)) {
-        case DL_TIMER_IIDX_ZERO:
-        M_F_L_cur = get_speed(M_F_L);
-				M_F_R_cur = get_speed(M_F_R);
-        pid_keep_speed();
-				printTo(1, "%d\r\n", M_F_L_cur);
-        break;
-        default:
-            break;
-    }
+  case DL_TIMER_IIDX_ZERO:
+    // M_F_L_cur = get_speed(M_F_L);
+    // M_F_R_cur = get_speed(M_F_R);
+    // pid_keep_speed();
+    // printTo(1, "%d\r\n", M_F_L_cur);
+    // printTo(1, "%f\r\n", Get_gyr_value(gyr_z_yaw));
+    break;
+  default:
+    break;
+  }
 }

@@ -1,4 +1,2 @@
-./objects/pid.o: ..\user\pid.c \
-  D:\program\keil_5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  D:\program\keil_5\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  ..\user\printTo.h ..\user\pid.h
+./objects/pid.o: ..\user\utils\pid.c ..\user\utils\pid.h \
+  ..\user\utils\..\config.h ..\user\utils\math.h

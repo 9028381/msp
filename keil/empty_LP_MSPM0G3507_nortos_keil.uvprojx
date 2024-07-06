@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>__MSPM0G3507__</Define>
               <Undefine></Undefine>
-              <IncludePath>../../../../../../source/third_party/CMSIS/Core/Include;../../../../../../source;..\..\..\..\..\..\..\user;..\user</IncludePath>
+              <IncludePath>../../../../../../source/third_party/CMSIS/Core/Include;../../../../../../source;..\..\..\..\..\..\..\user;..\user;..\..\..\driverlib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -435,16 +435,6 @@
               <FilePath>..\user\encounter.h</FilePath>
             </File>
             <File>
-              <FileName>pid.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user\pid.c</FilePath>
-            </File>
-            <File>
-              <FileName>pid.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\user\pid.h</FilePath>
-            </File>
-            <File>
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\motor.c</FilePath>
@@ -453,16 +443,6 @@
               <FileName>motor.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\user\motor.h</FilePath>
-            </File>
-            <File>
-              <FileName>gy901.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user\gy901.c</FilePath>
-            </File>
-            <File>
-              <FileName>gy901.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\user\gy901.h</FilePath>
             </File>
             <File>
               <FileName>control-center.c</FileName>
@@ -475,14 +455,24 @@
               <FilePath>..\user\control-center.h</FilePath>
             </File>
             <File>
-              <FileName>pid-yuan.c</FileName>
+              <FileName>pid.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\user\pid-yuan.c</FilePath>
+              <FilePath>..\user\utils\pid.c</FilePath>
             </File>
             <File>
-              <FileName>pid-yuan.h</FileName>
+              <FileName>pid.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\user\pid-yuan.h</FilePath>
+              <FilePath>..\user\utils\pid.h</FilePath>
+            </File>
+            <File>
+              <FileName>servo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\servo.h</FilePath>
+            </File>
+            <File>
+              <FileName>servo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\servo.c</FilePath>
             </File>
           </Files>
         </Group>

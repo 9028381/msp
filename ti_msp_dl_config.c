@@ -58,7 +58,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_SERVO_init();
     SYSCFG_DL_TIMER_INT_init();
     SYSCFG_DL_I2C_1_init();
-    SYSCFG_DL_I2C_init();
     SYSCFG_DL_UART_2_init();
     SYSCFG_DL_UART_1_init();
     SYSCFG_DL_UART_4_init();
@@ -106,7 +105,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerG_reset(SERVO_INST);
     DL_TimerG_reset(TIMER_INT_INST);
     DL_I2C_reset(I2C_1_INST);
-    DL_I2C_reset(I2C_INST);
     DL_UART_Main_reset(UART_2_INST);
     DL_UART_Main_reset(UART_1_INST);
     DL_UART_Main_reset(UART_4_INST);
@@ -119,7 +117,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerG_enablePower(SERVO_INST);
     DL_TimerG_enablePower(TIMER_INT_INST);
     DL_I2C_enablePower(I2C_1_INST);
-    DL_I2C_enablePower(I2C_INST);
     DL_UART_Main_enablePower(UART_2_INST);
     DL_UART_Main_enablePower(UART_1_INST);
     DL_UART_Main_enablePower(UART_4_INST);
@@ -154,16 +151,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
         DL_GPIO_WAKEUP_DISABLE);
     DL_GPIO_enableHiZ(GPIO_I2C_1_IOMUX_SDA);
     DL_GPIO_enableHiZ(GPIO_I2C_1_IOMUX_SCL);
-    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_I2C_IOMUX_SDA,
-        GPIO_I2C_IOMUX_SDA_FUNC, DL_GPIO_INVERSION_DISABLE,
-        DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
-        DL_GPIO_WAKEUP_DISABLE);
-    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_I2C_IOMUX_SCL,
-        GPIO_I2C_IOMUX_SCL_FUNC, DL_GPIO_INVERSION_DISABLE,
-        DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
-        DL_GPIO_WAKEUP_DISABLE);
-    DL_GPIO_enableHiZ(GPIO_I2C_IOMUX_SDA);
-    DL_GPIO_enableHiZ(GPIO_I2C_IOMUX_SCL);
 
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_UART_2_IOMUX_TX, GPIO_UART_2_IOMUX_TX_FUNC);
@@ -214,10 +201,18 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_initDigitalInput(M4_M4_CH2_IOMUX);
 
+    DL_GPIO_initDigitalOutput(IIC_GYR_SDA_IOMUX);
+
+    DL_GPIO_initDigitalOutput(IIC_GYR_SCL_IOMUX);
+
     DL_GPIO_clearPins(GPIOA, M2_M2_D1_PIN |
-		M3_M3_D1_PIN);
+		M3_M3_D1_PIN |
+		IIC_GYR_SDA_PIN |
+		IIC_GYR_SCL_PIN);
     DL_GPIO_enableOutput(GPIOA, M2_M2_D1_PIN |
-		M3_M3_D1_PIN);
+		M3_M3_D1_PIN |
+		IIC_GYR_SDA_PIN |
+		IIC_GYR_SCL_PIN);
     DL_GPIO_setLowerPinsPolarity(GPIOA, DL_GPIO_PIN_9_EDGE_RISE);
     DL_GPIO_clearInterruptStatus(GPIOA, M1_M1_CH1_PIN);
     DL_GPIO_enableInterrupt(GPIOA, M1_M1_CH1_PIN);
@@ -327,20 +322,20 @@ SYSCONFIG_WEAK void SYSCFG_DL_M_PWM_init(void) {
 
 }
 /*
- * Timer clock configuration to be sourced by  / 1 (32000000 Hz)
+ * Timer clock configuration to be sourced by  / 8 (4000000 Hz)
  * timerClkFreq = (timerClkSrc / (timerClkDivRatio * (timerClkPrescale + 1)))
- *   32000000 Hz = 32000000 Hz / (1 * (0 + 1))
+ *   160000 Hz = 4000000 Hz / (8 * (24 + 1))
  */
 static const DL_TimerG_ClockConfig gSERVOClockConfig = {
     .clockSel = DL_TIMER_CLOCK_BUSCLK,
-    .divideRatio = DL_TIMER_CLOCK_DIVIDE_1,
-    .prescale = 0U
+    .divideRatio = DL_TIMER_CLOCK_DIVIDE_8,
+    .prescale = 24U
 };
 
 static const DL_TimerG_PWMConfig gSERVOConfig = {
-    .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN,
-    .period = 1000,
-    .startTimer = DL_TIMER_STOP,
+    .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN_UP,
+    .period = 3200,
+    .startTimer = DL_TIMER_START,
 };
 
 SYSCONFIG_WEAK void SYSCFG_DL_SERVO_init(void) {
@@ -356,14 +351,14 @@ SYSCONFIG_WEAK void SYSCFG_DL_SERVO_init(void) {
 		DL_TIMERG_CAPTURE_COMPARE_0_INDEX);
 
     DL_TimerG_setCaptCompUpdateMethod(SERVO_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERG_CAPTURE_COMPARE_0_INDEX);
-    DL_TimerG_setCaptureCompareValue(SERVO_INST, 1000, DL_TIMER_CC_0_INDEX);
+    DL_TimerG_setCaptureCompareValue(SERVO_INST, 0, DL_TIMER_CC_0_INDEX);
 
     DL_TimerG_setCaptureCompareOutCtl(SERVO_INST, DL_TIMER_CC_OCTL_INIT_VAL_LOW,
 		DL_TIMER_CC_OCTL_INV_OUT_DISABLED, DL_TIMER_CC_OCTL_SRC_FUNCVAL,
 		DL_TIMERG_CAPTURE_COMPARE_1_INDEX);
 
     DL_TimerG_setCaptCompUpdateMethod(SERVO_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERG_CAPTURE_COMPARE_1_INDEX);
-    DL_TimerG_setCaptureCompareValue(SERVO_INST, 1000, DL_TIMER_CC_1_INDEX);
+    DL_TimerG_setCaptureCompareValue(SERVO_INST, 0, DL_TIMER_CC_1_INDEX);
 
     DL_TimerG_enableClock(SERVO_INST);
 
@@ -389,7 +384,7 @@ static const DL_TimerG_ClockConfig gTIMER_INTClockConfig = {
 
 /*
  * Timer load value (where the counter starts from) is calculated as (timerPeriod * timerClockFreq) - 1
- * TIMER_INT_INST_LOAD_VALUE = (100ms * 125000 Hz) - 1
+ * TIMER_INT_INST_LOAD_VALUE = (50ms * 125000 Hz) - 1
  */
 static const DL_TimerG_TimerConfig gTIMER_INTTimerConfig = {
     .period     = TIMER_INT_INST_LOAD_VALUE,
@@ -429,31 +424,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_I2C_1_init(void) {
     DL_I2C_enableAnalogGlitchFilter(I2C_1_INST);
 
 
-
-
-}
-static const DL_I2C_ClockConfig gI2CClockConfig = {
-    .clockSel = DL_I2C_CLOCK_BUSCLK,
-    .divideRatio = DL_I2C_CLOCK_DIVIDE_1,
-};
-
-SYSCONFIG_WEAK void SYSCFG_DL_I2C_init(void) {
-
-    DL_I2C_setClockConfig(I2C_INST,
-        (DL_I2C_ClockConfig *) &gI2CClockConfig);
-    DL_I2C_disableAnalogGlitchFilter(I2C_INST);
-
-    /* Configure Controller Mode */
-    DL_I2C_resetControllerTransfer(I2C_INST);
-    /* Set frequency to 100000 Hz*/
-    DL_I2C_setTimerPeriod(I2C_INST, 31);
-    DL_I2C_setControllerTXFIFOThreshold(I2C_INST, DL_I2C_TX_FIFO_LEVEL_EMPTY);
-    DL_I2C_setControllerRXFIFOThreshold(I2C_INST, DL_I2C_RX_FIFO_LEVEL_BYTES_1);
-    DL_I2C_enableControllerClockStretching(I2C_INST);
-
-
-    /* Enable module */
-    DL_I2C_enableController(I2C_INST);
 
 
 }

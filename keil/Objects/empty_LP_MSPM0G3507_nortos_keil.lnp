@@ -4,11 +4,10 @@
 ".\objects\ti_msp_dl_config.o"
 ".\objects\printto.o"
 ".\objects\encounter.o"
-".\objects\pid.o"
 ".\objects\motor.o"
-".\objects\gy901.o"
 ".\objects\control-center.o"
-".\objects\pid-yuan.o"
+".\objects\pid.o"
+".\objects\servo.o"
 --library_type=microlib --strict --scatter "./mspm0g3507.sct"
 ../../../../../../source/ti/driverlib/lib/keil/m0p/mspm0g1x0x_g3x0x/driverlib.a --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

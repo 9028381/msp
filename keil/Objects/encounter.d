@@ -40,7 +40,7 @@
   ..\..\..\..\..\..\source\ti\devices\msp\msp.h \
   C:\ti\mspm0_sdk_2_01_00_03\source\ti\devices\DeviceFamily.h \
   ..\..\..\..\..\..\source\ti\driverlib\dl_common.h \
-  C:\ti\mspm0_sdk_2_01_00_03\examples\nortos\LP_MSPM0G3507\driverlib\empty\ti_msp_dl_config.h \
+  ..\..\..\driverlib\empty\ti_msp_dl_config.h \
   ..\..\..\..\..\..\source\ti\driverlib\driverlib.h \
   ..\..\..\..\..\..\source\ti\driverlib\dl_adc12.h \
   D:\program\keil_5\ARM\ARMCLANG\Bin\..\include\math.h \

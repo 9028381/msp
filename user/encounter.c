@@ -82,7 +82,7 @@ void M1_CH1_INT(void)
 
 void M2_CH1_INT(void)
 {
-  if (M2_CH2_getValue()) {
+  if (!M2_CH2_getValue()) {
     L_2++;
   } else {
     L_2--;

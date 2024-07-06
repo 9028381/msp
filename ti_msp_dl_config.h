@@ -110,7 +110,7 @@ extern "C" {
 #define SERVO_INST                                                         TIMG6
 #define SERVO_INST_IRQHandler                                   TIMG6_IRQHandler
 #define SERVO_INST_INT_IRQN                                     (TIMG6_INT_IRQn)
-#define SERVO_INST_CLK_FREQ                                             32000000
+#define SERVO_INST_CLK_FREQ                                               160000
 /* GPIO defines for channel 0 */
 #define GPIO_SERVO_C0_PORT                                                 GPIOA
 #define GPIO_SERVO_C0_PIN                                         DL_GPIO_PIN_21
@@ -130,7 +130,7 @@ extern "C" {
 #define TIMER_INT_INST                                                   (TIMG0)
 #define TIMER_INT_INST_IRQHandler                               TIMG0_IRQHandler
 #define TIMER_INT_INST_INT_IRQN                                 (TIMG0_INT_IRQn)
-#define TIMER_INT_INST_LOAD_VALUE                                       (12499U)
+#define TIMER_INT_INST_LOAD_VALUE                                        (6249U)
 
 
 
@@ -147,20 +147,6 @@ extern "C" {
 #define GPIO_I2C_1_SCL_PIN                                        DL_GPIO_PIN_15
 #define GPIO_I2C_1_IOMUX_SCL                                     (IOMUX_PINCM37)
 #define GPIO_I2C_1_IOMUX_SCL_FUNC                      IOMUX_PINCM37_PF_I2C1_SCL
-
-/* Defines for I2C */
-#define I2C_INST                                                            I2C0
-#define I2C_INST_IRQHandler                                      I2C0_IRQHandler
-#define I2C_INST_INT_IRQN                                          I2C0_INT_IRQn
-#define I2C_BUS_SPEED_HZ                                                  100000
-#define GPIO_I2C_SDA_PORT                                                  GPIOA
-#define GPIO_I2C_SDA_PIN                                           DL_GPIO_PIN_0
-#define GPIO_I2C_IOMUX_SDA                                        (IOMUX_PINCM1)
-#define GPIO_I2C_IOMUX_SDA_FUNC                         IOMUX_PINCM1_PF_I2C0_SDA
-#define GPIO_I2C_SCL_PORT                                                  GPIOA
-#define GPIO_I2C_SCL_PIN                                           DL_GPIO_PIN_1
-#define GPIO_I2C_IOMUX_SCL                                        (IOMUX_PINCM2)
-#define GPIO_I2C_IOMUX_SCL_FUNC                         IOMUX_PINCM2_PF_I2C0_SCL
 
 
 /* Defines for UART_2 */
@@ -320,6 +306,15 @@ extern "C" {
 /* Defines for M4_CH2: GPIOB.6 with pinCMx 23 on package pin 58 */
 #define M4_M4_CH2_PIN                                            (DL_GPIO_PIN_6)
 #define M4_M4_CH2_IOMUX                                          (IOMUX_PINCM23)
+/* Port definition for Pin Group IIC_GYR */
+#define IIC_GYR_PORT                                                     (GPIOA)
+
+/* Defines for SDA: GPIOA.0 with pinCMx 1 on package pin 33 */
+#define IIC_GYR_SDA_PIN                                          (DL_GPIO_PIN_0)
+#define IIC_GYR_SDA_IOMUX                                         (IOMUX_PINCM1)
+/* Defines for SCL: GPIOA.1 with pinCMx 2 on package pin 34 */
+#define IIC_GYR_SCL_PIN                                          (DL_GPIO_PIN_1)
+#define IIC_GYR_SCL_IOMUX                                         (IOMUX_PINCM2)
 
 /* clang-format on */
 
@@ -331,7 +326,6 @@ void SYSCFG_DL_M_PWM_init(void);
 void SYSCFG_DL_SERVO_init(void);
 void SYSCFG_DL_TIMER_INT_init(void);
 void SYSCFG_DL_I2C_1_init(void);
-void SYSCFG_DL_I2C_init(void);
 void SYSCFG_DL_UART_2_init(void);
 void SYSCFG_DL_UART_1_init(void);
 void SYSCFG_DL_UART_4_init(void);

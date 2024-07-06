@@ -1,5 +1,5 @@
 ./objects/gy901.o: ..\user\gy901.c ..\user\gy901.h \
-  C:\ti\mspm0_sdk_2_01_00_03\examples\nortos\LP_MSPM0G3507\driverlib\empty\ti_msp_dl_config.h \
+  ..\..\..\driverlib\empty\ti_msp_dl_config.h \
   ..\..\..\..\..\..\source\ti\devices\msp\msp.h \
   C:\ti\mspm0_sdk_2_01_00_03\source\ti\devices\DeviceFamily.h \
   ..\..\..\..\..\..\source\ti\devices\msp\m0p\mspm0g350x.h \

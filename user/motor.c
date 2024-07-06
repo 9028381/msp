@@ -23,8 +23,9 @@ Pid M_B_L_PID;
 Pid M_B_R_PID;
 
 void init_PID() {
+
   pid_init(&M_F_L_PID, 1, 1, 1, 5, 50);
-  pid_init(&M_F_R_PID, 10, 10, 10, 5, 50);
+  pid_init(&M_F_R_PID, 1, 1, 1, 5, 50);
   pid_init(&M_B_L_PID, 10, 10, 10, 5, 50);
   pid_init(&M_B_R_PID, 10, 10, 10, 5, 50);
 }

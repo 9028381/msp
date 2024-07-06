@@ -6,7 +6,7 @@
 //参考i2c_controller_rw_multibyte_fifo_poll
 float Get_gyr_value(enum gyroscope k)
 {
-    volatile uint8_t buf[2];
+    volatile uint8_t buf[2] = {0};
 		uint8_t key = k;
 
 
@@ -17,7 +17,7 @@ float Get_gyr_value(enum gyroscope k)
         DL_I2C_getControllerStatus(I2C_INST) & DL_I2C_CONTROLLER_STATUS_IDLE))
         ;
 
-    DL_I2C_startControllerTransferAdvanced(I2C_INST, GYR_ADDR, DL_I2C_CONTROLLER_DIRECTION_TX, 1, DL_I2C_CONTROLLER_START_ENABLE, DL_I2C_CONTROLLER_STOP_ENABLE, DL_I2C_CONTROLLER_ACK_DISABLE); //***
+    DL_I2C_startControllerTransferAdvanced(I2C_INST, GYR_ADDR, DL_I2C_CONTROLLER_DIRECTION_TX, 1, DL_I2C_CONTROLLER_START_ENABLE, DL_I2C_CONTROLLER_STOP_DISABLE, DL_I2C_CONTROLLER_ACK_ENABLE); //***
 		//DL_I2C_startControllerTransfer(I2C_INST, GYR_ADDR, DL_I2C_CONTROLLER_DIRECTION_TX, 1);
 		
     while (DL_I2C_getControllerStatus(I2C_INST) &

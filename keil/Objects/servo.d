@@ -1,4 +1,4 @@
-./objects/empty.o: ..\empty.c ..\user\control-center.h \
+./objects/servo.o: ..\user\servo.c ..\user\servo.h \
   ..\..\..\..\..\..\source\ti\devices\msp\m0p\mspm0g350x.h \
   D:\program\keil_5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   D:\program\keil_5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
@@ -82,11 +82,4 @@
   ..\..\..\..\..\..\source\ti\driverlib\dl_vref.h \
   ..\..\..\..\..\..\source\ti\driverlib\dl_wwdt.h \
   ..\..\..\..\..\..\source\ti\driverlib\m0p\dl_interrupt.h \
-  ..\..\..\..\..\..\source\ti\driverlib\m0p\dl_systick.h \
-  ..\user\encounter.h ..\user\gy901.h ..\user\motor.h ..\user\pid.h \
-  ..\..\..\..\..\..\..\user\printTo.h \
-  C:\ti\mspm0_sdk_2_01_00_03\examples\nortos\LP_MSPM0G3507\driverlib\empty\ti_msp_dl_config.h \
-  D:\program\keil_5\ARM\ARMCLANG\Bin\..\include\stdarg.h \
-  D:\program\keil_5\ARM\ARMCLANG\Bin\..\include\stdio.h ..\user\servo.h \
-  D:\program\keil_5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  ..\ti_msp_dl_config.h
+  ..\..\..\..\..\..\source\ti\driverlib\m0p\dl_systick.h
