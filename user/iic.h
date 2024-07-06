@@ -9,19 +9,19 @@
 #define GYR_SDA IIC_GYR_SDA_PIN
 #define GYR_SCL IIC_GYR_SCL_PIN
 
-#define IIC_SCL_OUT DL_GPIO_initDigitalOutput(IIC_GYR_SCL_IOMUX)
-#define IIC_SCL_IN DL_GPIO_initDigitalInput(IIC_GYR_SCL_IOMUX)
-#define IIC_SDA_OUT DL_GPIO_initDigitalOutput(IIC_GYR_SDA_IOMUX)
-#define IIC_SDA_IN DL_GPIO_initDigitalInput(IIC_GYR_SDA_IOMUX)
+#define IIC_SCL_OUT DL_GPIO_initDigitalOutput(IIC_SCL_IOMUX)
+#define IIC_SCL_IN DL_GPIO_initDigitalInput(IIC_SCL_IOMUX)
+#define IIC_SDA_OUT DL_GPIO_initDigitalOutput(IIC_SDA_IOMUX)
+#define IIC_SDA_IN DL_GPIO_initDigitalInput(IIC_SDA_IOMUX)
 
-#define IIC_SCL_HIGH DL_GPIO_setPins(GYR_PORT, IIC_GYR_SCL_PIN)
-#define IIC_SCL_LOW DL_GPIO_clearPins(GYR_PORT, IIC_GYR_SCL_PIN)
+#define IIC_SCL_HIGH DL_GPIO_setPins(IIC_PORT, IIC_SCL_PIN)
+#define IIC_SCL_LOW DL_GPIO_clearPins(IIC_PORT, IIC_SCL_PIN)
 
-#define IIC_SDA_HIGH DL_GPIO_setPins(GYR_PORT, IIC_GYR_SDA_PIN)
-#define IIC_SDA_LOW DL_GPIO_clearPins(GYR_PORT, IIC_GYR_SDA_PIN)
+#define IIC_SDA_HIGH DL_GPIO_setPins(IIC_PORT, IIC_SDA_PIN)
+#define IIC_SDA_LOW DL_GPIO_clearPins(IIC_PORT, IIC_SDA_PIN)
 
-#define IIC_SDA_READ (bool)DL_GPIO_readPins(GYR_PORT, IIC_GYR_SDA_PIN)
-#define IIC_SCL_READ (bool)DL_GPIO_readPins(GYR_PORT, IIC_GYR_SCL_PIN)
+#define IIC_SDA_READ (bool)DL_GPIO_readPins(IIC_PORT, IIC_SDA_PIN)
+#define IIC_SCL_READ (bool)DL_GPIO_readPins(IIC_PORT, IIC_SCL_PIN)
 
 extern uint8_t IIC_DATA;
 
