@@ -28,7 +28,7 @@ void pid_init(Pid *pid, float kp, float ki, float kd,
   pid->index = 0;
   pid->len = integral_length;
   pid->sum = 0;
-  pid->sum_max = integral_max;
+  pid->i_max = integral_max;
   for (unsigned char i = 0; i < pid->len; i++)
     pid->data[i] = 0;
 }
@@ -40,7 +40,7 @@ int pid_compute(Pid *pid, int target, int current) {
   pid->data[pid->index] = err;
 
   float p = err;
-  float i = (float)CLAMP(pid->sum, pid->sum_max) / pid->len;
+  float i = (float)CLAMP(pid->sum, pid->i_max) / pid->len;
   float d = err - pid->data[pid->index == 0 ? pid->len - 1 : pid->index - 1];
 
   pid->index += 1;

@@ -9,7 +9,7 @@ struct Pid {
   unsigned char index;
   unsigned char len;
   int sum;
-  unsigned int sum_max;
+  int i_max;
 };
 typedef struct Pid Pid;
 
