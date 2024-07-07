@@ -116,9 +116,8 @@ void GROUP1_IRQHandler(void) {
 void TIMER_INT_INST_IRQHandler(void) {
   switch (DL_TimerG_getPendingInterrupt(TIMER_INT_INST)) {
   case DL_TIMER_IIDX_ZERO:
-    TRACE(L_1, "%d");
-
     status_next(&status);
+    status.wheels[FONT_RIGHT].target = 100;
 
     // M_F_L_cur = get_speed(M_F_L);
     // M_F_R_cur = get_speed(M_F_R);
@@ -129,8 +128,9 @@ void TIMER_INT_INST_IRQHandler(void) {
     //		    TRACE(1, "%d");
     // TRACE("HELLO", "%s");
     // TRACE(Get_gyr_value(gyr_y_pitch), "%f");
-    TRACE(status.wheels[FONT_RIGHT].history, "%d");
+    TRACE(status.wheels[FONT_RIGHT].thrust, "%d");
     // PRINTLN("%d", radar_data[0]);
+    status_drive(&status);
     break;
   default:
     break;

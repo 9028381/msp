@@ -20,5 +20,6 @@ extern struct Status status;
 
 void status_init(struct Status *status);
 void status_next(struct Status *status);
+void status_drive(struct Status *status);
 
 #endif // !__STATUS_H__
