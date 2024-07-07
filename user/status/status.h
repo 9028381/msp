@@ -10,7 +10,7 @@ enum Mode { FOWARD };
 
 struct Status {
   /// times / STATUS_FREQ == run time(s)
-  unsigned int times;
+  uint32_t times;
   struct Sensor sensor;
   struct Wheel wheels[WHEEL_NUMS];
   enum Mode mode;
