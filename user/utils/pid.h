@@ -21,11 +21,11 @@ typedef struct Pid Pid;
  * @param kd Derivative gain of the PID controller
  * @param integral_length Length of the integral.
  * @param integral_max max of the integral.
- * must in range[0, PID_DATA_LOOP_LENGTH_MAX], see <config.h>.
+ * must in range[2, PID_DATA_LOOP_LENGTH_MAX], see <config.h>.
  *
  * @notice:
  * - The PID controller must be initialized before use.
- * - integral_length <= PID_DATA_LOOP_LENGTH_MAX
+ * - 2 <= integral_length <= PID_DATA_LOOP_LENGTH_MAX
  *
  * @example:
  * ```c

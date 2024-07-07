@@ -28,6 +28,8 @@ void log_uprintf(enum Uart uart, const char *format, ...);
 #define DEBUG(fmt, ...) LOG_SPAN("D", fmt, ##__VA_ARGS__)
 #define TRACE(var, fmt) LOG_SPAN("T", #var "=" fmt, var)
 
+#define THROW_ERROR(fmt, ...) LOG_SPAN("E", fmt, ##__VA_ARGS__)
+
 #ifndef LOG_ENABLE
 #undef ERROR
 #undef WARN
