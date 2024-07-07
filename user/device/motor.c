@@ -3,26 +3,14 @@
 #include "../utils/math.h"
 #include "ti/driverlib/dl_gpio.h"
 
+uint16_t encounter[WHEEL_NUMS];
+
+void encounter_init();
+void motor_init() { encounter_init(); }
+
 int motor_get_speed(enum WheelPosition which) {
-  int speed;
-  switch (which) {
-  case FONT_LEFT:
-    speed = L_1 - 0xefff;
-    L_1 = 0xefff;
-    break;
-  case FONT_RIGHT:
-    speed = L_2 - 0xefff;
-    L_2 = 0xefff;
-    break;
-  case BACK_LEFT:
-    speed = L_3 - 0xefff;
-    L_3 = 0xefff;
-    break;
-  case BACK_RIGHT:
-    speed = L_4 - 0xefff;
-    L_4 = 0xefff;
-    break;
-  }
+  int speed = encounter[which] - 0xefff;
+  encounter[which] = 0xefff;
   return speed;
 }
 
@@ -60,4 +48,27 @@ void motor_set_thrust(enum WheelPosition which, int thrust) {
                 DL_TIMER_CC_3_INDEX);
     break;
   }
+}
+
+void encounter_init() {
+  for (unsigned int i = 0; i < WHEEL_NUMS; i++)
+    encounter[i] = 0xefff;
+
+  NVIC_EnableIRQ(GPIOA_INT_IRQn);
+  NVIC_EnableIRQ(GPIOB_INT_IRQn);
+}
+
+#define GPIO_READ(port, pin) DL_GPIO_readPins(port, pin) ? 1 : -1
+
+void M1_CH1_INT() {
+  encounter[FONT_LEFT] += GPIO_READ(M1_M1_CH2_PORT, M1_M1_CH2_PIN);
+}
+void M2_CH1_INT() {
+  encounter[FONT_RIGHT] += GPIO_READ(M2_M2_CH2_PORT, M2_M2_CH2_PIN);
+}
+void M3_CH1_INT() {
+  encounter[BACK_LEFT] += GPIO_READ(M3_M3_CH2_PORT, M3_M3_CH2_PIN);
+}
+void M4_CH1_INT() {
+  encounter[BACK_RIGHT] += GPIO_READ(M4_PORT, M4_M4_CH1_IIDX);
 }

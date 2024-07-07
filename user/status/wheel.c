@@ -30,6 +30,9 @@ void status_wheel_init(struct Wheel wheels[WHEEL_NUMS],
 }
 
 void status_wheels_init(struct Wheel wheels[WHEEL_NUMS]) {
+  INFO("motor init.");
+  motor_init();
+
   status_wheel_init(wheels, FONT_LEFT, 1, 1, 1, 5, 50);
   status_wheel_init(wheels, FONT_RIGHT, 1, 1, 1, 5, 50);
   status_wheel_init(wheels, BACK_LEFT, 1, 1, 1, 5, 50);
@@ -49,4 +52,9 @@ void status_wheel_next(struct Wheel wheels[WHEEL_NUMS],
 void status_wheels_next(struct Wheel wheels[WHEEL_NUMS]) {
   for (unsigned int which = 0; which < WHEEL_NUMS; which++)
     status_wheel_next(wheels, which);
+}
+
+void status_wheels_drive(struct Wheel wheels[WHEEL_NUMS]) {
+  for (unsigned int which = 0; which < WHEEL_NUMS; which++)
+    motor_set_thrust(which, wheels[which].thrust);
 }
