@@ -8,8 +8,8 @@
 /******* STATUS ******/
 #define STATUS_FREQ 20
 
-/******* MOTOR *******/
-#define MOTOR_THRUST_MAX 999
+/******* WHEEL *******/
+#define WHEEL_THRUST_MAX 9999
 
 /******** PID ********/
 #define PID_DATA_LOOP_LENGTH_MAX 40

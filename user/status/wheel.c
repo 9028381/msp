@@ -1,6 +1,7 @@
 #include "wheel.h"
 #include "../device/motor.h"
 #include "../utils/log.h"
+#include "../utils/math.h"
 
 #define CASE_RETURN(x)                                                         \
   case x:                                                                      \
@@ -42,6 +43,7 @@ void status_wheel_next(struct Wheel wheels[WHEEL_NUMS],
   wheel->current = speed;
   wheel->history += speed;
   wheel->thrust += pid_compute(&wheel->pid, wheel->target, wheel->current);
+  wheel->thrust = LIMIT_MAX(wheel->thrust, WHEEL_THRUST_MAX);
 }
 
 void status_wheels_next(struct Wheel wheels[WHEEL_NUMS]) {
