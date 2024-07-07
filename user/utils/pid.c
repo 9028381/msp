@@ -37,11 +37,10 @@ int pid_compute(Pid *pid, int target, int current) {
   int err = target - current;
 
   pid->sum += err - pid->data[pid->index];
-  pid->sum = CLAMP(pid->sum, pid->sum_max);
   pid->data[pid->index] = err;
 
   float p = err;
-  float i = (float)pid->sum / pid->len;
+  float i = (float)CLAMP(pid->sum, pid->sum_max) / pid->len;
   float d = err - pid->data[pid->index == 0 ? pid->len - 1 : pid->index - 1];
 
   pid->index += 1;
