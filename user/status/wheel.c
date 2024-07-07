@@ -30,8 +30,8 @@ void status_wheel_init(struct Wheel wheels[WHEEL_NUMS],
 }
 
 void status_wheels_init(struct Wheel wheels[WHEEL_NUMS]) {
-  status_wheel_init(wheels, FONT_LEFT, 1, 1, 1, 5, 50);
-  status_wheel_init(wheels, FONT_RIGHT, 1, 1, 1, 5, 50);
+  status_wheel_init(wheels, FONT_LEFT, 2, 0, 0, 5, 50);
+  status_wheel_init(wheels, FONT_RIGHT, 2, 1, 0, 5, 50);
   status_wheel_init(wheels, BACK_LEFT, 1, 1, 1, 5, 50);
   status_wheel_init(wheels, BACK_RIGHT, 1, 1, 1, 5, 50);
 }
