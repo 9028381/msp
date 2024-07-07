@@ -466,12 +466,18 @@ SYSCONFIG_WEAK void SYSCFG_DL_UART_2_init(void)
     DL_UART_Main_init(UART_2_INST, (DL_UART_Main_Config *) &gUART_2Config);
     /*
      * Configure baud rate by setting oversampling and baud rate divisors.
-     *  Target baud rate: 9600
-     *  Actual baud rate: 9600.24
+     *  Target baud rate: 460800
+     *  Actual baud rate: 460431.65
      */
     DL_UART_Main_setOversampling(UART_2_INST, DL_UART_OVERSAMPLING_RATE_16X);
-    DL_UART_Main_setBaudRateDivisor(UART_2_INST, UART_2_IBRD_32_MHZ_9600_BAUD, UART_2_FBRD_32_MHZ_9600_BAUD);
+    DL_UART_Main_setBaudRateDivisor(UART_2_INST, UART_2_IBRD_32_MHZ_460800_BAUD, UART_2_FBRD_32_MHZ_460800_BAUD);
 
+
+    /* Configure Interrupts */
+    DL_UART_Main_enableInterrupt(UART_2_INST,
+                                 DL_UART_MAIN_INTERRUPT_RX);
+    /* Setting the Interrupt Priority */
+    NVIC_SetPriority(UART_2_INST_INT_IRQN, 3);
 
     /* Configure DMA Transmit Event */
     DL_UART_Main_enableDMATransmitEvent(UART_2_INST);
@@ -506,12 +512,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_UART_1_init(void)
     DL_UART_Main_setOversampling(UART_1_INST, DL_UART_OVERSAMPLING_RATE_16X);
     DL_UART_Main_setBaudRateDivisor(UART_1_INST, UART_1_IBRD_32_MHZ_115200_BAUD, UART_1_FBRD_32_MHZ_115200_BAUD);
 
-
-    /* Configure Interrupts */
-    DL_UART_Main_enableInterrupt(UART_1_INST,
-                                 DL_UART_MAIN_INTERRUPT_RX);
-    /* Setting the Interrupt Priority */
-    NVIC_SetPriority(UART_1_INST_INT_IRQN, 1);
 
     /* Configure DMA Transmit Event */
     DL_UART_Main_enableDMATransmitEvent(UART_1_INST);
@@ -574,11 +574,11 @@ SYSCONFIG_WEAK void SYSCFG_DL_UART_3_init(void)
     DL_UART_Main_init(UART_3_INST, (DL_UART_Main_Config *) &gUART_3Config);
     /*
      * Configure baud rate by setting oversampling and baud rate divisors.
-     *  Target baud rate: 9600
-     *  Actual baud rate: 9600.24
+     *  Target baud rate: 460800
+     *  Actual baud rate: 460431.65
      */
     DL_UART_Main_setOversampling(UART_3_INST, DL_UART_OVERSAMPLING_RATE_16X);
-    DL_UART_Main_setBaudRateDivisor(UART_3_INST, UART_3_IBRD_32_MHZ_9600_BAUD, UART_3_FBRD_32_MHZ_9600_BAUD);
+    DL_UART_Main_setBaudRateDivisor(UART_3_INST, UART_3_IBRD_32_MHZ_460800_BAUD, UART_3_FBRD_32_MHZ_460800_BAUD);
 
 
     /* Configure DMA Transmit Event */

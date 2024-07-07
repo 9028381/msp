@@ -134,6 +134,22 @@ extern "C" {
 
 
 
+
+/* Defines for I2C */
+#define I2C_INST                                                            I2C1
+#define I2C_INST_IRQHandler                                      I2C1_IRQHandler
+#define I2C_INST_INT_IRQN                                          I2C1_INT_IRQn
+#define I2C_BUS_SPEED_HZ                                                  100000
+#define GPIO_I2C_SDA_PORT                                                  GPIOA
+#define GPIO_I2C_SDA_PIN                                          DL_GPIO_PIN_16
+#define GPIO_I2C_IOMUX_SDA                                       (IOMUX_PINCM38)
+#define GPIO_I2C_IOMUX_SDA_FUNC                        IOMUX_PINCM38_PF_I2C1_SDA
+#define GPIO_I2C_SCL_PORT                                                  GPIOA
+#define GPIO_I2C_SCL_PIN                                          DL_GPIO_PIN_15
+#define GPIO_I2C_IOMUX_SCL                                       (IOMUX_PINCM37)
+#define GPIO_I2C_IOMUX_SCL_FUNC                        IOMUX_PINCM37_PF_I2C1_SCL
+
+
 /* Defines for UART_2 */
 #define UART_2_INST                                                        UART2
 #define UART_2_INST_IRQHandler                                  UART2_IRQHandler
@@ -146,9 +162,9 @@ extern "C" {
 #define GPIO_UART_2_IOMUX_TX                                     (IOMUX_PINCM43)
 #define GPIO_UART_2_IOMUX_RX_FUNC                      IOMUX_PINCM44_PF_UART2_RX
 #define GPIO_UART_2_IOMUX_TX_FUNC                      IOMUX_PINCM43_PF_UART2_TX
-#define UART_2_BAUD_RATE                                                  (9600)
-#define UART_2_IBRD_32_MHZ_9600_BAUD                                       (208)
-#define UART_2_FBRD_32_MHZ_9600_BAUD                                        (21)
+#define UART_2_BAUD_RATE                                                (460800)
+#define UART_2_IBRD_32_MHZ_460800_BAUD                                       (4)
+#define UART_2_FBRD_32_MHZ_460800_BAUD                                      (22)
 /* Defines for UART_1 */
 #define UART_1_INST                                                        UART3
 #define UART_1_INST_IRQHandler                                  UART3_IRQHandler
@@ -191,9 +207,9 @@ extern "C" {
 #define GPIO_UART_3_IOMUX_TX                                     (IOMUX_PINCM21)
 #define GPIO_UART_3_IOMUX_RX_FUNC                      IOMUX_PINCM22_PF_UART0_RX
 #define GPIO_UART_3_IOMUX_TX_FUNC                      IOMUX_PINCM21_PF_UART0_TX
-#define UART_3_BAUD_RATE                                                  (9600)
-#define UART_3_IBRD_32_MHZ_9600_BAUD                                       (208)
-#define UART_3_FBRD_32_MHZ_9600_BAUD                                        (21)
+#define UART_3_BAUD_RATE                                                (460800)
+#define UART_3_IBRD_32_MHZ_460800_BAUD                                       (4)
+#define UART_3_FBRD_32_MHZ_460800_BAUD                                      (22)
 
 
 
@@ -301,14 +317,14 @@ extern "C" {
 #define IIC_GYR_SCL_GYR_PIN                                      (DL_GPIO_PIN_1)
 #define IIC_GYR_SCL_GYR_IOMUX                                     (IOMUX_PINCM2)
 /* Port definition for Pin Group IIC */
-#define IIC_PORT                                                         (GPIOA)
+#define IIC_PORT                                                         (GPIOB)
 
-/* Defines for SCL: GPIOA.15 with pinCMx 37 on package pin 8 */
-#define IIC_SCL_PIN                                             (DL_GPIO_PIN_15)
-#define IIC_SCL_IOMUX                                            (IOMUX_PINCM37)
-/* Defines for SDA: GPIOA.16 with pinCMx 38 on package pin 9 */
-#define IIC_SDA_PIN                                             (DL_GPIO_PIN_16)
-#define IIC_SDA_IOMUX                                            (IOMUX_PINCM38)
+/* Defines for IIC_SCL: GPIOB.19 with pinCMx 45 on package pin 16 */
+#define IIC_IIC_SCL_PIN                                         (DL_GPIO_PIN_19)
+#define IIC_IIC_SCL_IOMUX                                        (IOMUX_PINCM45)
+/* Defines for IIC_SDA: GPIOB.20 with pinCMx 48 on package pin 19 */
+#define IIC_IIC_SDA_PIN                                         (DL_GPIO_PIN_20)
+#define IIC_IIC_SDA_IOMUX                                        (IOMUX_PINCM48)
 
 /* clang-format on */
 
@@ -319,6 +335,7 @@ void SYSCFG_DL_SYSCTL_init(void);
 void SYSCFG_DL_M_PWM_init(void);
 void SYSCFG_DL_SERVO_init(void);
 void SYSCFG_DL_TIMER_INT_init(void);
+void SYSCFG_DL_I2C_init(void);
 void SYSCFG_DL_UART_2_init(void);
 void SYSCFG_DL_UART_1_init(void);
 void SYSCFG_DL_UART_4_init(void);

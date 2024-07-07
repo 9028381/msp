@@ -15,6 +15,7 @@ const GPIO2         = GPIO.addInstance();
 const GPIO3         = GPIO.addInstance();
 const GPIO4         = GPIO.addInstance();
 const GPIO5         = GPIO.addInstance();
+const GPIO6         = GPIO.addInstance();
 const I2C           = scripting.addModule("/ti/driverlib/I2C", {}, false);
 const I2C1          = I2C.addInstance();
 const PWM           = scripting.addModule("/ti/driverlib/PWM", {}, false);
@@ -104,15 +105,22 @@ GPIO4.associatedPins[3].pin.$assign       = "PB6";
 
 GPIO5.$name                         = "IIC_GYR";
 GPIO5.associatedPins.create(2);
-GPIO5.associatedPins[0].$name       = "SDA";
 GPIO5.associatedPins[0].ioStructure = "OD";
-GPIO5.associatedPins[0].pin.$assign = "PA0";
-GPIO5.associatedPins[1].$name       = "SCL";
+GPIO5.associatedPins[0].$name       = "SDA_GYR";
 GPIO5.associatedPins[1].ioStructure = "OD";
+GPIO5.associatedPins[1].$name       = "SCL_GYR";
 GPIO5.associatedPins[1].pin.$assign = "PA1";
 
-I2C1.$name                             = "I2C_1";
+GPIO6.$name                   = "IIC";
+GPIO6.associatedPins.create(2);
+GPIO6.associatedPins[0].$name = "IIC_SCL";
+GPIO6.associatedPins[1].$name = "IIC_SDA";
+
+I2C1.basicEnableController             = true;
+I2C1.advAnalogGlitchFilter             = "DISABLED";
+I2C1.$name                             = "I2C";
 I2C1.peripheral.$assign                = "I2C1";
+I2C1.peripheral.sclPin.$assign         = "PA15";
 I2C1.sdaPinConfig.hideOutputInversion  = scripting.forceWrite(false);
 I2C1.sdaPinConfig.onlyInternalResistor = scripting.forceWrite(false);
 I2C1.sdaPinConfig.passedPeripheralType = scripting.forceWrite("Digital");
@@ -177,12 +185,15 @@ TIMER1.$name              = "TIMER_INT";
 TIMER1.timerClkPrescale   = 256;
 TIMER1.timerMode          = "PERIODIC";
 TIMER1.interrupts         = ["ZERO"];
-TIMER1.interruptPriority  = "1";
 TIMER1.timerPeriod        = "50ms";
+TIMER1.interruptPriority  = "2";
 TIMER1.peripheral.$assign = "TIMG0";
 
 UART1.$name                            = "UART_2";
 UART1.enabledDMATXTriggers             = "DL_UART_DMA_INTERRUPT_TX";
+UART1.targetBaudRate                   = 460800;
+UART1.enabledInterrupts                = ["RX"];
+UART1.interruptPriority                = "3";
 UART1.peripheral.rxPin.$assign         = "PB18";
 UART1.peripheral.txPin.$assign         = "PB17";
 UART1.txPinConfig.direction            = scripting.forceWrite("OUTPUT");
@@ -202,6 +213,7 @@ UART1.DMA_CHANNEL_TX.$name             = "DMA_CH2";
 UART2.$name                      = "UART_1";
 UART2.enabledDMATXTriggers       = "DL_UART_DMA_INTERRUPT_TX";
 UART2.targetBaudRate             = 115200;
+UART2.interruptPriority          = "1";
 UART2.peripheral.$assign         = "UART3";
 UART2.peripheral.rxPin.$assign   = "PA13";
 UART2.peripheral.txPin.$assign   = "PA14";
@@ -232,6 +244,8 @@ UART3.DMA_CHANNEL_TX.$name             = "DMA_CH4";
 
 UART4.$name                      = "UART_3";
 UART4.enabledDMATXTriggers       = "DL_UART_DMA_INTERRUPT_TX";
+UART4.targetBaudRate             = 460800;
+UART4.interruptPriority          = "3";
 UART4.peripheral.rxPin.$assign   = "PA11";
 UART4.peripheral.txPin.$assign   = "PA10";
 UART4.txPinConfig.$name          = "ti_driverlib_gpio_GPIOPinGeneric6";
@@ -248,8 +262,10 @@ ProjectConfig.deviceSpin = "MSPM0G3507";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+GPIO5.associatedPins[0].pin.$suggestSolution     = "PA0";
+GPIO6.associatedPins[0].pin.$suggestSolution     = "PB19";
+GPIO6.associatedPins[1].pin.$suggestSolution     = "PB20";
 I2C1.peripheral.sdaPin.$suggestSolution          = "PA16";
-I2C1.peripheral.sclPin.$suggestSolution          = "PA15";
 PWM2.peripheral.$suggestSolution                 = "TIMG6";
 UART1.peripheral.$suggestSolution                = "UART2";
 UART1.DMA_CHANNEL_TX.peripheral.$suggestSolution = "DMA_CH3";
