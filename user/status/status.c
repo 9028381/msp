@@ -1,5 +1,4 @@
 #include "status.h"
-#include "../device/device.h"
 #include "wheel.h"
 
 struct Status status;
@@ -17,6 +16,5 @@ void status_next(struct Status *status) {
 }
 
 void status_drive(struct Status *status) {
-  for (unsigned int which = 0; which < WHEEL_NUMS; which++)
-    motor_set_thrust(which, status->wheels[which].thrust);
+  status_wheels_drive(status->wheels);
 }

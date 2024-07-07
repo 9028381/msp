@@ -1,3 +1,12 @@
+/*
+ * @Author: zl 2293721550@qq.com
+ * @Date: 2024-07-06 21:36:48
+ * @LastEditors: zl 2293721550@qq.com
+ * @LastEditTime: 2024-07-07 14:43:24
+ * @FilePath: \empty\user\status\wheel.c
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置
+ * 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #include "wheel.h"
 #include "../device/motor.h"
 #include "../utils/log.h"
@@ -49,4 +58,9 @@ void status_wheel_next(struct Wheel wheels[WHEEL_NUMS],
 void status_wheels_next(struct Wheel wheels[WHEEL_NUMS]) {
   for (unsigned int which = 0; which < WHEEL_NUMS; which++)
     status_wheel_next(wheels, which);
+}
+
+void status_wheels_drive(struct Wheel wheels[WHEEL_NUMS]) {
+  for (unsigned int which = 0; which < WHEEL_NUMS; which++)
+    motor_set_thrust(which, wheels[which].thrust);
 }

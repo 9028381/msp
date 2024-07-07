@@ -25,4 +25,6 @@ void status_wheels_init(struct Wheel wheels[WHEEL_NUMS]);
 
 void status_wheels_next(struct Wheel wheels[WHEEL_NUMS]);
 
+void status_wheels_drive(struct Wheel wheels[WHEEL_NUMS]);
+
 #endif // !__WHEEL_H__
