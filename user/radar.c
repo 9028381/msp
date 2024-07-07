@@ -1,4 +1,7 @@
 #include "radar.h"
+#include "empty/ti_msp_dl_config.h"
+#include "ti/driverlib/dl_uart.h"
+#include "ti/driverlib/m0p/dl_core.h"
 
 extern uint16_t receive_cnt;
 int data_flag = 0, data_process_flag = 0;
@@ -295,11 +298,11 @@ void radar_data_process() {
   }
 }
 
-// void radar_init(UART_CHA_enum uart)
-// {
-// 	UART_init(uart, 460800);
-// 	UART_IRQRX_set(uart);
-// }
+void init_radar(void) {
+  DL_UART_disable(UART_3_INST);
+  delay_cycles(50000);
+  DL_UART_enable(UART_3_INST);
+}
 
 float float_abs(float input) {
   if (input < 0)

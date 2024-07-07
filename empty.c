@@ -45,7 +45,6 @@
 #include "gyroscope.h"
 #include "iic.h"
 #include "motor.h"
-#include "radar.h"
 #include "servo.h"
 #include "stdlib.h"
 #include "string.h"
@@ -62,14 +61,14 @@
 #include "user/status/wheel.h"
 #include "utils/log.h"
 #include <stdio.h>
+#include "device/motor.h"
 
 int main(void) {
   SYSCFG_DL_init();
 
   //
-  init_encounter();
   // init_PID();
-  status_init(&status);
+  //status_init(&status);
 
   //  NVIC_ClearPendingIRQ(UART_1_INST_INT_IRQN);
   //  NVIC_EnableIRQ(UART_1_INST_INT_IRQN); // 使能 接收中断
@@ -80,14 +79,13 @@ int main(void) {
   DL_TimerG_startCounter(TIMER_INT_INST);
   //
   //
-  init_radar();
   M_F_L_tar = 200;
   M_F_R_tar = 200;
 
   //	DL_SYSCTL_enableSleepOssnExit();
   delay_cycles(9999999);
   while (1) {
-    radar_data_process();
+    
   }
 }
 
@@ -118,7 +116,10 @@ void TIMER_INT_INST_IRQHandler(void) {
   switch (DL_TimerG_getPendingInterrupt(TIMER_INT_INST)) {
   case DL_TIMER_IIDX_ZERO:
     status_next(&status);
-    status.wheels[FONT_RIGHT].target = 100;
+    status.wheels[FONT_RIGHT].target = 0;
+		status.wheels[FONT_LEFT].target = 0;
+	  
+	  
 
     // M_F_L_cur = get_speed(M_F_L);
     // M_F_R_cur = get_speed(M_F_R);
@@ -128,9 +129,7 @@ void TIMER_INT_INST_IRQHandler(void) {
     // TRACE(status.times, "%u");
     //		    TRACE(1, "%d");
     // TRACE("HELLO", "%s");
-    // TRACE(Get_gyr_value(gyr_y_pitch), "%f");
-    TRACE(status.wheels[FONT_RIGHT].thrust, "%d");
-    PRINTLN("%d", radar_data[0]);
+    PRINTLN("%d, %d", status.wheels[FONT_RIGHT].current, status.wheels[FONT_LEFT].current);
     status_drive(&status);
     break;
   default:
@@ -156,17 +155,17 @@ void TIMER_INT_INST_IRQHandler(void) {
 //  }
 //}
 
-uint8_t data = 0;
+//uint8_t data = 0;
 
-void UART_3_INST_IRQHandler(void) {
-  switch (
-      DL_UART_Main_getPendingInterrupt(UART_3_INST)) { // 串口的RX接收到了数据
-  case DL_UART_MAIN_IIDX_RX:
+//void UART_3_INST_IRQHandler(void) {
+//  switch (
+//      DL_UART_Main_getPendingInterrupt(UART_3_INST)) { // 串口的RX接收到了数据
+//  case DL_UART_MAIN_IIDX_RX:
 
-    data = DL_UART_Main_receiveData(UART_3_INST); // 存数据
-    Ladar_drive(data);
-    break;
-  default:
-    break;
-  }
-}
+//    data = DL_UART_Main_receiveData(UART_3_INST); // 存数据
+//    Ladar_drive(data);
+//    break;
+//  default:
+//    break;
+//  }
+//}

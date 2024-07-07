@@ -56,7 +56,8 @@ extern int data_cnt, data_error_cnt;
 extern int data_flag, data_process_flag;
 
 extern void Ladar_drive(uint8_t temp_data); //雷达驱动函数，放在中断中
-extern void radar_data_process(); //雷达数据处理函数，放在while（1）中
+extern void radar_data_process(); // 雷达数据处理函数，放在while（1）中
+extern void init_radar();
 
 extern uint16_t radar_data[360];
 #endif

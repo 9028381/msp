@@ -8,6 +8,7 @@
 /**
  * Import the modules used in this configuration.
  */
+const Board         = scripting.addModule("/ti/driverlib/Board");
 const DMA           = scripting.addModule("/ti/driverlib/DMA");
 const GPIO          = scripting.addModule("/ti/driverlib/GPIO", {}, false);
 const GPIO1         = GPIO.addInstance();
@@ -34,7 +35,7 @@ const ProjectConfig = scripting.addModule("/ti/project_config/ProjectConfig");
 /**
  * Write custom configuration values to the imported modules.
  */
-const Board                       = scripting.addModule("/ti/driverlib/Board", {}, false);
+Board.InitPriority8               = "/ti/driverlib/PWM";
 Board.peripheral.$assign          = "DEBUGSS";
 Board.peripheral.swclkPin.$assign = "PA20";
 Board.peripheral.swdioPin.$assign = "PA19";
@@ -246,6 +247,7 @@ UART4.$name                      = "UART_3";
 UART4.enabledDMATXTriggers       = "DL_UART_DMA_INTERRUPT_TX";
 UART4.targetBaudRate             = 460800;
 UART4.interruptPriority          = "3";
+UART4.enabledInterrupts          = ["RX"];
 UART4.peripheral.rxPin.$assign   = "PA11";
 UART4.peripheral.txPin.$assign   = "PA10";
 UART4.txPinConfig.$name          = "ti_driverlib_gpio_GPIOPinGeneric6";
