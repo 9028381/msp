@@ -103,9 +103,9 @@ extern "C" {
 #define GPIO_UART_1_IOMUX_TX                                     (IOMUX_PINCM36)
 #define GPIO_UART_1_IOMUX_RX_FUNC                      IOMUX_PINCM35_PF_UART3_RX
 #define GPIO_UART_1_IOMUX_TX_FUNC                      IOMUX_PINCM36_PF_UART3_TX
-#define UART_1_BAUD_RATE                                                (115200)
-#define UART_1_IBRD_32_MHZ_115200_BAUD                                      (17)
-#define UART_1_FBRD_32_MHZ_115200_BAUD                                      (23)
+#define UART_1_BAUD_RATE                                                (460800)
+#define UART_1_IBRD_32_MHZ_460800_BAUD                                       (4)
+#define UART_1_FBRD_32_MHZ_460800_BAUD                                      (22)
 /* Defines for UART_4 */
 #define UART_4_INST                                                        UART1
 #define UART_4_INST_IRQHandler                                  UART1_IRQHandler
@@ -118,9 +118,9 @@ extern "C" {
 #define GPIO_UART_4_IOMUX_TX                                     (IOMUX_PINCM39)
 #define GPIO_UART_4_IOMUX_RX_FUNC                      IOMUX_PINCM40_PF_UART1_RX
 #define GPIO_UART_4_IOMUX_TX_FUNC                      IOMUX_PINCM39_PF_UART1_TX
-#define UART_4_BAUD_RATE                                                  (9600)
-#define UART_4_IBRD_32_MHZ_9600_BAUD                                       (208)
-#define UART_4_FBRD_32_MHZ_9600_BAUD                                        (21)
+#define UART_4_BAUD_RATE                                                (460800)
+#define UART_4_IBRD_32_MHZ_460800_BAUD                                       (4)
+#define UART_4_FBRD_32_MHZ_460800_BAUD                                      (22)
 /* Defines for UART_3 */
 #define UART_3_INST                                                        UART0
 #define UART_3_INST_IRQHandler                                  UART0_IRQHandler
