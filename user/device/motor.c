@@ -38,8 +38,7 @@ int motor_get_speed(enum WheelPosition which) {
       DL_GPIO_clearPins(fport, fpin);                                          \
       DL_GPIO_clearPins(bport, bpin);                                          \
     }                                                                          \
-    DL_Timer_setCaptureCompareValue(                                           \
-        M_PWM_INST, LIMIT_MAX(ABS(thrust), MOTOR_THRUST_MAX), pwm_timercc);    \
+    DL_Timer_setCaptureCompareValue(M_PWM_INST, ABS(thrust), pwm_timercc);     \
   }
 
 void motor_set_thrust(enum WheelPosition which, int thrust) {
