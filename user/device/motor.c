@@ -58,13 +58,13 @@ void encounter_init() {
   NVIC_EnableIRQ(GPIOB_INT_IRQn);
 }
 
-#define GPIO_READ(port, pin) DL_GPIO_readPins(port, pin) ? 1 : -1
+#define GPIO_READ(port, pin) (DL_GPIO_readPins(port, pin) ? 1 : -1)
 
 void M1_CH1_INT() {
   encounter[FONT_LEFT] += GPIO_READ(M1_M1_CH2_PORT, M1_M1_CH2_PIN);
 }
 void M2_CH1_INT() {
-  encounter[FONT_RIGHT] += GPIO_READ(M2_M2_CH2_PORT, M2_M2_CH2_PIN);
+  encounter[FONT_RIGHT] -= GPIO_READ(M2_M2_CH2_PORT, M2_M2_CH2_PIN);
 }
 void M3_CH1_INT() {
   encounter[BACK_LEFT] += GPIO_READ(M3_M3_CH2_PORT, M3_M3_CH2_PIN);
