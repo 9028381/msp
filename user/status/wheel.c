@@ -41,11 +41,10 @@ void status_wheel_next(struct Wheel wheels[WHEEL_NUMS],
   int speed = motor_get_speed(which);
   wheel->current = speed;
   wheel->history += speed;
+  wheel->thrust += pid_compute(&wheel->pid, wheel->target, wheel->current);
 }
 
 void status_wheels_next(struct Wheel wheels[WHEEL_NUMS]) {
-  status_wheel_next(wheels, FONT_LEFT);
-  status_wheel_next(wheels, FONT_RIGHT);
-  status_wheel_next(wheels, BACK_LEFT);
-  status_wheel_next(wheels, BACK_RIGHT);
+  for (unsigned int which = 0; which < WHEEL_NUMS; which++)
+    status_wheel_next(wheels, which);
 }
