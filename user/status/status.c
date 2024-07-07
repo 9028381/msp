@@ -1,10 +1,11 @@
 #include "status.h"
-#include "wheel.h"
+#include "rpc.h"
 
 struct Status status;
 
 void status_init(struct Status *status) {
   status->times = 0;
+  status_rpc_init(status->rpc);
   // sensor init
   status_wheels_init(status->wheels);
 }

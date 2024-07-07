@@ -5,13 +5,13 @@
 #include "stdint.h"
 
 struct Procedure {
-  void fn(uint16_t, void *);
+  void (*fn)(uint16_t var, void *para);
   void *para;
 };
 
-struct RPC {
-  struct Procedure procedures[STATUS_RPC_ID_MAX];
-  uint16_t stack;
-};
+typedef struct Procedure RPC[STATUS_RPC_ID_MAX];
+
+void status_rpc_init(RPC rpc);
+void rpc_call_id(RPC rpc, uint8_t id, uint16_t var);
 
 #endif // !__RPC_H__
