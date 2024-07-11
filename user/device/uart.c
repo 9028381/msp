@@ -1,5 +1,5 @@
 #include "uart.h"
-#include "empty/ti_msp_dl_config.h"
+#include "ti_msp_dl_config.h"
 #include "ti/driverlib/dl_dma.h"
 
 #define UART_DMA_SEND(channel, data, len, dest)                                \

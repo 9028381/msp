@@ -53,6 +53,9 @@ void uart_re_driver(enum Uart uart, uint8_t data) {
     } else {
       R2_BUFF[R2_flag++] = data;
       if (R2_flag == 4) {
+                uint16_t cat = ((uint16_t)R2_BUFF[2] << 8) | R2_BUFF[3];
+        rpc_call_id(status.rpc, R2_BUFF[1], cat);
+
         for (int i = 0; i < 4; i++) {
           R2_BUFF[i] = 0;
         }
@@ -69,6 +72,9 @@ void uart_re_driver(enum Uart uart, uint8_t data) {
     } else {
       R3_BUFF[R3_flag++] = data;
       if (R3_flag == 4) {
+                uint16_t cat = ((uint16_t)R3_BUFF[2] << 8) | R3_BUFF[3];
+        rpc_call_id(status.rpc, R3_BUFF[1], cat);
+
         for (int i = 0; i < 4; i++) {
           R3_BUFF[i] = 0;
         }
@@ -85,6 +91,9 @@ void uart_re_driver(enum Uart uart, uint8_t data) {
     } else {
       R4_BUFF[R4_flag++] = data;
       if (R4_flag == 4) {
+                uint16_t cat = ((uint16_t)R4_BUFF[2] << 8) | R4_BUFF[3];
+        rpc_call_id(status.rpc, R4_BUFF[1], cat);
+
         for (int i = 0; i < 4; i++) {
           R4_BUFF[i] = 0;
         }

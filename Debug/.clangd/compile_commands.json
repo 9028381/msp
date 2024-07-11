@@ -1,0 +1,92 @@
+[
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/empty.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug/ti_msp_dl_config.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/device/motor.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/device/uart.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/gyr_iic.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/status/rpc.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/status/status.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/status/wheel.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/uart_re_driver.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/utils/log.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/utils/pid.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/device/servo.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/device/radar.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/device/gyroscope.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/device/gw_gray.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/it/uart_it.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/it/timer_it.c"
+   },
+   {
+      "directory" : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug",
+      "command"   : "clang++ -D__MSPM0G3507__ -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang\" -I\"C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/Debug\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source/third_party/CMSIS/Core/Include\" -I\"C:/ti/mspm0_sdk_2_01_00_03/source\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/armv7em-ti-none-eabihf/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c++/v1\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/lib/clang/15.0.7/include\" -isystem\"D:/program/CCS/ccs_blue/ccs/tools/compiler/ti-cgt-armllvm_3.2.1.LTS/include/c\"",
+      "file"      : "C:/Users/22937/workspace_ccstheia/empty_LP_MSPM0G3507_nortos_ticlang/User/it/gpio_it.c"
+   }
+]

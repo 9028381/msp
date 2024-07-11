@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "MSPM0G350X" --package "LQFP-64(PM)" --part "Default" --product "mspm0_sdk@2.01.00.03"
- * @versions {"tool":"1.20.0+3587"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -35,6 +35,10 @@ const ProjectConfig = scripting.addModule("/ti/project_config/ProjectConfig");
 /**
  * Write custom configuration values to the imported modules.
  */
+const pinFunction3     = system.clockTree["HFCLKEXT"];
+pinFunction3.enable    = true;
+pinFunction3.inputFreq = 8;
+
 Board.InitPriority8               = "/ti/driverlib/PWM";
 Board.peripheral.$assign          = "DEBUGSS";
 Board.peripheral.swclkPin.$assign = "PA20";
@@ -262,21 +266,24 @@ UART4.DMA_CHANNEL_TX.srcLength   = "BYTE";
 UART4.DMA_CHANNEL_TX.dstLength   = "BYTE";
 
 ProjectConfig.deviceSpin = "MSPM0G3507";
+scripting.suppress("Migrating requires going through the Switch Board or Device menu in the Device View section\\.", ProjectConfig, "deviceSpin");
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-GPIO5.associatedPins[0].pin.$suggestSolution     = "PA0";
-GPIO6.associatedPins[0].pin.$suggestSolution     = "PB19";
-GPIO6.associatedPins[1].pin.$suggestSolution     = "PB20";
-I2C1.peripheral.sdaPin.$suggestSolution          = "PA16";
-PWM2.peripheral.$suggestSolution                 = "TIMG6";
-UART1.peripheral.$suggestSolution                = "UART2";
-UART1.DMA_CHANNEL_TX.peripheral.$suggestSolution = "DMA_CH3";
-UART2.DMA_CHANNEL_TX.peripheral.$suggestSolution = "DMA_CH2";
-UART3.peripheral.$suggestSolution                = "UART1";
-UART3.DMA_CHANNEL_TX.peripheral.$suggestSolution = "DMA_CH1";
-UART4.peripheral.$suggestSolution                = "UART0";
-UART4.DMA_CHANNEL_TX.peripheral.$suggestSolution = "DMA_CH0";
+pinFunction3.peripheral.$suggestSolution            = "SYSCTL";
+pinFunction3.peripheral.hfclkInPin.$suggestSolution = "PA6";
+GPIO5.associatedPins[0].pin.$suggestSolution        = "PA0";
+GPIO6.associatedPins[0].pin.$suggestSolution        = "PB19";
+GPIO6.associatedPins[1].pin.$suggestSolution        = "PB20";
+I2C1.peripheral.sdaPin.$suggestSolution             = "PA16";
+PWM2.peripheral.$suggestSolution                    = "TIMG6";
+UART1.peripheral.$suggestSolution                   = "UART2";
+UART1.DMA_CHANNEL_TX.peripheral.$suggestSolution    = "DMA_CH3";
+UART2.DMA_CHANNEL_TX.peripheral.$suggestSolution    = "DMA_CH2";
+UART3.peripheral.$suggestSolution                   = "UART1";
+UART3.DMA_CHANNEL_TX.peripheral.$suggestSolution    = "DMA_CH1";
+UART4.peripheral.$suggestSolution                   = "UART0";
+UART4.DMA_CHANNEL_TX.peripheral.$suggestSolution    = "DMA_CH0";
