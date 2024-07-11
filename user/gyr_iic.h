@@ -3,7 +3,7 @@
 
 #include "ti/devices/msp/m0p/mspm0g350x.h"
 #include "ti/driverlib/dl_gpio.h"
-#include "empty/ti_msp_dl_config.h"
+#include "ti_msp_dl_config.h"
 
 #define GYR_PORT IIC_GYR_PORT
 #define GYR_SDA IIC_GYR_SDA_PIN

@@ -1,7 +1,8 @@
 #include "motor.h"
-#include "../encounter.h"
 #include "../utils/math.h"
+#include "ti_msp_dl_config.h"
 #include "ti/driverlib/dl_gpio.h"
+
 
 uint16_t encounter[WHEEL_NUMS];
 
@@ -53,9 +54,6 @@ void motor_set_thrust(enum WheelPosition which, int thrust) {
 void encounter_init() {
   for (unsigned int i = 0; i < WHEEL_NUMS; i++)
     encounter[i] = 0xefff;
-
-  NVIC_EnableIRQ(GPIOA_INT_IRQn);
-  NVIC_EnableIRQ(GPIOB_INT_IRQn);
 }
 
 #define GPIO_READ(port, pin) (DL_GPIO_readPins(port, pin) ? 1 : -1)

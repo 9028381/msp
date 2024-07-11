@@ -1,6 +1,9 @@
 #include "rpc.h"
 #include "../utils/log.h"
+#include "User/status/wheel.h"
+#include "status.h"
 #include "stdlib.h"
+#include "wheel.h"
 
 void rpc_register(RPC rpc, uint8_t id, const char *describe,
                   void fn(uint16_t, void *), void *para);
@@ -49,12 +52,13 @@ void echo(uint16_t var, void *p) { INFO("ECHO %hx %s", var, p) }
   rpc_register(rpc, id, "FN " #fn, fn, para)
 
 void rpc_declare(RPC rpc) {
-  // rpc register var in there.
-  float a;
-  // rpc_register(rpc, 0, "a", store_float, &a);
-  RPC_DECLARE_SET_VAR(0, a);
-  RPC_DECLARE_GET_VAR(1, a);
-  RPC_DECLARE_CALL_FN(2, echo, "Hello World!");
+  /// rpc register var in there.
+  /// rpc_register(rpc, 0, "a", store_float, &a);
+  /// RPC_DECLARE_SET_VAR(0, a);
+  /// RPC_DECLARE_GET_VAR(1, a);
+  /// RPC_DECLARE_CALL_FN(2, echo, "Hello World!");
+  RPC_DECLARE_VAR(0, status.wheels[FONT_LEFT].target);
+  RPC_DECLARE_VAR(1, status.wheels[FONT_RIGHT].target);
 }
 
 void status_rpc_init(RPC rpc) {
@@ -70,7 +74,6 @@ void status_rpc_init(RPC rpc) {
 
 void rpc_register(RPC rpc, uint8_t id, const char *describe,
                   void fn(uint16_t, void *), void *para) {
-  // do something
   if (id >= STATUS_RPC_ID_LIMIT) {
     THROW_ERROR(
         "RPC_REGISTER_ERROR id more than or equal to STATUS_RPC_ID_LIMIT "
@@ -97,11 +100,13 @@ void rpc_call_id(RPC rpc, uint8_t id, uint16_t var) {
         "RPC_CALL_ERROR no register this procedure (id=%d). Will ignore.", id);
     return;
   }
+
   if (id >= STATUS_RPC_ID_LIMIT) {
     THROW_ERROR("RPC_CALL_ERROR id more than or equal to STATUS_RPC_ID_LIMIT"
                 "(id=%d, STATUS_RPC_ID_LIMIT=%d). Will ignore.",
                 id, STATUS_RPC_ID_LIMIT);
     return;
   }
+
   rpc_call(&rpc[id], var);
 }
