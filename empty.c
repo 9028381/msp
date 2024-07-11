@@ -24,14 +24,14 @@ int main(void) {
   SYSCFG_DL_init();
 
     status_init(&status);
-	
+
     enable_timer_it();
     enable_all_uart_it();
     enable_all_gpio_it();
 
   while (1) {
 
-    }
+    } 120
 }
 
 
