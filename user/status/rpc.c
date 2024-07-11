@@ -66,4 +66,11 @@ void rpc_call(struct Procedure *proc, uint16_t var) {
   proc->fn(var, proc->para);
 }
 
-void rpc_call_id(RPC rpc, uint8_t id, uint16_t var) { rpc_call(&rpc[id], var); }
+void rpc_call_id(RPC rpc, uint8_t id, uint16_t var) {
+  if (rpc[id].fn == NULL) {
+    THROW_ERROR(
+        "RPC_CALL_ERROR no register this procedure (id=%d). Will ignore.", id);
+    return;
+  }
+  rpc_call(&rpc[id], var);
+}
