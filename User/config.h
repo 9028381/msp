@@ -16,6 +16,13 @@
 #define WHEEL_THRUST_MAX 9999
 
 /*
+ * task
+ */
+#define TASK_RPC_ID_LIMIT 30
+#define TASK_QUEUE_LIMIT 30
+#define TASK_TIMED_LIMIT 30
+
+/*
  * utils
  */
 
