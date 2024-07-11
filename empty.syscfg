@@ -17,6 +17,8 @@ const GPIO3         = GPIO.addInstance();
 const GPIO4         = GPIO.addInstance();
 const GPIO5         = GPIO.addInstance();
 const GPIO6         = GPIO.addInstance();
+const GPIO7         = GPIO.addInstance();
+const GPIO8         = GPIO.addInstance();
 const I2C           = scripting.addModule("/ti/driverlib/I2C", {}, false);
 const I2C1          = I2C.addInstance();
 const PWM           = scripting.addModule("/ti/driverlib/PWM", {}, false);
@@ -35,6 +37,18 @@ const ProjectConfig = scripting.addModule("/ti/project_config/ProjectConfig");
 /**
  * Write custom configuration values to the imported modules.
  */
+const divider9       = system.clockTree["UDIV"];
+divider9.divideValue = 2;
+
+const multiplier2         = system.clockTree["PLL_QDIV"];
+multiplier2.multiplyValue = 20;
+
+const mux8       = system.clockTree["HSCLKMUX"];
+mux8.inputSelect = "HSCLKMUX_SYSPLL0";
+
+const mux12       = system.clockTree["SYSPLLMUX"];
+mux12.inputSelect = "zSYSPLLMUX_HFCLK";
+
 const pinFunction3     = system.clockTree["HFCLKEXT"];
 pinFunction3.enable    = true;
 pinFunction3.inputFreq = 8;
@@ -120,6 +134,12 @@ GPIO6.$name                   = "IIC";
 GPIO6.associatedPins.create(2);
 GPIO6.associatedPins[0].$name = "IIC_SCL";
 GPIO6.associatedPins[1].$name = "IIC_SDA";
+
+GPIO7.$name                   = "LED_PORT";
+GPIO7.associatedPins[0].$name = "LED";
+
+GPIO8.$name                   = "BUF_PORT";
+GPIO8.associatedPins[0].$name = "PIN";
 
 I2C1.basicEnableController             = true;
 I2C1.advAnalogGlitchFilter             = "DISABLED";
@@ -276,8 +296,10 @@ scripting.suppress("Migrating requires going through the Switch Board or Device 
 pinFunction3.peripheral.$suggestSolution            = "SYSCTL";
 pinFunction3.peripheral.hfclkInPin.$suggestSolution = "PA6";
 GPIO5.associatedPins[0].pin.$suggestSolution        = "PA0";
-GPIO6.associatedPins[0].pin.$suggestSolution        = "PB19";
-GPIO6.associatedPins[1].pin.$suggestSolution        = "PB20";
+GPIO6.associatedPins[0].pin.$suggestSolution        = "PB20";
+GPIO6.associatedPins[1].pin.$suggestSolution        = "PB21";
+GPIO7.associatedPins[0].pin.$suggestSolution        = "PB19";
+GPIO8.associatedPins[0].pin.$suggestSolution        = "PB22";
 I2C1.peripheral.sdaPin.$suggestSolution             = "PA16";
 PWM2.peripheral.$suggestSolution                    = "TIMG6";
 UART1.peripheral.$suggestSolution                   = "UART2";

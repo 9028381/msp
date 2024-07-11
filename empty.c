@@ -19,6 +19,7 @@
 #include "User/it/uart_it.h"
 #include "User/it/gpio_it.h"
 #include "User/it/timer_it.h"
+#include "User/device/delay.h"
 
 int main(void) {
   SYSCFG_DL_init();
@@ -31,6 +32,7 @@ int main(void) {
 
   while (1) {
 
+    delay_us(10);
     }
 }
 

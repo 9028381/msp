@@ -233,6 +233,18 @@ extern "C" {
 
 
 
+/* Port definition for Pin Group LED_PORT */
+#define LED_PORT_PORT                                                    (GPIOB)
+
+/* Defines for LED: GPIOB.19 with pinCMx 45 on package pin 16 */
+#define LED_PORT_LED_PIN                                        (DL_GPIO_PIN_19)
+#define LED_PORT_LED_IOMUX                                       (IOMUX_PINCM45)
+/* Port definition for Pin Group BUF_PORT */
+#define BUF_PORT_PORT                                                    (GPIOB)
+
+/* Defines for PIN: GPIOB.22 with pinCMx 50 on package pin 21 */
+#define BUF_PORT_PIN_PIN                                        (DL_GPIO_PIN_22)
+#define BUF_PORT_PIN_IOMUX                                       (IOMUX_PINCM50)
 /* Defines for M1_D1: GPIOB.4 with pinCMx 17 on package pin 52 */
 #define M1_M1_D1_PORT                                                    (GPIOB)
 #define M1_M1_D1_PIN                                             (DL_GPIO_PIN_4)
@@ -319,12 +331,12 @@ extern "C" {
 /* Port definition for Pin Group IIC */
 #define IIC_PORT                                                         (GPIOB)
 
-/* Defines for IIC_SCL: GPIOB.19 with pinCMx 45 on package pin 16 */
-#define IIC_IIC_SCL_PIN                                         (DL_GPIO_PIN_19)
-#define IIC_IIC_SCL_IOMUX                                        (IOMUX_PINCM45)
-/* Defines for IIC_SDA: GPIOB.20 with pinCMx 48 on package pin 19 */
-#define IIC_IIC_SDA_PIN                                         (DL_GPIO_PIN_20)
-#define IIC_IIC_SDA_IOMUX                                        (IOMUX_PINCM48)
+/* Defines for IIC_SCL: GPIOB.20 with pinCMx 48 on package pin 19 */
+#define IIC_IIC_SCL_PIN                                         (DL_GPIO_PIN_20)
+#define IIC_IIC_SCL_IOMUX                                        (IOMUX_PINCM48)
+/* Defines for IIC_SDA: GPIOB.21 with pinCMx 49 on package pin 20 */
+#define IIC_IIC_SDA_PIN                                         (DL_GPIO_PIN_21)
+#define IIC_IIC_SDA_IOMUX                                        (IOMUX_PINCM49)
 
 /* clang-format on */
 
