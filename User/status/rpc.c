@@ -1,4 +1,4 @@
-#include "rpc.h"
+#include "User/status/rpc.h"
 #include "../utils/log.h"
 #include "User/status/wheel.h"
 #include "status.h"
@@ -57,8 +57,8 @@ void rpc_declare(RPC rpc) {
   /// RPC_DECLARE_SET_VAR(0, a);
   /// RPC_DECLARE_GET_VAR(1, a);
   /// RPC_DECLARE_CALL_FN(2, echo, "Hello World!");
-  RPC_DECLARE_VAR(0, status.wheels[FONT_LEFT].target);
-  RPC_DECLARE_VAR(1, status.wheels[FONT_RIGHT].target);
+  RPC_DECLARE_SET_VAR(0, status.wheels[FONT_LEFT].target);
+  RPC_DECLARE_SET_VAR(1, status.wheels[FONT_RIGHT].target);
 }
 
 void status_rpc_init(RPC rpc) {
