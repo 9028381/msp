@@ -5,8 +5,11 @@
 
 #define DEV
 
+/******* TIMER *******/
+#define TIMER1_FREQ 20
+
 /******* STATUS ******/
-#define STATUS_FREQ 20
+#define STATUS_FREQ TIMER1_FREQ
 #define STATUS_RPC_ID_LIMIT 30
 
 /******* WHEEL *******/

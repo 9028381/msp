@@ -7,10 +7,10 @@
 
 void log_uprintf(enum Uart uart, const char *format, ...);
 
-/// minute:second:frequency
 #define PRINTF(fmt, ...) log_uprintf(LOG_UART, fmt, ##__VA_ARGS__);
 #define PRINTLN(fmt, ...) PRINTF(fmt "\r\n", ##__VA_ARGS__)
 
+/// minute:second:frequency
 #define LOG_TIME_FMT_TYPE "%02u:%02u:%02u"
 #define LOG_TIME_FMT(t)                                                        \
   ((t / STATUS_FREQ) / 60), ((t / STATUS_FREQ) % 60), (t % STATUS_FREQ)
@@ -20,7 +20,7 @@ void log_uprintf(enum Uart uart, const char *format, ...);
           ##__VA_ARGS__)
 
 #define LOG_SPAN(level, fmt, ...)                                              \
-  LOG_EVENT(level, "%s:%s:%u " fmt, __FILE__, __func__, __LINE__, ##__VA_ARGS__)
+  LOG_EVENT(level, __func__ ":%u " fmt, __LINE__, ##__VA_ARGS__)
 
 #define ERROR(fmt, ...) LOG_EVENT("E", fmt, ##__VA_ARGS__)
 #define WARN(fmt, ...) LOG_EVENT("W", fmt, ##__VA_ARGS__)
@@ -29,6 +29,7 @@ void log_uprintf(enum Uart uart, const char *format, ...);
 #define TRACE(var, fmt) LOG_SPAN("T", #var "=" fmt, var)
 
 #define THROW_ERROR(fmt, ...) LOG_SPAN("E", fmt, ##__VA_ARGS__)
+#define THROW_WARN(fmt, ...) LOG_SPAN("W", fmt, ##__VA_ARGS__)
 
 #ifndef LOG_ENABLE
 #undef ERROR
