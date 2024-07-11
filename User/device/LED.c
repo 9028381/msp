@@ -14,38 +14,35 @@ void LED_set(uint8_t sta) {
 void led_blame_sun(void *para);
 void led_blame_moon(void *para);
 
-union LedPara {
-  void *point;
-  uint8_t array[3];
-};
-
 void led_blame_moon(void *para) {
-  union LedPara blame = (union LedPara)para;
   LED_set(0);
 
-  blame.array[0]--;
-  if (blame.array[0] == 0)
+  para--;
+  if ((uint32_t)para & 0xff == 0)
     return;
 
-  Task t = task_new(led_blame_sun, blame.point);
-  task_timed_insert(&task.timed, t, blame.array[2]);
+  uint32_t moon_time = ((uint32_t)para >> 16) & 0xff;
+
+  Task t = task_new(led_blame_sun, para);
+  task_timed_insert(&task.timed, t, moon_time);
 }
 
 void led_blame_sun(void *para) {
-  union LedPara blame = (union LedPara)para;
   LED_set(1);
 
-  Task t = task_new(led_blame_moon, blame.point);
-  task_timed_insert(&task.timed, t, blame.array[1]);
+  uint32_t sun_time = ((uint32_t)para >> 8) & 0xff;
+
+  Task t = task_new(led_blame_moon, para);
+  task_timed_insert(&task.timed, t, sun_time);
 }
 
 void led_blame(uint8_t start_time, uint8_t times, uint8_t sun_time,
                uint8_t moon_time) {
-  union LedPara para;
-  para.array[0] = times;
-  para.array[1] = sun_time;
-  para.array[2] = moon_time;
+  if (times == 0)
+    return;
 
-  Task t = task_new(led_blame_sun, para.point);
+  uint32_t para = moon_time << 16 | sun_time << 8 | times;
+
+  Task t = task_new(led_blame_sun, (void *)para);
   task_timed_insert(&task.timed, t, start_time);
 }
