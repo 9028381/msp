@@ -20,7 +20,11 @@ void log_uprintf(enum Uart uart, const char *format, ...);
           ##__VA_ARGS__)
 
 #define LOG_SPAN(level, fmt, ...)                                              \
+<<<<<<< HEAD
   LOG_EVENT(level, "%s:%u " fmt, __func__,__LINE__, ##__VA_ARGS__)
+=======
+  LOG_EVENT(level, "%s:%u " fmt, __func__, __LINE__, ##__VA_ARGS__)
+>>>>>>> f2f7dac72a4d89bbf87f07f00a06ac4c159055f0
 
 #define ERROR(fmt, ...) LOG_EVENT("E", fmt, ##__VA_ARGS__)
 #define WARN(fmt, ...) LOG_EVENT("W", fmt, ##__VA_ARGS__)

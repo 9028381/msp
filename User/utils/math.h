@@ -11,6 +11,6 @@
 #define LIMIT_MAX(x, max) MIN(x, max)
 #define LIMIT_MIN(x, min) MAX(x, min)
 #define LIMIT(x, min, max) LIMIT_MIN(LIMIT_MAX(x, max), min)
-#define CLAMP(x, range) LIMIT(x, -range, range)
+#define CLAMP(x, range) LIMIT(x, -(range), range)
 
 #endif // !__MATH_H__
