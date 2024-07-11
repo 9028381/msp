@@ -43,6 +43,7 @@ struct TimedTask *data_append(struct Timed *timed, struct TimedTask task) {
 }
 
 void task_timed_insert(struct Timed *timed, Task task, unsigned int time) {
+  time = status.times + time;
   struct TimedTask *data = data_append(
       timed, (struct TimedTask){.task = task, .timed = time, .next = NULL});
 
@@ -54,9 +55,15 @@ void task_timed_insert(struct Timed *timed, Task task, unsigned int time) {
     return;
   }
 
+  if (timed->first->timed >= data->timed) {
+    data->next = timed->first;
+    timed->first = data;
+    return;
+  }
+
   struct TimedTask *current = timed->first;
   while (current->next != NULL) {
-    if (current->timed >= data->timed) {
+    if (current->next->timed >= data->timed) {
       data->next = current->next;
       current->next = data;
       return;
