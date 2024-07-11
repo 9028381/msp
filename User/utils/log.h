@@ -32,16 +32,8 @@ void log_uprintf(enum Uart uart, const char *format, ...);
 #define THROW_WARN(fmt, ...) LOG_SPAN("W", fmt, ##__VA_ARGS__)
 
 #ifndef LOG_ENABLE
-#undef ERROR
-#undef WARN
-#undef INFO
-#undef DEBUG
-#undef TRACE
-#define ERROR(format, ...)
-#define WARN(format, ...)
-#define INFO(format, ...)
-#define DEBUG(format, ...)
-#define TRACE(var, fmt)
+#undef LOG_EVENT
+#define LOG_EVENT(level, fmt, ...)
 #endif // !LOG_ENABLE
 
 #endif // !__LOG_H__
