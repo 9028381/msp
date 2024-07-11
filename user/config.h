@@ -7,7 +7,7 @@
 
 /******* STATUS ******/
 #define STATUS_FREQ 20
-#define STATUS_RPC_ID_MAX 30
+#define STATUS_RPC_ID_LIMIT 30
 
 /******* WHEEL *******/
 #define WHEEL_THRUST_MAX 9999

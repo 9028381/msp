@@ -9,7 +9,7 @@ struct Procedure {
   void *para;
 };
 
-typedef struct Procedure RPC[STATUS_RPC_ID_MAX];
+typedef struct Procedure RPC[STATUS_RPC_ID_LIMIT];
 
 void status_rpc_init(RPC rpc);
 void rpc_call_id(RPC rpc, uint8_t id, uint16_t var);
