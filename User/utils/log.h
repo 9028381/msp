@@ -31,6 +31,10 @@ void log_uprintf(enum Uart uart, const char *format, ...);
 #define THROW_ERROR(fmt, ...) LOG_SPAN("E", fmt, ##__VA_ARGS__)
 #define THROW_WARN(fmt, ...) LOG_SPAN("W", fmt, ##__VA_ARGS__)
 
+#ifdef DEV
+#define LOG_ENABLE
+#endif // DEV
+
 #ifndef LOG_ENABLE
 #undef LOG_EVENT
 #define LOG_EVENT(level, fmt, ...)
