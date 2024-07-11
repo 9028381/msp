@@ -1,5 +1,5 @@
 include/
-Debug/
+Debug/*
 !Debug/ti_msp_dl_config.h
 .clangd
 *.out
