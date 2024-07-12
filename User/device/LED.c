@@ -18,7 +18,7 @@ void led_blame_moon(void *para) {
   LED_set(0);
 
   para--;
-  if ((uint32_t)para & 0xff == 0)
+  if (((uint32_t)para & 0xff) == 0)
     return;
 
   uint32_t moon_time = ((uint32_t)para >> 16) & 0xff;

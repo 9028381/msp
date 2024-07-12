@@ -3,6 +3,5 @@
 
 void delay_us(uint32_t t)
 {
-    uint32_t cnt = CLOCK * t;
-    delay_cycles(cnt);
+    delay_cycles(CLOCK * t);
 }

@@ -62,6 +62,7 @@ void task_timed_insert(struct Timed *timed, Task task, unsigned int time) {
   }
 
   struct TimedTask *current = timed->first;
+  
   while (current->next != NULL) {
     if (current->next->timed >= data->timed) {
       data->next = current->next;
@@ -71,4 +72,6 @@ void task_timed_insert(struct Timed *timed, Task task, unsigned int time) {
 
     current = current->next;
   }
+
+  current->next = data;
 }

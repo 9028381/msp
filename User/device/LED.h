@@ -6,4 +6,7 @@
 
 extern void LED_set(uint8_t sta);
 
+void led_blame(uint8_t start_time, uint8_t times, uint8_t sun_time,
+               uint8_t moon_time);
+
 #endif

@@ -8,11 +8,13 @@
  * 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 #include "uart_re_driver.h"
+#include "User/task/rpc.h"
 #include "device/uart.h"
-#include "status/rpc.h"
 #include "status/status.h"
 #include "stdint.h"
+#include "task/task.h"
 #include "utils/log.h"
+
 
 uint8_t R1_BUFF[4] = {0};
 uint8_t R2_BUFF[4] = {0};
@@ -35,7 +37,7 @@ void uart_re_driver(enum Uart uart, uint8_t data) {
       R1_BUFF[R1_flag++] = data;
       if (R1_flag == 4) {
         uint16_t cat = ((uint16_t)R1_BUFF[2] << 8) | R1_BUFF[3];
-        rpc_call_id(status.rpc, R1_BUFF[1], cat);
+        task_rpc_call_id(task.rpc, R1_BUFF[1], cat);
 
         for (int i = 0; i < 4; i++) {
           R1_BUFF[i] = 0;
@@ -53,8 +55,8 @@ void uart_re_driver(enum Uart uart, uint8_t data) {
     } else {
       R2_BUFF[R2_flag++] = data;
       if (R2_flag == 4) {
-                uint16_t cat = ((uint16_t)R2_BUFF[2] << 8) | R2_BUFF[3];
-        rpc_call_id(status.rpc, R2_BUFF[1], cat);
+        uint16_t cat = ((uint16_t)R2_BUFF[2] << 8) | R2_BUFF[3];
+        task_rpc_call_id(task.rpc, R2_BUFF[1], cat);
 
         for (int i = 0; i < 4; i++) {
           R2_BUFF[i] = 0;
@@ -72,8 +74,8 @@ void uart_re_driver(enum Uart uart, uint8_t data) {
     } else {
       R3_BUFF[R3_flag++] = data;
       if (R3_flag == 4) {
-                uint16_t cat = ((uint16_t)R3_BUFF[2] << 8) | R3_BUFF[3];
-        rpc_call_id(status.rpc, R3_BUFF[1], cat);
+        uint16_t cat = ((uint16_t)R3_BUFF[2] << 8) | R3_BUFF[3];
+        task_rpc_call_id(task.rpc, R3_BUFF[1], cat);
 
         for (int i = 0; i < 4; i++) {
           R3_BUFF[i] = 0;
@@ -91,8 +93,8 @@ void uart_re_driver(enum Uart uart, uint8_t data) {
     } else {
       R4_BUFF[R4_flag++] = data;
       if (R4_flag == 4) {
-                uint16_t cat = ((uint16_t)R4_BUFF[2] << 8) | R4_BUFF[3];
-        rpc_call_id(status.rpc, R4_BUFF[1], cat);
+        uint16_t cat = ((uint16_t)R4_BUFF[2] << 8) | R4_BUFF[3];
+        task_rpc_call_id(task.rpc, R4_BUFF[1], cat);
 
         for (int i = 0; i < 4; i++) {
           R4_BUFF[i] = 0;
