@@ -10,6 +10,7 @@
 
 #include "uart_it.h"
 #include "User/device/radar.h"
+#include "User/device/ms_gray.h"
 
 uint8_t r1_buf = 0;
 uint8_t r2_buf = 0;
@@ -44,7 +45,7 @@ void UART_2_INST_IRQHandler(void) {
   case DL_UART_MAIN_IIDX_RX:
 
     r2_buf = DL_UART_Main_receiveData(UART_2_INST);
-    uart_re_driver(uart2, r2_buf);
+    update_ms_diff(r2_buf);
 
     break;
   default:

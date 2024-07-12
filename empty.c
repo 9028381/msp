@@ -24,6 +24,8 @@
 #include "ti/driverlib/m0p/dl_core.h"
 #include "ti_msp_dl_config.h"
 #include <stdio.h>
+#include "User/move/follow_line.h"
+#include "User/move/turn.h"
 
 int main(void) {
   SYSCFG_DL_init();
@@ -35,11 +37,15 @@ int main(void) {
   enable_all_uart_it();
   enable_all_gpio_it();
 
-led_blame(100, 5, 10, 10);
+    led_blame(100, 5, 10, 10);
 
-buzzer_buzz(50, 7, 20, 10);
+    buzzer_buzz(50, 7, 20, 10);
 
-  print_start(20);
+    // start_follow_line(1);
+
+    turn_abs_start_turn(90, 200);
+
+  //print_start(20);
 
   while (1) {
     task_poll(&task);

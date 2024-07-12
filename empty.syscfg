@@ -223,9 +223,9 @@ TIMER1.peripheral.$assign = "TIMG0";
 
 UART1.$name                            = "UART_2";
 UART1.enabledDMATXTriggers             = "DL_UART_DMA_INTERRUPT_TX";
-UART1.targetBaudRate                   = 460800;
 UART1.enabledInterrupts                = ["RX"];
 UART1.interruptPriority                = "2";
+UART1.targetBaudRate                   = 115200;
 UART1.peripheral.rxPin.$assign         = "PB18";
 UART1.peripheral.txPin.$assign         = "PB17";
 UART1.txPinConfig.direction            = scripting.forceWrite("OUTPUT");

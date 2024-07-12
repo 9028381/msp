@@ -13,7 +13,7 @@ void led_blame_sun(void *para);
 void led_blame_moon(void *para);
 
 void led_blame_moon(void *para) {
-  LED_set(0);
+  led_set(0);
 
   para--;
   if (((uint32_t)para & 0xff) == 0)
@@ -26,7 +26,7 @@ void led_blame_moon(void *para) {
 }
 
 void led_blame_sun(void *para) {
-  LED_set(1);
+  led_set(1);
 
   uint32_t sun_time = ((uint32_t)para >> 8) & 0xff;
 

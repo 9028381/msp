@@ -6,7 +6,14 @@
 
 struct Sensor {};
 
-enum Mode { FOWARD };
+enum Mode { 
+    STOP,
+    FOWARD,
+    BACKWARD,
+    FOLLOW_LINE,
+    TURN_RIGHT,
+    TURN_LEFT,
+    };
 
 struct Status {
   /// times / STATUS_FREQ == run time(s)
