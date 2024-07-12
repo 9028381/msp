@@ -1,9 +1,7 @@
-#include "LED.h"
-#include "../task/task.h"
-#include "stdint.h"
-#include "ti_msp_dl_config.h"
+#include "led.h"
 
-void LED_set(uint8_t sta) {
+
+void led_set(uint8_t sta) {
   if (sta == 1) {
     DL_GPIO_setPins(LED_PORT_PORT, LED_PORT_LED_PIN);
   } else {

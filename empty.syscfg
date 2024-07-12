@@ -144,8 +144,8 @@ GPIO7.$name                         = "LED_PORT";
 GPIO7.associatedPins[0].$name       = "LED";
 GPIO7.associatedPins[0].pin.$assign = "PA21";
 
-GPIO8.$name                         = "BUF_PORT";
-GPIO8.associatedPins[0].$name       = "PIN";
+GPIO8.$name                         = "BUZZER_PORT";
+GPIO8.associatedPins[0].$name       = "BUZZER_PIN";
 GPIO8.associatedPins[0].pin.$assign = "PB20";
 
 I2C1.basicEnableController             = true;

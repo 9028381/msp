@@ -239,12 +239,12 @@ extern "C" {
 /* Defines for LED: GPIOA.21 with pinCMx 46 on package pin 17 */
 #define LED_PORT_LED_PIN                                        (DL_GPIO_PIN_21)
 #define LED_PORT_LED_IOMUX                                       (IOMUX_PINCM46)
-/* Port definition for Pin Group BUF_PORT */
-#define BUF_PORT_PORT                                                    (GPIOB)
+/* Port definition for Pin Group BUZZER_PORT */
+#define BUZZER_PORT_PORT                                                 (GPIOB)
 
-/* Defines for PIN: GPIOB.20 with pinCMx 48 on package pin 19 */
-#define BUF_PORT_PIN_PIN                                        (DL_GPIO_PIN_20)
-#define BUF_PORT_PIN_IOMUX                                       (IOMUX_PINCM48)
+/* Defines for BUZZER_PIN: GPIOB.20 with pinCMx 48 on package pin 19 */
+#define BUZZER_PORT_BUZZER_PIN_PIN                              (DL_GPIO_PIN_20)
+#define BUZZER_PORT_BUZZER_PIN_IOMUX                             (IOMUX_PINCM48)
 /* Defines for M1_D1: GPIOB.4 with pinCMx 17 on package pin 52 */
 #define M1_M1_D1_PORT                                                    (GPIOB)
 #define M1_M1_D1_PIN                                             (DL_GPIO_PIN_4)
