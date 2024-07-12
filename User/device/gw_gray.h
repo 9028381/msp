@@ -6,9 +6,6 @@
 #ifndef __GW_GRAY_H__
 #define __GW_GRAY_H__
 
-#include "ti/devices/msp/m0p/mspm0g350x.h"
-#include "ti/driverlib/dl_gpio.h"
-#include "ti_msp_dl_config.h"
 #include <stdint.h>
 
 // Get whether there is a black line under the sensor, from left to right

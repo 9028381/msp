@@ -1,13 +1,12 @@
 #include "gyroscope.h"
-#include "User/gyr_iic.h"
-#include "ti/driverlib/m0p/dl_core.h"
+#include "User/drive/iic-software.h"
 
 #define GYR_ADDR 0x50
 
-float Get_gyr_value(enum gyroscope key) {
+float gyr_get_value(enum Gyroscope key) {
   uint8_t buf[2];
 
-  GYR_IIC_Read_To_Mem(GYR_ADDR, key, 2, buf);
+  iic_software_read_to_mem(GYR_ADDR, key, 2, buf);
   float value = (short)(((short)buf[1] << 8) | buf[0]);
 
   switch (key) {
@@ -26,21 +25,21 @@ float Get_gyr_value(enum gyroscope key) {
   }
 }
 
-void GYR_unlock() {
+void gyr_unlock() {
   uint8_t buf[5] = {0xff, 0xaa, 0x69, 0x88, 0xb5};
-  GYR_IIC_Write(GYR_ADDR, 5, buf);
+  iic_software_write(GYR_ADDR, 5, buf);
 }
 
-void GYR_save() {
+void gyr_save() {
   uint8_t buf[5] = {0xff, 0xaa, 0x00, 0x00, 0x00};
-  GYR_IIC_Write(GYR_ADDR, 5, buf);
+  iic_software_write(GYR_ADDR, 5, buf);
 }
 
-void GYR_set0(enum gyroscope tar) {
+void gyr_set_zero(enum Gyroscope tar) {
   if (tar == gyr_y_pitch) {
-    GYR_unlock();
+    gyr_unlock();
     uint8_t buf[5] = {0xff, 0xaa, 0x01, 0x40, 0x00};
-    GYR_IIC_Write(GYR_ADDR, 5, buf);
-    GYR_save();
+    iic_software_write(GYR_ADDR, 5, buf);
+    gyr_save();
   }
 }

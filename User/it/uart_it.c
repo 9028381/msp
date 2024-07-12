@@ -1,15 +1,8 @@
-/*
- * @Author: zl 2293721550@qq.com
- * @Date: 2024-07-07 19:20:44
- * @LastEditors: zl 2293721550@qq.com
- * @LastEditTime: 2024-07-07 19:30:22
- * @FilePath: \empty\user\uart_it.c
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置
- * 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-
 #include "uart_it.h"
-#include "User/device/radar.h"
+#include "../drive/uart.h"
+#include "User/uart_re_driver.h"
+#include "stdint.h"
+#include "ti_msp_dl_config.h"
 
 uint8_t r1_buf = 0;
 uint8_t r2_buf = 0;

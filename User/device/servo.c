@@ -1,5 +1,9 @@
 #include "servo.h"
 
+#define SERVO_MAX_ANGLE 180
+
+#include "ti_msp_dl_config.h"
+
 void servo_set_angle(enum SERVO servo, float angle) {
   if ((int)angle > SERVO_MAX_ANGLE / 2)
     angle = (float)SERVO_MAX_ANGLE / 2;
