@@ -1,5 +1,6 @@
 #include "gpio_it.h"
-#include "User/it/uart_it.h"
+#include "User/drive/motor.h"
+#include "ti_msp_dl_config.h"
 
 void GROUP1_IRQHandler(void) {
   uint32_t gpioA = DL_GPIO_getEnabledInterruptStatus(GPIOA, M1_M1_CH1_PIN);
@@ -24,8 +25,7 @@ void GROUP1_IRQHandler(void) {
   }
 }
 
-void enable_all_gpio_it(void)
-{
-    NVIC_EnableIRQ(GPIOA_INT_IRQn);
-    NVIC_EnableIRQ(GPIOB_INT_IRQn);
+void enable_all_gpio_it(void) {
+  NVIC_EnableIRQ(GPIOA_INT_IRQn);
+  NVIC_EnableIRQ(GPIOB_INT_IRQn);
 }

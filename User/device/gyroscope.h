@@ -1,7 +1,7 @@
 #ifndef __GYROSCOPE_H__
 #define __GYROSCOPE_H__
 
-enum gyroscope {
+enum Gyroscope {
   gyr_a_x = 0x34,     // Acceleration of the sensor along the x-axis
   gyr_a_y = 0x35,     // Acceleration of the sensor along the y-axis
   gyr_a_z = 0x36,     // Acceleration of the sensor along the z-axis
@@ -13,7 +13,7 @@ enum gyroscope {
   gyr_z_yaw = 0x3F,   // The angle of the sensor around the z-axis
 };
 
-extern float Get_gyr_value(enum gyroscope key);
-extern void GYR_set0(enum gyroscope tar);
+float gyr_get_value(enum Gyroscope key);
+void gyr_set_zero(enum Gyroscope tar);
 
 #endif /* !__GYROSCOPE_H__ */

@@ -1,6 +1,6 @@
 #include "uart.h"
-#include "ti_msp_dl_config.h"
 #include "ti/driverlib/dl_dma.h"
+#include "ti_msp_dl_config.h"
 
 #define UART_DMA_SEND(channel, data, len, dest)                                \
   while (DL_DMA_isChannelEnabled(DMA, channel))                                \

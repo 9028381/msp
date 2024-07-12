@@ -1,8 +1,6 @@
 #include "motor.h"
 #include "../utils/math.h"
 #include "ti_msp_dl_config.h"
-#include "ti/driverlib/dl_gpio.h"
-
 
 uint16_t encounter[WHEEL_NUMS];
 

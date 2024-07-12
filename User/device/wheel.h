@@ -2,7 +2,6 @@
 #define __WHEEL_H__
 
 #include "../utils/pid.h"
-#include "stdint.h"
 
 #define WHEEL_NUMS 4
 
@@ -14,10 +13,10 @@ enum WheelPosition {
 };
 
 struct Wheel {
-  int16_t thrust;
-  int16_t target;
-  int16_t current;
-  int32_t history;
+  short thrust;
+  short target;
+  short current;
+  int history;
   Pid pid;
 };
 

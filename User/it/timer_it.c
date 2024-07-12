@@ -1,4 +1,7 @@
 #include "timer_it.h"
+#include "User/status/status.h"
+#include "ti_msp_dl_config.h"
+
 #include "ti/driverlib/dl_timerg.h"
 
 void TIMER_INT_INST_IRQHandler(void) {
@@ -13,8 +16,7 @@ void TIMER_INT_INST_IRQHandler(void) {
   }
 }
 
-void enable_timer_it(void)
-{
-    NVIC_EnableIRQ(TIMER_INT_INST_INT_IRQN);
-    DL_TimerG_startCounter(TIMER_INT_INST);
+void enable_timer_it(void) {
+  NVIC_EnableIRQ(TIMER_INT_INST_INT_IRQN);
+  DL_TimerG_startCounter(TIMER_INT_INST);
 }

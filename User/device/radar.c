@@ -1,7 +1,7 @@
 #include "radar.h"
-#include "ti_msp_dl_config.h"
 #include "ti/driverlib/dl_uart.h"
 #include "ti/driverlib/m0p/dl_core.h"
+#include "ti_msp_dl_config.h"
 
 extern uint16_t receive_cnt;
 int data_flag = 0, data_process_flag = 0;

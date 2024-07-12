@@ -1,12 +1,12 @@
-#ifndef __BUZZER_H_
-#define __BUZZER_H_
+#ifndef __BUZZER_H__
+#define __BUZZER_H__
 
-#include "ti_msp_dl_config.h"
-#include "ti/driverlib/dl_gpio.h"
-#include "../task/task.h"
 #include "stdint.h"
 
-void buzzer_set(uint8_t sta);
-void buzzer_buzz(uint8_t start_time, uint8_t times, uint8_t on_time, uint8_t off_time);
+void buzzer_ring();
+void buzzer_mute();
 
-#endif
+void buzzer_blame(uint8_t later_start, uint8_t times, uint8_t ring_time,
+                  uint8_t mute_time);
+
+#endif // !__BUZZER_H__

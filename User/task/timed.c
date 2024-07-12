@@ -8,12 +8,8 @@ void task_timed_init(struct Timed *timed) {
   timed->len = 0;
   timed->index = 0;
   timed->first = NULL;
-  for (unsigned int i = 0; i < TASK_TIMED_LIMIT; i++) {
+  for (unsigned int i = 0; i < TASK_TIMED_LIMIT; i++)
     timed->data[i].task.fn = NULL;
-    timed->data[i].task.para = NULL;
-    timed->data[i].next = NULL;
-    timed->data[i].timed = 0;
-  }
 }
 
 void task_timed_poll(struct Timed *timed) {
@@ -43,7 +39,6 @@ struct TimedTask *data_append(struct Timed *timed, struct TimedTask task) {
 }
 
 void task_timed_insert(struct Timed *timed, Task task, unsigned int time) {
-  time = status.times + time;
   struct TimedTask *data = data_append(
       timed, (struct TimedTask){.task = task, .timed = time, .next = NULL});
 
@@ -62,7 +57,7 @@ void task_timed_insert(struct Timed *timed, Task task, unsigned int time) {
   }
 
   struct TimedTask *current = timed->first;
-  
+
   while (current->next != NULL) {
     if (current->next->timed >= data->timed) {
       data->next = current->next;
@@ -74,4 +69,9 @@ void task_timed_insert(struct Timed *timed, Task task, unsigned int time) {
   }
 
   current->next = data;
+}
+
+void task_timed_append(struct Timed *timed, Task task, unsigned int later) {
+  unsigned int time = status.times + later;
+  task_timed_insert(timed, task, time);
 }

@@ -2,7 +2,7 @@
 #define __STATUS_H__
 
 #include "../config.h"
-#include "wheel.h"
+#include "../device/wheel.h"
 
 struct Sensor {};
 
@@ -17,7 +17,7 @@ enum Mode {
 
 struct Status {
   /// times / STATUS_FREQ == run time(s)
-  uint32_t times;
+  unsigned int times;
   struct Sensor sensor;
   struct Wheel wheels[WHEEL_NUMS];
   enum Mode mode;

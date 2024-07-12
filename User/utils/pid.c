@@ -39,8 +39,8 @@ void pid_init(Pid *pid, float kp, float ki, float kd,
     pid->data[i] = 0;
 }
 
-int pid_compute(Pid *pid, int target, int current) {
-  int err = target - current;
+int pid_compute(Pid *pid, short target, short current) {
+  short err = target - current;
 
   /*
    * pid input: ... -> 0 1 2 3 4 5 6 7 8 9 ...
