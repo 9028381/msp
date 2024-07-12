@@ -2,7 +2,7 @@
 #define __LOG_H__
 
 #include "../config.h"
-#include "../device/uart.h"
+#include "../drive/uart.h"
 #include "../status/status.h"
 
 void log_uprintf(enum Uart uart, const char *format, ...);

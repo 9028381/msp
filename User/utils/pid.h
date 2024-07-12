@@ -5,7 +5,7 @@
 
 struct Pid {
   float kp, ki, kd;
-  int data[PID_DATA_LOOP_LENGTH_MAX];
+  short data[PID_DATA_LOOP_LENGTH_MAX];
   unsigned char index;
   unsigned char len;
   int sum;
@@ -82,6 +82,6 @@ void pid_init(Pid *pid, float kp, float ki, float kd,
  * }
  * ```
  */
-int pid_compute(Pid *pid, int target, int current);
+int pid_compute(Pid *pid, short target, short current);
 
 #endif // !__PID_H__

@@ -1,7 +1,7 @@
 #ifndef __MOTOR_H__
 #define __MOTOR_H__
 
-#include "../status/wheel.h"
+#include "../device/wheel.h"
 
 void motor_init();
 int motor_get_speed(enum WheelPosition which);

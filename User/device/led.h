@@ -1,14 +1,12 @@
-#ifndef __LED_H_
-#define __LED_H_
+#ifndef __LED_H__
+#define __LED_H__
 
-#include "ti_msp_dl_config.h"
-#include "ti/driverlib/dl_gpio.h"
-#include "../task/task.h"
 #include "stdint.h"
 
-extern void led_set(uint8_t sta);
+void led_on();
+void led_off();
 
-void led_blame(uint8_t start_time, uint8_t times, uint8_t sun_time,
+void led_blame(uint8_t later_start, uint8_t times, uint8_t sun_time,
                uint8_t moon_time);
 
-#endif
+#endif // !__LED_H__

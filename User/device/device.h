@@ -1,7 +1,9 @@
 #ifndef __DEVICE_H__
 #define __DEVICE_H__
 
-#include "motor.h"
-#include "uart.h"
+#include "buzzer.h"
+#include "led.h"
+
+#include "wheel.h"
 
 #endif // !__DEVICE_H__

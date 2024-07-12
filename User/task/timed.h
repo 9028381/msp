@@ -18,6 +18,7 @@ struct Timed {
 
 void task_timed_init(struct Timed *timed);
 void task_timed_poll(struct Timed *timed);
-void task_timed_insert(struct Timed *timed, Task task, unsigned int time); //time是指time时间后执行task任务
+void task_timed_insert(struct Timed *timed, Task task, unsigned int time);
+void task_timed_append(struct Timed *timed, Task task, unsigned int later);
 
 #endif // !__TIMED_H__
