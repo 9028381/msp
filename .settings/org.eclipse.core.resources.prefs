@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//Debug/User/device/subdir_rules.mk=UTF-8
 encoding//Debug/User/device/subdir_vars.mk=UTF-8
+encoding//Debug/User/drive/subdir_rules.mk=UTF-8
+encoding//Debug/User/drive/subdir_vars.mk=UTF-8
 encoding//Debug/User/it/subdir_rules.mk=UTF-8
 encoding//Debug/User/it/subdir_vars.mk=UTF-8
 encoding//Debug/User/move/subdir_rules.mk=UTF-8
@@ -9,6 +11,8 @@ encoding//Debug/User/status/subdir_rules.mk=UTF-8
 encoding//Debug/User/status/subdir_vars.mk=UTF-8
 encoding//Debug/User/subdir_rules.mk=UTF-8
 encoding//Debug/User/subdir_vars.mk=UTF-8
+encoding//Debug/User/task/example/subdir_rules.mk=UTF-8
+encoding//Debug/User/task/example/subdir_vars.mk=UTF-8
 encoding//Debug/User/task/subdir_rules.mk=UTF-8
 encoding//Debug/User/task/subdir_vars.mk=UTF-8
 encoding//Debug/User/test/subdir_rules.mk=UTF-8

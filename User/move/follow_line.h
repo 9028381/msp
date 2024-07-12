@@ -5,7 +5,7 @@
 #include "stdint.h"
 #include "User/device/gw_gray.h"
 #include "User/status/status.h"
-#include "User/status/wheel.h"
+#include "User/device/wheel.h"
 #include "User/task/task.h"
 #include "User/task/timed.h"
 #include "User/device/ms_gray.h"
