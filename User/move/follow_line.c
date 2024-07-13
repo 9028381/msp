@@ -6,8 +6,6 @@
 int16_t diff = 0;
 Pid follow_line_pid;
 
-const int16_t gw_bit_weight[8] = {1000, 800, 300, 100, -100, -300, -800, -1000};
-
 void follow_line_pid_init(Pid *pid) {
   pid_init(pid, 1, 0, 0, 3, 20);
 

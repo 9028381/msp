@@ -1,5 +1,7 @@
 #include "keep_angle.h"
 #include "User/move/turn.h"
+#include "User/status/status.h"
+#include "User/utils/math.h"
 #include "User/utils/pid.h"
 #include "turn.h"
 #include <stdint.h>
@@ -20,11 +22,11 @@ void keep_angle() {
   float diff;
   diff = turn_head_diff(static_keep_angle, turn_abs_origin);
   int turn_speed = pid_compute(&keep_angle_pid, 0, -diff);
-  // printTo(uart3, "%f    %d\r\n", diff, turn_speed);
-  if (turn_speed > TURN_SPEED)
-    turn_speed = TURN_SPEED;
-  if (turn_speed < -TURN_SPEED)
-    turn_speed = -TURN_SPEED;
-  left_tar += -turn_speed;
-  right_tar += turn_speed;
+  if (turn_speed > 0)
+    turn_speed = LIMIT(turn_speed, 300, 700);
+  else
+    turn_speed = LIMIT(turn_speed, -700, -300);
+
+//   left_tar += -turn_speed;
+//   right_tar += turn_speed;
 }
