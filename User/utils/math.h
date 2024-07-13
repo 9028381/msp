@@ -13,4 +13,9 @@
 #define LIMIT(x, min, max) LIMIT_MIN(LIMIT_MAX(x, max), min)
 #define CLAMP(x, range) LIMIT(x, -(range), range)
 
+#define WARPPING_FUN(x)                                                        \
+  _Generic((x), int: warpping_int, short: warpping_short, float: warpping_float)
+
+#define WARPPING(var) WARPPING_FUN(var)(var)
+
 #endif // !__MATH_H__
