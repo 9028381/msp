@@ -17,10 +17,17 @@ struct Mode {
   bool follow;
 };
 
+struct MovePid {
+  Pid turn;
+  Pid follow;
+};
+
 struct Status {
   /// times / STATUS_FREQ == run time(s)
   unsigned int times;
   struct Sensor sensor;
+  struct MovePid pid;
+  short base_speed;
   struct Wheel wheels[WHEEL_NUMS];
   struct Mode mode;
 };
