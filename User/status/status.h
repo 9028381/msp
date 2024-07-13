@@ -22,11 +22,17 @@ struct MovePid {
   Pid follow;
 };
 
+struct Direction {
+  float origin;
+  float target;
+};
+
 struct Status {
   /// times / STATUS_FREQ == run time(s)
   unsigned int times;
   struct Sensor sensor;
   struct MovePid pid;
+  struct Direction dir;
   short base_speed;
   struct Wheel wheels[WHEEL_NUMS];
   struct Mode mode;

@@ -1,7 +1,7 @@
 #include "status.h"
 #include "../device/gw_gray.h"
 #include "../device/gyroscope.h"
-#include "../utils/pid.h"
+#include "../utils/utils.h"
 
 struct Status status;
 
@@ -10,6 +10,8 @@ void status_init(struct Status *status) {
   status->times = 0;
 
   // sensor init
+  status->dir.origin = gyr_get_value(gyr_z_yaw);
+  status->dir.origin = 0.0;
 
   // move pid init
   pid_init(&status->pid.turn, 0, 0, 0, 0, 0);
@@ -44,13 +46,18 @@ void status_next(struct Status *status) {
 
   // update wheel target speed based on sensor
   if (status->mode.turn) {
-    status->wheels[FONT_LEFT].target += pid_compute(&status->pid.turn, 0, 0);
-    status->wheels[FONT_RIGHT].target -= pid_compute(&status->pid.turn, 0, 0);
+    float diff = status->dir.target + status->dir.origin - status->sensor.gyro;
+    diff = WARPPING(diff, -180.0, 180.0);
+    int delta = pid_compute(&status->pid.turn, 0, diff * 10);
+    delta = CLAMP(delta, 100); // LIMIT MAX TURN SPEED
+    status->wheels[FONT_LEFT].target += delta;
+    status->wheels[FONT_RIGHT].target -= delta;
   }
 
   if (status->mode.follow) {
-    status->wheels[FONT_LEFT].target += pid_compute(&status->pid.follow, 0, 0);
-    status->wheels[FONT_RIGHT].target -= pid_compute(&status->pid.follow, 0, 0);
+    int delta = pid_compute(&status->pid.follow, 0, status->sensor.follow);
+    status->wheels[FONT_LEFT].target += delta;
+    status->wheels[FONT_RIGHT].target -= delta;
   }
 
   // update wheel thrust based on wheel target
