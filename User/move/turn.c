@@ -44,8 +44,8 @@ void turn_abs(void *para)
     float diff;
 
     diff = turn_head_diff(turn_abs_angle, turn_abs_origin);
+     TRACE(diff, "%f");
     int turn_speed = pid_compute(&turn_pid, 0, -diff);
-    log_uprintf(uart3, "%f\r\n", -diff);
     if ((diff <= 2) && (diff >= -2))
     {
         turn_abs_cnt--;
@@ -75,6 +75,8 @@ void turn_abs_start_turn(int16_t angle, uint8_t time)
     uint32_t para = angle <<16 | time;     
     turn_abs_angle = (float)angle;
     turn_abs_cnt = 1;
-    turn_abs((void *)para);
+
+    Task T = task_new(turn_abs, (void *)para);
+    task_timed_insert(&task.timed, T, (uint32_t)para & 0xff);
 }
 

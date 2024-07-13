@@ -38,15 +38,13 @@ int main(void) {
 
     led_blame(100, 5, 10, 10);
 
-    //turn_abs_head_init();
+    turn_abs_head_init();
 
-    //turn_abs_start_turn(90, 200);
+    turn_abs_start_turn(90, 0);
 
   //print_start(20);
 
   while (1) {
-    log_uprintf(uart3, "%f\r\n", gyr_get_value(gyr_z_yaw));
-    delay_us(100000);
     task_poll(&task);
   }
 }
