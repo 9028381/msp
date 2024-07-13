@@ -1,3 +1,4 @@
+#include "../../device/ms_gray.h"
 #include "../uart.h"
 #include "User/task/rpc.h"
 #include "User/task/task.h"
@@ -33,8 +34,7 @@ void UART_2_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_2_INST)) {
   case DL_UART_MAIN_IIDX_RX:
 
-    // uint8_t buf = DL_UART_Main_receiveData(UART_2_INST);
-    // update_ms_diff(buf);
+    update_ms_diff(DL_UART_Main_receiveData(UART_2_INST));
 
     break;
   default:
