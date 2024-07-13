@@ -1,5 +1,6 @@
 #include "gw_gray.h"
 #include "User/drive/iic-hardware.h"
+#include "User/task/task.h"
 
 #define GW_GRAY_ADDR 0x4C
 
@@ -9,7 +10,7 @@
 #define Analogue_Output_CMD 0xB0
 #define Get_error_CMD 0xDE
 
-const int16_t gw_bit_weight[8] = {-30000, -1500, -300, -100, 100, 300, 1500, 30000};
+const int16_t gw_bit_weight[8] = {0, -1500, -300, -100, 100, 300, 1500, 0};
 
 short gw_gray_diff(uint8_t line) {
   short diff = 0;
@@ -28,9 +29,110 @@ short gw_gray_diff(uint8_t line) {
   }
 }
 
+uint8_t gw_read_line_buf = 0;
+enum Crossing { Cross, TRoad, LeftTurn, RightTurn, Straight };
+enum Crossing cross = Straight;
+enum Crossing gw_TRoad_as = LeftTurn;
+enum Crossing gw_Cross_as = Straight;
+
+void crossing_R_decision(void *para);
+void crossing_L_decision(void *para);
+void crossing_T_decision(void *para);
+
+void crossing_L_decision(void *para) {
+  uint32_t data = (uint32_t)para;
+  data -= 1;
+
+  if (data == 0) {
+    if (gw_read_line_buf & 0x01)
+      cross = gw_TRoad_as;
+    else
+      cross = LeftTurn;
+    return;
+  }
+
+  if (gw_read_line_buf & 0x01) {
+    Task t = task_new(crossing_T_decision, (void *)data);
+    task_timed_append(&task.timed, t, 1);
+    return;
+  }
+
+  Task t = task_new(crossing_L_decision, (void *)data);
+  task_timed_append(&task.timed, t, 1);
+}
+
+void crossing_R_decision(void *para) {
+  uint32_t data = (uint32_t)para;
+  data -= 1;
+
+  if (data == 0) {
+    if (gw_read_line_buf & 0x80)
+      cross = gw_TRoad_as;
+    else
+      cross = RightTurn;
+    return;
+  }
+
+  if (gw_read_line_buf & 0x80) {
+    Task t = task_new(crossing_T_decision, (void *)data);
+    task_timed_append(&task.timed, t, 1);
+    return;
+  }
+
+  Task t = task_new(crossing_R_decision, (void *)data);
+  task_timed_append(&task.timed, t, 1);
+}
+
+void crossing_T_decision(void *para) {
+  uint32_t data = (uint32_t)para;
+  data -= 1;
+
+  if (data == 0) {
+    if (gw_read_line_buf & 0x7E)
+      cross = gw_Cross_as;
+    else
+      cross = gw_TRoad_as;
+    return;
+  }
+
+  Task t = task_new(crossing_L_decision, (void *)data);
+  task_timed_append(&task.timed, t, 1);
+}
+
 short gw_gray_get_diff() {
+  static enum Crossing maybe = Straight;
+
   uint8_t line = gw_gray_get_line_digital_is_black();
-  return gw_gray_diff(line);
+  gw_read_line_buf = line;
+
+  if (line & 0x81) {
+    // This variable determines how many times the judgment is made.
+    uint32_t para = 4;
+    Task t;
+    switch (line) {
+    case 0x01:
+      t = task_new(crossing_R_decision, (void *)para);
+      task_timed_append(&task.timed, t, 1);
+      break;
+    case 0x80:
+      t = task_new(crossing_L_decision, (void *)para);
+      task_timed_append(&task.timed, t, 1);
+      break;
+    case 0x81:
+      t = task_new(crossing_T_decision, (void *)para);
+      task_timed_append(&task.timed, t, 1);
+      break;
+    }
+  }
+
+  switch (cross) {
+  case RightTurn:
+    return -30000;
+  case LeftTurn:
+    return 30000;
+  default:
+    return gw_gray_diff(line & 0x7E); // 0b0111_1110
+  }
 }
 
 uint8_t gw_gray_get_line_digital_is_black() {
