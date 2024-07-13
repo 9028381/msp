@@ -11,10 +11,9 @@
 
 const int16_t gw_bit_weight[8] = {1000, 800, 300, 100, -100, -300, -800, -1000};
 
-short gw_gray_get_diff() {
+short gw_gray_diff(uint8_t line) {
   short diff = 0;
   unsigned char cnt = 0;
-  uint8_t line = gw_gray_get_line_digital_is_black();
 
   for (int i = 0; i < 8; i++) {
     if (((line >> i) & 0x01)) {
@@ -27,6 +26,11 @@ short gw_gray_get_diff() {
   } else {
     return 0;
   }
+}
+
+short gw_gray_get_diff() {
+  uint8_t line = gw_gray_get_line_digital_is_black();
+  return gw_gray_diff(line);
 }
 
 uint8_t gw_gray_get_line_digital_is_black() {
