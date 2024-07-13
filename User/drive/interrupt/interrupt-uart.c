@@ -1,12 +1,11 @@
 #include "../uart.h"
 #include "User/task/rpc.h"
 #include "User/task/task.h"
-#include "User/uart_re_driver.h"
 #include "interrupt-timer.h"
 #include "stdint.h"
 #include "ti_msp_dl_config.h"
 
-void interrupt_timers_init(void) {
+void interrupt_uarts_init(void) {
   NVIC_ClearPendingIRQ(UART_1_INST_INT_IRQN);
   NVIC_EnableIRQ(UART_1_INST_INT_IRQN);
   NVIC_ClearPendingIRQ(UART_2_INST_INT_IRQN);
@@ -23,8 +22,7 @@ void UART_1_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_1_INST)) {
   case DL_UART_MAIN_IIDX_RX:
 
-    uint8_t buf = DL_UART_Main_receiveData(UART_1_INST);
-    uart_rpc_drive(uart1, buf);
+    uart_rpc_drive(uart1, DL_UART_Main_receiveData(UART_1_INST));
 
     break;
   default:
@@ -36,7 +34,7 @@ void UART_2_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_2_INST)) {
   case DL_UART_MAIN_IIDX_RX:
 
-    uint8_t buf = DL_UART_Main_receiveData(UART_2_INST);
+    // uint8_t buf = DL_UART_Main_receiveData(UART_2_INST);
     // update_ms_diff(buf);
 
     break;
@@ -49,8 +47,7 @@ void UART_3_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_3_INST)) {
   case DL_UART_MAIN_IIDX_RX:
 
-    uint8_t buf = DL_UART_Main_receiveData(UART_3_INST);
-    uart_rpc_drive(uart3, buf);
+    uart_rpc_drive(uart3, DL_UART_Main_receiveData(UART_3_INST));
 
     break;
   default:
@@ -62,8 +59,7 @@ void UART_4_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_4_INST)) {
   case DL_UART_MAIN_IIDX_RX:
 
-    uint8_t buf = DL_UART_Main_receiveData(UART_4_INST);
-    uart_rpc_drive(uart4, buf);
+    uart_rpc_drive(uart4, DL_UART_Main_receiveData(UART_4_INST));
 
     break;
   default:

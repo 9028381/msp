@@ -3,16 +3,13 @@
 #include "User/device/gw_gray.h"
 #include "User/device/gyroscope.h"
 #include "User/device/led.h"
+#include "User/drive/interrupt/interrupt-timer.h"
 #include "User/drive/motor.h"
 #include "User/device/radar.h"
 #include "User/device/servo.h"
-#include "User/it/gpio_it.h"
-#include "User/it/timer_it.h"
-#include "User/it/uart_it.h"
 #include "User/status/status.h"
 #include "User/device/wheel.h"
 #include "User/task/task.h"
-#include "User/uart_re_driver.h"
 #include "User/utils/log.h"
 #include "stdlib.h"
 #include "string.h"
@@ -25,6 +22,7 @@
 #include <stdio.h>
 #include "User/move/follow_line.h"
 #include "User/move/turn.h"
+#include "User/drive/interrupt/interrupt.h"
 
 int main(void) {
   SYSCFG_DL_init();
@@ -32,9 +30,9 @@ int main(void) {
   status_init(&status);
   task_init(&task);
 
-  enable_timer_it();
-  enable_all_uart_it();
-  enable_all_gpio_it();
+  interrupt_timers_init();
+  interrupt_uarts_init();
+  interrupt_gpios_init();
 
     led_blame(100, 5, 10, 10);
 
