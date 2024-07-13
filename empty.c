@@ -5,6 +5,8 @@
 #include "User/status/status.h"
 #include "User/task/task.h"
 #include "ti_msp_dl_config.h"
+#include "User/drive/delay.h"
+#include "User/device/gw_gray.h"
 
 int main(void) {
   SYSCFG_DL_init();
@@ -18,11 +20,9 @@ int main(void) {
 
   led_blame(100, 5, 10, 10);
 
-  turn_abs_head_init();
-
-  turn_abs_start_turn(90, 0);
-
   while (1) {
+    gw_gray_get_line_analog();
+    delay_us(100000);
     task_poll(&task);
   }
 }

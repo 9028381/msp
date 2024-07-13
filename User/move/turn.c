@@ -15,7 +15,7 @@ struct Pid turn_pid;
 // 初始化转向 得到原始角度 设置pid的值
 void turn_abs_head_init(void) {
   turn_abs_origin = gyr_get_value(gyr_z_yaw) + 180;
-  pid_init(&turn_pid, 2, 0, 0, 3, 10);
+  pid_init(&turn_pid, 5, 2, 2, 10, 30);
 }
 
 float turn_head_abs(float num) { return num >= 0 ? num : -num; }
