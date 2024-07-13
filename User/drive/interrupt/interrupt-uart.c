@@ -1,7 +1,6 @@
 #include "../uart.h"
 #include "User/task/rpc.h"
 #include "User/task/task.h"
-#include "interrupt-timer.h"
 #include "stdint.h"
 #include "ti_msp_dl_config.h"
 
