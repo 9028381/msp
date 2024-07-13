@@ -39,19 +39,29 @@ void status_wheels_init(struct Wheel wheels[WHEEL_NUMS]) {
   status_wheel_init(wheels, BACK_RIGHT, 1, 1, 1, 5, 50);
 }
 
-void status_wheel_next(struct Wheel wheels[WHEEL_NUMS],
-                       enum WheelPosition which) {
+void status_wheel_next_speed(struct Wheel wheels[WHEEL_NUMS],
+                             enum WheelPosition which) {
   struct Wheel *wheel = &wheels[which];
   int speed = motor_get_speed(which);
   wheel->current = speed;
   wheel->history += speed;
+}
+
+void status_wheels_next_speed(struct Wheel wheels[WHEEL_NUMS]) {
+  for (unsigned int which = 0; which < WHEEL_NUMS; which++)
+    status_wheel_next_speed(wheels, which);
+}
+
+void status_wheel_next_thrust(struct Wheel wheels[WHEEL_NUMS],
+                              enum WheelPosition which) {
+  struct Wheel *wheel = &wheels[which];
   wheel->thrust += pid_compute(&wheel->pid, wheel->target, wheel->current);
   wheel->thrust = LIMIT_MAX(wheel->thrust, WHEEL_THRUST_MAX);
 }
 
-void status_wheels_next(struct Wheel wheels[WHEEL_NUMS]) {
+void status_wheels_next_thrust(struct Wheel wheels[WHEEL_NUMS]) {
   for (unsigned int which = 0; which < WHEEL_NUMS; which++)
-    status_wheel_next(wheels, which);
+    status_wheel_next_thrust(wheels, which);
 }
 
 void status_wheels_drive(struct Wheel wheels[WHEEL_NUMS]) {

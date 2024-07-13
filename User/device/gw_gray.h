@@ -8,6 +8,8 @@
 
 #include <stdint.h>
 
+short gw_gray_get_diff();
+
 // Get whether there is a black line under the sensor, from left to right
 uint8_t gw_gray_get_line_digital_is_black();
 

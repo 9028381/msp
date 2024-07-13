@@ -9,6 +9,26 @@
 #define Analogue_Output_CMD 0xB0
 #define Get_error_CMD 0xDE
 
+const int16_t gw_bit_weight[8] = {1000, 800, 300, 100, -100, -300, -800, -1000};
+
+short gw_gray_get_diff() {
+  short diff = 0;
+  unsigned char cnt = 0;
+  uint8_t line = gw_gray_get_line_digital_is_black();
+
+  for (int i = 0; i < 8; i++) {
+    if (((line >> i) & 0x01)) {
+      cnt++;
+      diff += gw_bit_weight[i];
+    }
+  }
+  if (cnt != 0) {
+    return diff / cnt;
+  } else {
+    return 0;
+  }
+}
+
 uint8_t gw_gray_get_line_digital_is_black() {
   uint8_t cmd = Digital_Output_CMD;
   uint8_t buf = 0;

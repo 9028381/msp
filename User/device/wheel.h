@@ -22,7 +22,9 @@ struct Wheel {
 
 void status_wheels_init(struct Wheel wheels[WHEEL_NUMS]);
 
-void status_wheels_next(struct Wheel wheels[WHEEL_NUMS]);
+void status_wheels_next_speed(struct Wheel wheels[WHEEL_NUMS]);
+
+void status_wheels_next_thrust(struct Wheel wheels[WHEEL_NUMS]);
 
 void status_wheels_drive(struct Wheel wheels[WHEEL_NUMS]);
 

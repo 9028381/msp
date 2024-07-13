@@ -1,7 +1,6 @@
 #include "follow_line.h"
 #include "User/status/status.h"
 #include "User/task/timed.h"
-#include <sys/_stdint.h>
 
 
 int16_t diff = 0;
