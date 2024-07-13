@@ -7,6 +7,7 @@
 #include "User/task/timed.h"
 #include "User/device/gyroscope.h"
 #include "User/status/status.h"
+#include "User/utils/pid.h"
 
 #define TURN_SPEED 500
 

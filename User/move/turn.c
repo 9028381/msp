@@ -1,5 +1,5 @@
 #include "turn.h"
-#include <sys/_stdint.h>
+#include <stdint.h>
 
 int8_t turn_abs_cnt = 0;
 float turn_abs_angle = 0;
@@ -9,7 +9,6 @@ struct PID *turn_abs_pid;
 float turn_abs_origin;
 float turn_abs_move_line_angle;
 static struct pid_data turn_abs_head_data;
-struct PID *turn_abs_XZ_pid = NULL;
 
 /**
  * 初始化转向PID结构体
