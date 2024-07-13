@@ -1,6 +1,7 @@
 #include "gw_gray.h"
 #include "User/drive/iic-hardware.h"
 #include "User/task/task.h"
+#include "stdbool.h"
 
 #define GW_GRAY_ADDR 0x4C
 
@@ -30,6 +31,7 @@ short gw_gray_diff(uint8_t line) {
 }
 
 uint8_t gw_read_line_buf = 0;
+bool gw_cross_block = false;
 enum Crossing { Cross, TRoad, LeftTurn, RightTurn, Straight };
 enum Crossing cross = Straight;
 enum Crossing gw_TRoad_as = LeftTurn;
@@ -105,8 +107,9 @@ short gw_gray_get_diff() {
   uint8_t line = gw_gray_get_line_digital_is_black();
   gw_read_line_buf = line;
 
-  if (line & 0x81) {
+  if ((line & 0x81) && !gw_cross_block) {
     // This variable determines how many times the judgment is made.
+    gw_cross_block = true;
     uint32_t para = 4;
     Task t;
     switch (line) {
