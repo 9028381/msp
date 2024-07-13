@@ -11,11 +11,11 @@ void status_init(struct Status *status) {
 
   // sensor init
   status->dir.origin = gyr_get_value(gyr_z_yaw);
-  status->dir.origin = 0.0;
+  status->dir.target = 0.0;
 
   // move pid init
-  pid_init(&status->pid.turn, 0, 0, 0, 0, 0);
-  pid_init(&status->pid.follow, 0, 0, 0, 0, 0);
+  pid_init(&status->pid.turn, 2, 0, 1, 5, 10);
+  pid_init(&status->pid.follow, 1, 0, 0, 3, 10);
 
   // wheels init
   status->base_speed = 0;
@@ -49,13 +49,14 @@ void status_next(struct Status *status) {
     float diff = status->dir.target + status->dir.origin - status->sensor.gyro;
     diff = WARPPING(diff, -180.0, 180.0);
     int delta = pid_compute(&status->pid.turn, 0, diff * 10);
-    delta = CLAMP(delta, 100); // LIMIT MAX TURN SPEED
+    delta = CLAMP(delta, MAX_TURN_SPEED); // LIMIT MAX TURN SPEED
     status->wheels[FONT_LEFT].target += delta;
     status->wheels[FONT_RIGHT].target -= delta;
   }
 
   if (status->mode.follow) {
     int delta = pid_compute(&status->pid.follow, 0, status->sensor.follow);
+    delta = CLAMP(delta, MAX_FOLLOW_TURN_SPEED);
     status->wheels[FONT_LEFT].target += delta;
     status->wheels[FONT_RIGHT].target -= delta;
   }

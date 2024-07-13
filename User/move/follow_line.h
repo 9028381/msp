@@ -10,6 +10,8 @@
 #include "User/task/timed.h"
 #include "User/device/ms_gray.h"
 
+extern uint8_t gw_bit_weight[8];
+
 
 enum GET_DIFF_WAYS 
 {

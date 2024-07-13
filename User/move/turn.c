@@ -1,7 +1,9 @@
 #include "turn.h"
 #include "User/utils/log.h"
+#include "User/utils/math.h"
 #include "User/utils/pid.h"
 #include <stdint.h>
+
 
 int8_t turn_abs_cnt = 0;
 float turn_abs_angle = 0;
@@ -40,7 +42,6 @@ void turn_abs(void *para) {
   float diff;
 
   diff = turn_head_diff(turn_abs_angle, turn_abs_origin);
-  TRACE(diff, "%f");
   int turn_speed = pid_compute(&turn_pid, 0, -diff);
   if ((diff <= 2) && (diff >= -2)) {
     turn_abs_cnt--;
@@ -52,10 +53,11 @@ void turn_abs(void *para) {
       return;
     }
   }
-  if (turn_speed > 100)
-    turn_speed = TURN_SPEED;
-  if (turn_speed < -100)
-    turn_speed = -TURN_SPEED;
+  if (turn_speed > 0)
+    turn_speed = LIMIT(turn_speed, 300, 700);
+  else
+    turn_speed = LIMIT(turn_speed, -700, -300);
+
   status.wheels[FONT_LEFT].target = -turn_speed;
   status.wheels[FONT_RIGHT].target = turn_speed;
 

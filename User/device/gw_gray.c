@@ -9,7 +9,7 @@
 #define Analogue_Output_CMD 0xB0
 #define Get_error_CMD 0xDE
 
-const int16_t gw_bit_weight[8] = {1000, 800, 300, 100, -100, -300, -800, -1000};
+const int16_t gw_bit_weight[8] = {-30000, -1500, -300, -100, 100, 300, 1500, 30000};
 
 short gw_gray_diff(uint8_t line) {
   short diff = 0;

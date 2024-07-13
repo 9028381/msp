@@ -20,9 +20,10 @@ int main(void) {
 
   led_blame(100, 5, 10, 10);
 
+    status.base_speed = 500;
+  status.mode.follow = true;
+
   while (1) {
-    gw_gray_get_line_analog();
-    delay_us(100000);
     task_poll(&task);
   }
 }
