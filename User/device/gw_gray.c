@@ -59,9 +59,9 @@ enum Road {           // L F R
 enum Road cross = Straight;
 
 enum Road road_new_from_bit(bool L, bool F, bool R) {
-    uint8_t left = L ? 0b100 : 0;
-    uint8_t font = F ? 0b010 : 0;
-    uint8_t right = R ? 0b001 : 0;
+  uint8_t left = L ? 0b100 : 0;
+  uint8_t font = F ? 0b010 : 0;
+  uint8_t right = R ? 0b001 : 0;
 
   return left | font | right;
 }
@@ -92,9 +92,21 @@ short gw_gray_get_diff() {
         return 0;
       case CrossRoad:
         INFO("Cross road");
+        if (line & 0b00111100) {
+          cross = Straight;
+          maybe = 0;
+          return gw_gray_diff(line & 0x7E);
+        }
         return 0;
       case TBRoad:
         INFO("T B road");
+        if (line & 0b00111100) {
+          cross = Straight;
+          maybe = 0;
+          status.base_speed = 0;
+          status.mode.follow = false;
+          return gw_gray_diff(line & 0x7E);
+        }
         return 0;
       case TLRoad:
         INFO("T L road");
@@ -104,14 +116,19 @@ short gw_gray_get_diff() {
         return 0;
       case LeftRoad:
         INFO("Left road");
-        if (line & 0b00111100){
-            cross = Straight;
-            maybe = 0;
-            return gw_gray_diff(line & 0x7E);
+        if (line & 0b00111100) {
+          cross = Straight;
+          maybe = 0;
+          return gw_gray_diff(line & 0x7E);
         }
         return 30000;
       case RightRoad:
         INFO("Right road");
+        if (line & 0b00111100) {
+          cross = Straight;
+          maybe = 0;
+          return gw_gray_diff(line & 0x7E);
+        }
         return -30000;
       case Straight:
         INFO("Straight road");
