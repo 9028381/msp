@@ -1,9 +1,9 @@
 #include "gw_gray.h"
+#include "User/device/led.h"
 #include "User/drive/iic-hardware.h"
 #include "User/task/task.h"
 #include "User/utils/log.h"
 #include "stdbool.h"
-#include "User/device/led.h"
 #include <stdint.h>
 
 #define GW_GRAY_ADDR 0x4C
@@ -33,125 +33,91 @@ short gw_gray_diff(uint8_t line) {
   }
 }
 
-uint8_t gw_read_line_buf = 0;
-bool gw_cross_block = false;
-enum Crossing { Cross, TRoad, LeftTurn, RightTurn, Straight };
-enum Crossing cross = Straight;
-enum Crossing gw_TRoad_as = RightTurn;
-enum Crossing gw_Cross_as = Straight;
+void gw_gray_show(uint8_t line) {
+  char str[9];
+  str[8] = '\0';
 
-void crossing_R_decision(void *para);
-void crossing_L_decision(void *para);
-void crossing_T_decision(void *para);
-
-void crossing_L_decision(void *para) {
-  uint32_t data = (uint32_t)para;
-  data -= 1;
-
-  if (data == 0) {
-    if (gw_read_line_buf & 0x01)
-      cross = gw_TRoad_as;
-    else
-      cross = LeftTurn;
-    return;
+  for (int i = 0; i < 8; i++) {
+    str[i] = line & 0x80 ? '#' : '.';
+    line <<= 1;
   }
 
-  if (gw_read_line_buf & 0x01) {
-    Task t = task_new(crossing_T_decision, (void *)data);
-    task_timed_append(&task.timed, t, 1);
-    return;
-  }
-
-  Task t = task_new(crossing_L_decision, (void *)data);
-  task_timed_append(&task.timed, t, 1);
+  PRINTLN("%s", str);
 }
 
-void crossing_R_decision(void *para) {
-  uint32_t data = (uint32_t)para;
-  data -= 1;
+#define INTEGRAL_TIMES 6
+enum Road {           // L F R
+  CrossRoad = 0b111,  // 1 1 1
+  TBRoad = 0b101,     // 1 0 1
+  TLRoad = 0b110,     // 1 1 0
+  TRRoad = 0b011,     // 0 1 1
+  LeftRoad = 0b100,   // 1 0 0
+  RightRoad = 0b001,  // 0 0 1
+  Straight = 0b010,   // 0 1 0
+  UnknowRoad = 0b000, // 0 0 0
+};
+enum Road cross = CrossRoad;
 
-  if (data == 0) {
-    if (gw_read_line_buf & 0x80)
-      cross = gw_TRoad_as;
-    else
-      cross = RightTurn;
-    return;
-  }
-
-  if (gw_read_line_buf & 0x80) {
-    Task t = task_new(crossing_T_decision, (void *)data);
-    task_timed_append(&task.timed, t, 1);
-    return;
-  }
-
-  Task t = task_new(crossing_R_decision, (void *)data);
-  task_timed_append(&task.timed, t, 1);
+enum Road road_new_from_bit(bool L, bool F, bool R) {
+  return L << 2 | F << 1 | R;
 }
 
-void crossing_T_decision(void *para) {
-  uint32_t data = (uint32_t)para;
-  data -= 1;
-
-  if (data == 0) {
-    led_blame(0, 5, 5, 5);
-    if (gw_read_line_buf & 0x7E)
-      cross = gw_Cross_as;
-    else
-      cross = gw_TRoad_as;
-    return;
-  }
-
-  Task t = task_new(crossing_L_decision, (void *)data);
-  task_timed_append(&task.timed, t, 1);
+void gw_gray_decision(uint8_t integral, uint8_t line) {
+  bool left = (integral >> 6) == 0x03;    // 0b0000_0011
+  bool right = (integral & 0x03) == 0x03; // 0b0000_0011
+  bool font = line & 0x3C;                // 0b0011_1100
+  enum Road road = road_new_from_bit(left, font, right);
+  cross = road;
 }
 
 short gw_gray_get_diff() {
-  static enum Crossing maybe = Straight;
+  static uint8_t maybe = 0;
+  static uint8_t integral = 0;
 
   uint8_t line = gw_gray_get_line_digital_is_black();
-  
-  char out_8[9] = {0};
-  int i;
-  for(i=7;i>=0;i--)
-  {
-     if((line >> i) & 0x01)
-       out_8[7-i] = '#';
-     else
-       out_8[7-i] = '.';
-  }
- PRINTLN("%s", out_8);
 
-  gw_read_line_buf = line;
+  gw_gray_show(line);
 
-  if ((line & 0x81) && !gw_cross_block) {
-    // This variable determines how many times the judgment is made.
-    gw_cross_block = true;
-    uint32_t para = 6;
-    Task t;
-    switch (line & 0x81) {
-    case 0x01:
-      t = task_new(crossing_R_decision, (void *)para);
-      task_timed_append(&task.timed, t, 1);
-      break;
-    case 0x80:
-      t = task_new(crossing_L_decision, (void *)para);
-      task_timed_append(&task.timed, t, 1);
-      break;
-    case 0x81:
-      t = task_new(crossing_T_decision, (void *)para);
-      task_timed_append(&task.timed, t, 1);
-      break;
+  if (maybe) {
+    if (maybe == 1) {
+      gw_gray_decision(integral, line);
+      switch (cross) {
+      case UnknowRoad:
+        INFO("Unknow road");
+        return 0;
+      case CrossRoad:
+        INFO("Cross road");
+        return 0;
+      case TBRoad:
+        INFO("T B road");
+        return 0;
+      case TLRoad:
+        INFO("T L road");
+        return 0;
+      case TRRoad:
+        INFO("T R road");
+        return 0;
+      case LeftRoad:
+        INFO("Left road");
+        return 30000;
+      case RightRoad:
+        INFO("Right road");
+        return -30000;
+      case Straight:
+        INFO("Straight road");
+        maybe = 0;
+        return gw_gray_diff(line & 0x7E);
+      }
     }
+
+    integral = integral | line;
+    maybe--;
+  } else if (line & 0x81) {
+    maybe = INTEGRAL_TIMES;
+    integral = line;
   }
 
-  switch (cross) {
-  case RightTurn:
-    return -30000;
-  case LeftTurn:
-    return 30000;
-  default:
-    return gw_gray_diff(line & 0x7E); // 0b0111_1110
-  }
+  return gw_gray_diff(line & 0x7E); // 0b0111_1110
 }
 
 uint8_t gw_gray_get_line_digital_is_black() {
