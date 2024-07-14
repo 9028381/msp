@@ -56,9 +56,11 @@ void status_next(struct Status *status) {
 
   if (status->mode.follow) {
     int delta = pid_compute(&status->pid.follow, 0, status->sensor.follow);
-    delta = CLAMP(delta, MAX_FOLLOW_TURN_SPEED);
+    // delta = CLAMP(delta, MAX_FOLLOW_TURN_SPEED);
     status->wheels[FONT_LEFT].target += delta;
     status->wheels[FONT_RIGHT].target -= delta;
+    status->wheels[FONT_LEFT].target = CLAMP(status->wheels[FONT_LEFT].target, MAX_FOLLOW_TURN_SPEED);
+    status->wheels[FONT_RIGHT].target = CLAMP(status->wheels[FONT_RIGHT].target ,  MAX_FOLLOW_TURN_SPEED);
   }
 
   // update wheel thrust based on wheel target
