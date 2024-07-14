@@ -56,14 +56,18 @@ enum Road {           // L F R
   Straight = 0b010,   // 0 1 0
   UnknowRoad = 0b000, // 0 0 0
 };
-enum Road cross = CrossRoad;
+enum Road cross = Straight;
 
 enum Road road_new_from_bit(bool L, bool F, bool R) {
-  return L << 2 | F << 1 | R;
+    uint8_t left = L ? 0b100 : 0;
+    uint8_t font = F ? 0b010 : 0;
+    uint8_t right = R ? 0b001 : 0;
+
+  return left | font | right;
 }
 
 void gw_gray_decision(uint8_t integral, uint8_t line) {
-  bool left = (integral >> 6) == 0x03;    // 0b0000_0011
+  bool left = (integral >> 6) == 0x03;    // 0b1100_0000
   bool right = (integral & 0x03) == 0x03; // 0b0000_0011
   bool font = line & 0x3C;                // 0b0011_1100
   enum Road road = road_new_from_bit(left, font, right);
@@ -80,7 +84,8 @@ short gw_gray_get_diff() {
 
   if (maybe) {
     if (maybe == 1) {
-      gw_gray_decision(integral, line);
+      if (cross == Straight)
+        gw_gray_decision(integral, line);
       switch (cross) {
       case UnknowRoad:
         INFO("Unknow road");
@@ -114,7 +119,7 @@ short gw_gray_get_diff() {
     maybe--;
   } else if (line & 0x81) {
     maybe = INTEGRAL_TIMES;
-    integral = line;
+    integral = 0;
   }
 
   return gw_gray_diff(line & 0x7E); // 0b0111_1110

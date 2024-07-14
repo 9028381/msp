@@ -338,6 +338,12 @@ extern "C" {
 #define IIC_IIC_SDA_PIN                                         (DL_GPIO_PIN_21)
 #define IIC_IIC_SDA_IOMUX                                        (IOMUX_PINCM49)
 
+
+/* Defines for WWDT */
+#define WWDT0_INST                                                       (WWDT0)
+#define WWDT0_INT_IRQN                                          (WWDT0_INT_IRQn)
+
+
 /* clang-format on */
 
 void SYSCFG_DL_init(void);
@@ -354,6 +360,7 @@ void SYSCFG_DL_M_PWM_init(void);
 void SYSCFG_DL_SERVO_init(void);
 void SYSCFG_DL_DMA_init(void);
 
+void SYSCFG_DL_WWDT0_init(void);
 
 bool SYSCFG_DL_saveConfiguration(void);
 bool SYSCFG_DL_restoreConfiguration(void);
