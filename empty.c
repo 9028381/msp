@@ -7,6 +7,7 @@
 #include "ti_msp_dl_config.h"
 #include "User/drive/delay.h"
 #include "User/device/gw_gray.h"
+#include "User/utils/log.h"
 
 int main(void) {
   SYSCFG_DL_init();
@@ -18,9 +19,9 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
-  led_blame(100, 5, 10, 10);
-
-    status.base_speed = 500;
+  led_blame(0, 5, 10, 10);
+ 
+  status.base_speed = 500;
   status.mode.follow = true;
 
   while (1) {
