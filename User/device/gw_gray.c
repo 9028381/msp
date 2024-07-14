@@ -104,6 +104,11 @@ short gw_gray_get_diff() {
         return 0;
       case LeftRoad:
         INFO("Left road");
+        if (line & 0b00111100){
+            cross = Straight;
+            maybe = 0;
+            return gw_gray_diff(line & 0x7E);
+        }
         return 30000;
       case RightRoad:
         INFO("Right road");
