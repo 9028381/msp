@@ -89,30 +89,28 @@ short gw_gray_get_diff() {
       switch (cross) {
       case UnknowRoad:
         INFO("Unknow road");
+        cross = Straight;
+        maybe = 0;
         return 0;
       case CrossRoad:
         INFO("Cross road");
-        if (line & 0b00111100) {
           cross = Straight;
           maybe = 0;
-          return gw_gray_diff(line & 0x7E);
-        }
         return 0;
       case TBRoad:
         INFO("T B road");
-        if (line & 0b00111100) {
-          cross = Straight;
-          maybe = 0;
+          maybe = 1;
           status.base_speed = 0;
-          status.mode.follow = false;
-          return gw_gray_diff(line & 0x7E);
-        }
         return 0;
       case TLRoad:
         INFO("T L road");
+          cross = Straight;
+          maybe = 0;
         return 0;
       case TRRoad:
         INFO("T R road");
+          cross = Straight;
+          maybe = 0;
         return 0;
       case LeftRoad:
         INFO("Left road");
