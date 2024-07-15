@@ -19,7 +19,7 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
-  led_blame(1, 5, 10, 10);
+//   led_blame(1, 5, 10, 10);
  
 //   status.base_speed = 500;
 //   status.mode.follow = true;
