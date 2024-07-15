@@ -34,7 +34,8 @@ void UART_2_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_2_INST)) {
   case DL_UART_MAIN_IIDX_RX:
 
-    update_ms_diff(DL_UART_Main_receiveData(UART_2_INST));
+    update_cam_diff(DL_UART_Main_receiveData(UART_2_INST));
+    
 
     break;
   default:

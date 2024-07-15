@@ -1,4 +1,5 @@
 #include "User/status/status.h"
+#include "User/utils/log.h"
 #include "ti/driverlib/dl_timerg.h"
 #include "ti_msp_dl_config.h"
 
@@ -7,6 +8,8 @@ void TIMER_INT_INST_IRQHandler() {
   case DL_TIMER_IIDX_ZERO:
     DL_WWDT_restart(WWDT0_INST);
     status_next(&status);
+
+    PRINTLN("%d", get_cam_diff());
 
     break;
   default:

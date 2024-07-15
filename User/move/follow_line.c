@@ -1,4 +1,5 @@
 #include "follow_line.h"
+#include "User/device/cam.h"
 #include "User/status/status.h"
 #include "User/task/timed.h"
 
@@ -39,6 +40,8 @@ int16_t update_diff(enum GET_DIFF_WAYS way) {
   case MS_3:
     buf = get_ms_diff() * 3;
     break;
+  case CAM:
+    buf = get_cam_diff();
   default:
     break;
   }
@@ -47,7 +50,7 @@ int16_t update_diff(enum GET_DIFF_WAYS way) {
 
 void follow_line(void *para) {
   int16_t speed_diff = 0;
-  diff = update_diff(MS_3);
+  diff = update_diff(CAM); //修改巡线方式
   speed_diff = diff * 0.3;
 
   status.wheels[FONT_RIGHT].target = 500 - diff;
@@ -69,44 +72,3 @@ void start_follow_line(uint8_t time) //time*50ms巡线一次
     return;
 }
 
-void foward(void *para) {
-  status.wheels[FONT_RIGHT].target = 500;
-  status.wheels[FONT_LEFT].target = 500;
-
-  Task T = task_new(foward, para);
-  task_timed_insert(&task.timed, T, (uint32_t)para & 0xff);
-
-  return;
-}
-
-
-// void car_status_set(enum Mode mode, uint8_t time)
-// {
-//     uint32_t para = time;
-//     if(mode == FOLLOW_LINE)
-//     {
-//         follow_line((void *)para);
-//         return;        
-//     }
-//     else if(mode == FOWARD)
-//     {
-//         foward((void *)para);
-//         return;
-//     }
-//     else if(mode == BACKWARD)
-//     {
-
-//     }
-//     else if(mode == STOP)
-//     {
-
-//     }
-//     else if(mode == TURN_LEFT)
-//     {
-        
-//     }
-//     else if(mode == TURN_RIGHT)
-//     {
-
-//     }
-// }

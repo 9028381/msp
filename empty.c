@@ -8,6 +8,8 @@
 #include "User/drive/delay.h"
 #include "User/device/gw_gray.h"
 #include "User/utils/log.h"
+#include "User/move/follow_line.h"
+
 
 int main(void) {
   SYSCFG_DL_init();
@@ -19,10 +21,11 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
-//   led_blame(1, 5, 10, 10);
+  led_blame(1, 5, 10, 10);
  
-  status.base_speed = 500;
-  status.mode.follow = true;
+//   status.base_speed = 500;
+//   status.mode.follow = true;
+  start_follow_line(1);
 
   while (1) {
     task_poll(&task);
