@@ -118,3 +118,13 @@ void flash_read(unsigned sector, void *dest, unsigned len) {
   uint32_t base = BASE_ADDR + PAGE_SIZE * sector;
   memcpy(dest, (void *)base, len);
 }
+
+const void *flash_use(unsigned sector) {
+  if (sector >= 16) {
+    THROW_WARN("FLASH_ERROR: read sector %u out of range [0, 15].", sector);
+    return NULL;
+  }
+
+  uint32_t base = BASE_ADDR + PAGE_SIZE * sector;
+  return (void *)base;
+}
