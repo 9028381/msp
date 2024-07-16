@@ -56,7 +56,7 @@ void status_wheel_next_thrust(struct Wheel wheels[WHEEL_NUMS],
                               enum WheelPosition which) {
   struct Wheel *wheel = &wheels[which];
   wheel->thrust += pid_compute(&wheel->pid, wheel->target, wheel->current);
-  wheel->thrust = LIMIT_MAX(wheel->thrust, WHEEL_THRUST_MAX);
+  wheel->thrust = CLAMP(wheel->thrust, WHEEL_THRUST_MAX);
 }
 
 void status_wheels_next_thrust(struct Wheel wheels[WHEEL_NUMS]) {

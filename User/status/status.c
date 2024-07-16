@@ -1,4 +1,5 @@
 #include "status.h"
+#include "../device/flash.h"
 #include "../device/gw_gray.h"
 #include "../device/gyroscope.h"
 #include "../utils/utils.h"
@@ -11,7 +12,7 @@ void status_init(struct Status *status) {
   status->times = 0;
 
   // sensor init
-  //status->dir.origin = gyr_get_value(gyr_z_yaw);
+  // status->dir.origin = gyr_get_value(gyr_z_yaw);
   status->dir.target = 0.0;
 
   // move pid init
@@ -78,6 +79,12 @@ void status_next(struct Status *status) {
   }
 
   if (status->mode.repeat) {
+    const void *rec = flash_use(0);
+    const unsigned *tar = (rec + status->times * 4 * 2);
+    status->wheels[FONT_LEFT].target =
+        tar[0] - status->wheels[FONT_LEFT].history;
+    status->wheels[FONT_RIGHT].target =
+        tar[1] - status->wheels[FONT_RIGHT].history;
   }
 
   // update wheel thrust based on wheel target
