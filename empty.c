@@ -9,8 +9,8 @@
 #include "string.h"
 #include "ti_msp_dl_config.h"
 
-uint32_t buf1[16] = {2211, 345234,  4563,       245,       2,
-                     645,        13, 0xffffffff, 0x1fffff01};
+uint32_t buf1[16] = {2211, 345234, 4563,       245,       2,
+                     645,  13,     0xffffffff, 0x1fffff01};
 uint32_t buf2[16] = {0};
 
 int main(void) {
@@ -23,9 +23,9 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
-//   led_blame(1, 10, 10, 10);
+    led_blame(1, 10, 10, 10);
 
-  //status.mode.record = true; 
+  status.mode.record = true;
 
   //   status.base_speed = 500;
   //   status.mode.follow = true;

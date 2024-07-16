@@ -25,7 +25,7 @@ void task_queue_push_flash_write(unsigned char page, const void *src,
                                  bool back_half);
 
 void status_record(int var) {
-  struct Record record = {.data.which = false, .data.index = 0, .page = 0};
+  static struct Record record = {.data.which = false, .data.index = 0, .page = 0};
 
   record.data.ab[record.data.which][record.data.index] = var;
   record.data.index += 1;
