@@ -25,7 +25,8 @@ void task_queue_push_flash_write(unsigned char page, const void *src,
                                  bool back_half);
 
 void status_record(int var) {
-  static struct Record record = {.data.which = false, .data.index = 0, .page = 0};
+  static struct Record record = {
+      .data.which = false, .data.index = 0, .page = 0};
 
   record.data.ab[record.data.which][record.data.index] = var;
   record.data.index += 1;
@@ -44,15 +45,15 @@ void status_record(int var) {
   }
 }
 
+uint32_t record_task_buf_page_bitor_back_half;
+
 void task_flash_erase(void *para) { flash_erase((unsigned)para); }
 
 void task_flash_write(void *para) {
-  unsigned int data = (unsigned int)para;
-  unsigned short page = (data >> 24) & 0x7f;
-  void *src = (void *)(data & 0x00ffffff);
-  bool back_half = data & 0x80000000;
+  unsigned short page = record_task_buf_page_bitor_back_half & 0xffff;
+  bool back_half = record_task_buf_page_bitor_back_half & 0x80000000;
 
-  flash_write_to(page, back_half ? RECORD_BUF_LEN : 0, src,
+  flash_write_to(page, back_half ? RECORD_BUF_LEN : 0, para,
                  RECORD_BUF_LEN * sizeof(int32_t));
 }
 
@@ -63,16 +64,9 @@ void task_queue_push_flash_erase(unsigned page) {
 
 void task_queue_push_flash_write(unsigned char page, const void *src,
                                  bool back_half) {
-  uint32_t para = (uint32_t)src;
-  if (para & 0xff000000) {
-    THROW_WARN("RECORD_ERROR: para & 0xff000000 is not 0. para = %#0x."
-               " Can't zip with page",
-               para);
-    return;
-  }
-  para = page << 24 | para;
-  para = page | (back_half ? 0x80000000 : 0);
+  record_task_buf_page_bitor_back_half = page;
+  record_task_buf_page_bitor_back_half |= back_half ? 0x80000000 : 0;
 
-  Task t = task_new(task_flash_write, (void *)para);
+  Task t = task_new(task_flash_write, (void *)src);
   task_queue_push(&task.queue, t);
 }
