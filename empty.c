@@ -27,13 +27,11 @@ int main(void) {
   led_blame(1, 10, 10, 10);
 
   erase_flash(1);
-
   ram2flash(1, buf1, 16);
 
-memcpy(buf2, (void *)0x00008000, 16*4);
-//   flash2ram(1, buf2, 16);
+  flash2ram(1, buf2, 16);
 
-  PRINTLN("%x", *(uint32_t *)(0x00008000));
+//   PRINTLN("%x", *(uint32_t *)(0x00008000));
 
   //   status.base_speed = 500;
   //   status.mode.follow = true;

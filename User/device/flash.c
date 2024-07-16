@@ -40,17 +40,18 @@ uint8_t ram2flash(uint8_t sector, uint32_t* buf, uint8_t len)
     return 1;
 }
 
-// uint8_t flash2ram(uint8_t sector, uint32_t* buf, uint8_t len)
-// {
-//     sector--;
-//     if(sector > 15)
-//     {
-//         return 0;
-//     }
-//     for(int i = 0; i < len; i++)
-//     {
-        
-//     }
-//     return 1;
-// }
+
+uint8_t flash2ram(uint8_t sector, uint32_t* buf, uint8_t len)
+{
+    sector--;
+    if(sector > 15)
+    {
+        return 0;
+    }
+
+    memcpy(buf, (void *)(BASE_ADDR + 0x400*sector), len*4);
+
+
+    return 1;
+}
 
