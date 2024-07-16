@@ -2,6 +2,7 @@
 #include "../device/gw_gray.h"
 #include "../device/gyroscope.h"
 #include "../utils/utils.h"
+#include "record.h"
 
 struct Status status;
 
@@ -21,9 +22,14 @@ void status_init(struct Status *status) {
   status->base_speed = 0;
   status_wheels_init(status->wheels);
 
+  // record init
+  status_record_init();
+
   // mode init
   status->mode.turn = false;
   status->mode.follow = false;
+  status->mode.record = false;
+  status->mode.repeat = false;
 }
 
 void status_next(struct Status *status) {
@@ -32,6 +38,12 @@ void status_next(struct Status *status) {
 
   // encoder next
   status_wheels_next_speed(status->wheels);
+
+  // record
+  if (status->mode.record) {
+    status_record(status->wheels[FONT_LEFT].history);
+    status_record(status->wheels[FONT_RIGHT].history);
+  }
 
   // motor base speed
   for (int i = 0; i < WHEEL_NUMS; i++)
@@ -59,8 +71,13 @@ void status_next(struct Status *status) {
     // delta = CLAMP(delta, MAX_FOLLOW_TURN_SPEED);
     status->wheels[FONT_LEFT].target += delta;
     status->wheels[FONT_RIGHT].target -= delta;
-    status->wheels[FONT_LEFT].target = CLAMP(status->wheels[FONT_LEFT].target, MAX_FOLLOW_TURN_SPEED);
-    status->wheels[FONT_RIGHT].target = CLAMP(status->wheels[FONT_RIGHT].target ,  MAX_FOLLOW_TURN_SPEED);
+    status->wheels[FONT_LEFT].target =
+        CLAMP(status->wheels[FONT_LEFT].target, MAX_FOLLOW_TURN_SPEED);
+    status->wheels[FONT_RIGHT].target =
+        CLAMP(status->wheels[FONT_RIGHT].target, MAX_FOLLOW_TURN_SPEED);
+  }
+
+  if (status->mode.repeat) {
   }
 
   // update wheel thrust based on wheel target

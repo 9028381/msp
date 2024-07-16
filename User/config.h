@@ -11,6 +11,11 @@
 /******* TIMER *******/
 #define TIMER1_FREQ 20
 
+/******** FLASH *******/
+#define BASE_ADDR 0x00008000
+#define PAGE_SIZE 0x400
+#define PAGE_NUM 16
+
 /*
  * status
  */

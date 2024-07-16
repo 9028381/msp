@@ -15,6 +15,8 @@ struct Sensor {
 struct Mode {
   bool turn;
   bool follow;
+  bool record;
+  bool repeat;
 };
 
 struct MovePid {

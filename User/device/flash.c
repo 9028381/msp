@@ -1,4 +1,5 @@
 #include "flash.h"
+#include "User/config.h"
 #include "User/utils/log.h"
 #include "ti/driverlib/dl_flashctl.h"
 #include <string.h>
@@ -25,11 +26,8 @@
 #define ERROR_READ_64_OVERRIDE 13
 #define ERROR_EXPECTED_FAIL_OVERRIDE 14
 
-#define BASE_ADDR 0x00008000
-#define PAGE_SIZE 0x400
-
 void flash_erase(unsigned sector) {
-  if (sector >= 16) {
+  if (sector >= PAGE_NUM) {
     THROW_WARN("FLASH_ERROR: erase sector %u out of range [0, 15].", sector);
     return;
   }
@@ -37,11 +35,9 @@ void flash_erase(unsigned sector) {
   DL_FLASHCTL_COMMAND_STATUS cmd_status;
   uint32_t base = BASE_ADDR + PAGE_SIZE * sector;
 
-  cmd_status =  DL_FlashCTL_blankVerifyFromRAM(FLASHCTL, base);
-  if(cmd_status == DL_FLASHCTL_COMMAND_STATUS_PASSED)
-  {
+  cmd_status = DL_FlashCTL_blankVerifyFromRAM(FLASHCTL, base);
+  if (cmd_status == DL_FLASHCTL_COMMAND_STATUS_PASSED)
     return;
-  }
 
   DL_FlashCTL_unprotectSector(FLASHCTL, base, DL_FLASHCTL_REGION_SELECT_MAIN);
 
@@ -52,8 +48,36 @@ void flash_erase(unsigned sector) {
     THROW_WARN("FLASH_ERROR: sector %u erase failed.", sector);
 }
 
-void flash_write(unsigned sector, const void *src, unsigned len) {
-  if (sector >= 16) {
+void flash_write_u64(unsigned sector, unsigned index, uint32_t DA,
+                     uint32_t TA) {
+  if (sector >= PAGE_NUM) {
+    THROW_WARN("FLASH_ERROR: write u64 sector %u out of range [0, 15].",
+               sector);
+    return;
+  }
+
+  if (index >= PAGE_SIZE / 8) {
+    THROW_WARN("FLASH_ERROR: write u64 index %u out of range [0, %u].", index)
+    return;
+  }
+
+  uint32_t buf[2] = {[0] = DA, [1] = TA};
+  uint32_t base = BASE_ADDR + PAGE_SIZE * sector;
+  DL_FLASHCTL_COMMAND_STATUS cmd_status;
+
+  DL_FlashCTL_unprotectSector(FLASHCTL, base + index,
+                              DL_FLASHCTL_REGION_SELECT_MAIN);
+
+  cmd_status = DL_FlashCTL_programMemoryFromRAM64WithECCGenerated(
+      FLASHCTL, base + index, buf);
+
+  if (cmd_status == DL_FLASHCTL_COMMAND_STATUS_FAILED)
+    THROW_WARN("FLASH_ERROR: sector %u word %u write failed.", sector, index);
+}
+
+void flash_write_to(unsigned sector, unsigned position, const void *src,
+                    unsigned len) {
+  if (sector >= PAGE_NUM) {
     THROW_WARN("FLASH_ERROR: write sector %u out of range [0, 15].", sector);
     return;
   }
@@ -63,13 +87,13 @@ void flash_write(unsigned sector, const void *src, unsigned len) {
     return;
   }
 
-  if (len > PAGE_SIZE) {
+  if (position + len > PAGE_SIZE) {
     THROW_WARN("FLASH_ERROR: write len > PAGE_SIZE.");
     return;
   }
 
   DL_FLASHCTL_COMMAND_STATUS cmd_status;
-  uint32_t base = BASE_ADDR + PAGE_SIZE * sector;
+  uint32_t base = BASE_ADDR + PAGE_SIZE * sector + position;
 
   unsigned int ragged = len % 8;
   if (ragged != 0) {
@@ -105,8 +129,12 @@ void flash_write(unsigned sector, const void *src, unsigned len) {
   }
 }
 
+void flash_write(unsigned sector, const void *src, unsigned len) {
+  flash_write_to(sector, 0, src, len);
+}
+
 void flash_read(unsigned sector, void *dest, unsigned len) {
-  if (sector >= 16) {
+  if (sector >= PAGE_NUM) {
     THROW_WARN("FLASH_ERROR: read sector %u out of range [0, 15].", sector);
     return;
   }
@@ -126,7 +154,7 @@ void flash_read(unsigned sector, void *dest, unsigned len) {
 }
 
 const void *flash_use(unsigned sector) {
-  if (sector >= 16) {
+  if (sector >= PAGE_NUM) {
     THROW_WARN("FLASH_ERROR: read sector %u out of range [0, 15].", sector);
     return NULL;
   }
