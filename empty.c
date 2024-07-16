@@ -5,10 +5,11 @@
 #include "User/status/status.h"
 #include "User/task/task.h"
 #include "ti_msp_dl_config.h"
-#include "User/drive/delay.h"
-#include "User/device/gw_gray.h"
-#include "User/utils/log.h"
-#include "User/move/follow_line.h"
+#include "User/device/flash.h"
+
+uint32_t buf1[16] = {0xfff2ff11, 4, 4563, 245, 2, 645, 13, 0xffffffff, 0x1fffff01};
+uint32_t buf2[16] = {0};
+
 
 
 int main(void) {
@@ -21,11 +22,18 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
-  led_blame(1, 5, 10, 10);
- 
-//   status.base_speed = 500;
-//   status.mode.follow = true;
-  start_follow_line(1);
+  led_blame(1, 10, 10, 10);
+
+  erase_flash(1);
+
+  ram2flash(1, buf1, 16);
+
+//   flash2ram(1, buf2, 16);
+
+  PRINTLN("%x", *(uint32_t *)(0x00008000))
+
+  //   status.base_speed = 500;
+  //   status.mode.follow = true;
 
   while (1) {
     task_poll(&task);
