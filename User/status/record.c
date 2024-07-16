@@ -5,10 +5,10 @@
 #include "stdbool.h"
 #include "stdint.h"
 
-#define RECORD_BUF_LEN (PAGE_SIZE / 2)
+#define RECORD_BUF_LEN ((PAGE_SIZE / 2) / sizeof(int32_t))
 
 struct RecordDataAB {
-  uint32_t ab[2][RECORD_BUF_LEN];
+  int32_t ab[2][RECORD_BUF_LEN];
   bool which; // false: A, true: B
   unsigned index;
 };
@@ -24,7 +24,7 @@ void task_queue_push_flash_erase(unsigned page);
 void task_queue_push_flash_write(unsigned char page, const void *src,
                                  bool back_half);
 
-void status_record(unsigned int var) {
+void status_record(int var) {
   struct Record record = {.data.which = false, .data.index = 0, .page = 0};
 
   record.data.ab[record.data.which][record.data.index] = var;
@@ -52,7 +52,8 @@ void task_flash_write(void *para) {
   void *src = (void *)(data & 0x00ffffff);
   bool back_half = data & 0x80000000;
 
-  flash_write_to(page, back_half ? RECORD_BUF_LEN : 0, src, RECORD_BUF_LEN);
+  flash_write_to(page, back_half ? RECORD_BUF_LEN : 0, src,
+                 RECORD_BUF_LEN * sizeof(int32_t));
 }
 
 void task_queue_push_flash_erase(unsigned page) {

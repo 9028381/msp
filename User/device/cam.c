@@ -23,7 +23,7 @@ int16_t cam_get_diff(void)
         case T_R_road: return 0;
         case T_L_road: return 0;
         case T_B_road: status.base_speed = 0; return 0;
-        case CROSS_road return 0;
+        case CROSS_road: return 0;
         default: return cam_diff;
     }
 }

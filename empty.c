@@ -23,11 +23,9 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
-  led_blame(1, 10, 10, 10);
+//   led_blame(1, 10, 10, 10);
 
-  flash_erase(1);
-  flash_write(1, buf1, sizeof(buf1));
-  flash_read(1, buf2, sizeof(buf1));
+  //status.mode.record = true; 
 
   //   status.base_speed = 500;
   //   status.mode.follow = true;
