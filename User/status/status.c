@@ -42,8 +42,8 @@ void status_next(struct Status *status) {
 
   // record
   if (status->mode.record) {
-    status_record(status->wheels[FONT_LEFT].history);
-    status_record(status->wheels[FONT_RIGHT].history);
+    status_record(status->wheels[FONT_LEFT].current);
+    status_record(status->wheels[FONT_RIGHT].current);
   }
 
   // motor base speed
@@ -86,10 +86,7 @@ void status_next(struct Status *status) {
   }
 
   // update wheel thrust based on wheel target
-  if (status->mode.repeat)
-    status_wheels_next_thrust_with_history(status->wheels);
-  else
-    status_wheels_next_thrust(status->wheels);
+  status_wheels_next_thrust(status->wheels);
 
   // wheels drive
   status_wheels_drive(status->wheels);
