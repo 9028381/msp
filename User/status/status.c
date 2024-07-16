@@ -23,7 +23,7 @@ void status_init(struct Status *status) {
   status_wheels_init(status->wheels);
 
   // record init
-  status_record_init();
+//   status_record_init();
 
   // mode init
   status->mode.turn = false;
