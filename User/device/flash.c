@@ -77,6 +77,7 @@ void flash_write_u64(unsigned sector, unsigned index, uint32_t DA,
 
 void flash_write_to(unsigned sector, unsigned position, const void *src,
                     unsigned len) {
+                        INFO("sector %u position %u src %x len %u", sector, position, src, len);
   if (sector >= PAGE_NUM) {
     THROW_WARN("FLASH_ERROR: write sector %u out of range [0, 15].", sector);
     return;

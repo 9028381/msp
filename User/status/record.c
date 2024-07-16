@@ -53,8 +53,8 @@ void task_flash_write(void *para) {
   unsigned short page = record_task_buf_page_bitor_back_half & 0xffff;
   bool back_half = record_task_buf_page_bitor_back_half & 0x80000000;
 
-  flash_write_to(page, back_half ? RECORD_BUF_LEN : 0, para,
-                 RECORD_BUF_LEN * sizeof(int32_t));
+  flash_write_to(page, back_half ? RECORD_BUF_LEN * 4 : 0, para,
+                 RECORD_BUF_LEN * 4);
 }
 
 void task_queue_push_flash_erase(unsigned page) {
