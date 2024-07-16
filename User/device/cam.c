@@ -14,4 +14,16 @@ void update_cam_diff(uint8_t buf) {
   }
 }
 
-int16_t get_cam_diff(void) { return cam_diff ; }
+int16_t cam_get_diff(void)
+{
+    switch (cam_diff)
+    {
+        case Left_road: return -30000;
+        case Right_road: return 30000;
+        case T_R_road: return 0;
+        case T_L_road: return 0;
+        case T_B_road: status.base_speed = 0; return 0;
+        case CROSS_road return 0;
+        default: return cam_diff;
+    }
+}
