@@ -81,14 +81,15 @@ void status_next(struct Status *status) {
   if (status->mode.repeat) {
     const void *rec = flash_use(0);
     const int *tar = (rec + status->times * 4 * 2);
-    status->wheels[FONT_LEFT].target =
-        tar[0] - status->wheels[FONT_LEFT].history;
-    status->wheels[FONT_RIGHT].target =
-        tar[1] - status->wheels[FONT_RIGHT].history;
+    status->wheels[FONT_LEFT].target = tar[0];
+    status->wheels[FONT_RIGHT].target = tar[1];
   }
 
   // update wheel thrust based on wheel target
-  status_wheels_next_thrust(status->wheels);
+  if (status->mode.repeat)
+    status_wheels_next_thrust_with_history(status->wheels);
+  else
+    status_wheels_next_thrust(status->wheels);
 
   // wheels drive
   status_wheels_drive(status->wheels);

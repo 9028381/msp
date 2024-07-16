@@ -64,6 +64,18 @@ void status_wheels_next_thrust(struct Wheel wheels[WHEEL_NUMS]) {
     status_wheel_next_thrust(wheels, which);
 }
 
+void status_wheel_next_thrust_with_history(struct Wheel wheels[WHEEL_NUMS],
+                                           enum WheelPosition which) {
+  struct Wheel *wheel = &wheels[which];
+  wheel->thrust += pid_compute(&wheel->pid, wheel->target - wheel->history, 0);
+  wheel->thrust = CLAMP(wheel->thrust, WHEEL_THRUST_MAX);
+}
+
+void status_wheels_next_thrust_with_history(struct Wheel wheels[WHEEL_NUMS]) {
+  for (unsigned int which = 0; which < WHEEL_NUMS; which++)
+    status_wheel_next_thrust_with_history(wheels, which);
+}
+
 void status_wheels_drive(struct Wheel wheels[WHEEL_NUMS]) {
   for (unsigned int which = 0; which < WHEEL_NUMS; which++)
     motor_set_thrust(which, wheels[which].thrust);
