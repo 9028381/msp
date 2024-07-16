@@ -9,7 +9,7 @@
 #include "string.h"
 #include "ti_msp_dl_config.h"
 
-uint32_t buf1[16] = {0xfff2ff11, 4,  4563,       245,       2,
+uint32_t buf1[16] = {2211, 345234,  4563,       245,       2,
                      645,        13, 0xffffffff, 0x1fffff01};
 uint32_t buf2[16] = {0};
 

@@ -37,6 +37,12 @@ void flash_erase(unsigned sector) {
   DL_FLASHCTL_COMMAND_STATUS cmd_status;
   uint32_t base = BASE_ADDR + PAGE_SIZE * sector;
 
+  cmd_status =  DL_FlashCTL_blankVerifyFromRAM(FLASHCTL, base);
+  if(cmd_status == DL_FLASHCTL_COMMAND_STATUS_PASSED)
+  {
+    return;
+  }
+
   DL_FlashCTL_unprotectSector(FLASHCTL, base, DL_FLASHCTL_REGION_SELECT_MAIN);
 
   cmd_status = DL_FlashCTL_eraseMemoryFromRAM(FLASHCTL, base,
@@ -117,4 +123,14 @@ void flash_read(unsigned sector, void *dest, unsigned len) {
 
   uint32_t base = BASE_ADDR + PAGE_SIZE * sector;
   memcpy(dest, (void *)base, len);
+}
+
+const void *flash_use(unsigned sector) {
+  if (sector >= 16) {
+    THROW_WARN("FLASH_ERROR: read sector %u out of range [0, 15].", sector);
+    return NULL;
+  }
+
+  uint32_t base = BASE_ADDR + PAGE_SIZE * sector;
+  return (void *)base;
 }

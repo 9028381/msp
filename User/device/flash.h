@@ -4,5 +4,6 @@
 void flash_erase(unsigned sector);
 void flash_write(unsigned sector, const void *src, unsigned len);
 void flash_read(unsigned sector, void *dest, unsigned len);
+const void *flash_use(unsigned sector);
 
 #endif // !__FLASH_H__
