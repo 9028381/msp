@@ -10,7 +10,7 @@
 #include "ti_msp_dl_config.h"
 #include "User/device/flash.h"
 
-uint32_t buf1[16] = {12, 4, 4563, 245, 2, 645, 13, 0xffffffff, 0x1fffff01};
+uint32_t buf1[16] = {0xfff2ff11, 4, 4563, 245, 2, 645, 13, 0xffffffff, 0x1fffff01};
 uint32_t buf2[16] = {0};
 
 
@@ -25,13 +25,15 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
-  led_blame(1, 500, 10, 10);
+  led_blame(1, 10, 10, 10);
 
-  erase_flash(0);
+  erase_flash(1);
 
-  ram2flash(0, buf1, 16);
+  ram2flash(1, buf1, 16);
 
-  flash2ram(0, buf2, 16);
+//   flash2ram(1, buf2, 16);
+
+  PRINTLN("%x", *(uint32_t *)(0x00008000))
 
   //   status.base_speed = 500;
   //   status.mode.follow = true;

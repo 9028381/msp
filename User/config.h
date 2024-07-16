@@ -3,7 +3,7 @@
 
 #include "drive/uart.h"
 
-#define DEV
+// #define DEV
 
 #define MAX_TURN_SPEED 700
 #define MAX_FOLLOW_TURN_SPEED 900
