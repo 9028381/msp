@@ -1,7 +1,6 @@
 #include "User/config.h"
 #include "User/device/flash.h"
 #include "User/task/task.h"
-#include "User/utils/log.h"
 #include "stdbool.h"
 #include "stdint.h"
 

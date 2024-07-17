@@ -31,13 +31,14 @@ struct Direction {
 
 struct Status {
   /// times / STATUS_FREQ == run time(s)
-  unsigned int times;
+  unsigned times;
   struct Sensor sensor;
   struct MovePid pid;
   struct Direction dir;
   short base_speed;
   struct Wheel wheels[WHEEL_NUMS];
   struct Mode mode;
+  unsigned record_or_repeat_reference_time;
 };
 
 extern struct Status status;

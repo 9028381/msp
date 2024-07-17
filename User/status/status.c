@@ -81,7 +81,8 @@ void status_next(struct Status *status) {
 
   if (status->mode.repeat) {
     const void *rec = flash_use(0);
-    const int *tar = (rec + status->times * 4 * 2);
+    const int *tar =
+        rec + (status->times - status->record_or_repeat_reference_time) * 4 * 2;
     status->wheels[FONT_LEFT].target = tar[0];
     status->wheels[FONT_RIGHT].target = tar[1];
   }
@@ -89,10 +90,10 @@ void status_next(struct Status *status) {
   // update wheel thrust based on wheel target
   status_wheels_next_thrust(status->wheels);
 
-if (status->mode.record){
-  status->wheels[FONT_LEFT].thrust = 1;
-  status->wheels[FONT_RIGHT].thrust = 1;
-}
+  if (status->mode.record) {
+    status->wheels[FONT_LEFT].thrust = 1;
+    status->wheels[FONT_RIGHT].thrust = 1;
+  }
 
   // wheels drive
   status_wheels_drive(status->wheels);
