@@ -9,92 +9,92 @@
 
 struct Status status;
 
-void status_init(struct Status *status) {
+void status_init(struct Status *sta) {
   // time init
-  status->times = 0;
+  sta->times = 0;
 
   // sensor init
-  // status->dir.origin = gyr_get_value(gyr_z_yaw);
-  status->dir.target = 0.0;
+  // sta->dir.origin = gyr_get_value(gyr_z_yaw);
+  sta->dir.target = 0.0;
 
   // move pid init
-  pid_init(&status->pid.turn, 2, 0, 1, 5, 10);
-  pid_init(&status->pid.follow, 1, 0, 0, 3, 10);
+  pid_init(&sta->pid.turn, 2, 0, 1, 5, 10);
+  pid_init(&sta->pid.follow, 1, 0, 0, 3, 10);
 
   // wheels init
-  status->base_speed = 0;
-  status_wheels_init(status->wheels);
+  sta->base_speed = 0;
+  status_wheels_init(sta->wheels);
 
   // mode init
-  status->mode.turn = false;
-  status->mode.follow = false;
-  status->mode.record = false;
-  status->mode.repeat = false;
+  sta->mode.turn = false;
+  sta->mode.follow = false;
+  sta->mode.record = false;
+  sta->mode.repeat = false;
 }
 
-void status_next(struct Status *status) {
+void status_next(struct Status *sta) {
   // time next
-  status->times++;
+  sta->times++;
 
   // encoder next
-  status_wheels_next_speed(status->wheels);
+  status_wheels_next_speed(sta->wheels);
 
   // record
-  if (status->mode.record) {
-    status_record(status->wheels[FONT_LEFT].current);
-    status_record(status->wheels[FONT_RIGHT].current);
+  if (sta->mode.record) {
+    status_record(sta->wheels[FONT_LEFT].current);
+    status_record(sta->wheels[FONT_RIGHT].current);
   }
 
   // motor base speed
   for (int i = 0; i < WHEEL_NUMS; i++)
-    status->wheels[i].target = status->base_speed;
+    sta->wheels[i].target = sta->base_speed;
 
   // sensor next
-  if (status->mode.turn)
-    status->sensor.gyro = gyr_get_value(gyr_z_yaw);
+  if (sta->mode.turn)
+    sta->sensor.gyro = gyr_get_value(gyr_z_yaw);
 
-  if (status->mode.follow)
-    status->sensor.follow = get_cam_diff();
+  if (sta->mode.follow)
+    sta->sensor.follow = get_cam_diff();
 
   // update wheel target speed based on sensor
-  if (status->mode.turn) {
-    float diff = status->dir.target + status->dir.origin - status->sensor.gyro;
+  if (sta->mode.turn) {
+    float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro;
     diff = WARPPING(diff, -180.0, 180.0);
-    int delta = pid_compute(&status->pid.turn, 0, diff * 10);
+    int delta = pid_compute(&sta->pid.turn, 0, diff * 10);
     delta = CLAMP(delta, MAX_TURN_SPEED); // LIMIT MAX TURN SPEED
-    status->wheels[FONT_LEFT].target += delta;
-    status->wheels[FONT_RIGHT].target -= delta;
+    sta->wheels[FONT_LEFT].target += delta;
+    sta->wheels[FONT_RIGHT].target -= delta;
   }
 
-  if (status->mode.follow) {
-    int delta = pid_compute(&status->pid.follow, 0, status->sensor.follow);
+  if (sta->mode.follow) {
+    int delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
     // delta = CLAMP(delta, MAX_FOLLOW_TURN_SPEED);
-    status->wheels[FONT_LEFT].target += delta;
-    status->wheels[FONT_RIGHT].target -= delta;
-    status->wheels[FONT_LEFT].target =
-        CLAMP(status->wheels[FONT_LEFT].target, MAX_FOLLOW_TURN_SPEED);
-    status->wheels[FONT_RIGHT].target =
-        CLAMP(status->wheels[FONT_RIGHT].target, MAX_FOLLOW_TURN_SPEED);
+    sta->wheels[FONT_LEFT].target += delta;
+    sta->wheels[FONT_RIGHT].target -= delta;
+    sta->wheels[FONT_LEFT].target =
+        CLAMP(sta->wheels[FONT_LEFT].target, MAX_FOLLOW_TURN_SPEED);
+    sta->wheels[FONT_RIGHT].target =
+        CLAMP(sta->wheels[FONT_RIGHT].target, MAX_FOLLOW_TURN_SPEED);
   }
 
-  if (status->mode.repeat) {
+  if (sta->mode.repeat) {
     const void *rec = flash_use(0);
     const int *tar =
-        rec + (status->times - status->record_or_repeat_reference_time) * 4 * 2;
-    status->wheels[FONT_LEFT].target = tar[0];
-    status->wheels[FONT_RIGHT].target = tar[1];
+        rec + (sta->times - sta->record_or_repeat_reference_time) * 4 * 2;
+    sta->wheels[FONT_LEFT].target = tar[0];
+    sta->wheels[FONT_RIGHT].target = tar[1];
   }
 
   // update wheel thrust based on wheel target
-  status_wheels_next_thrust(status->wheels);
+  status_wheels_next_thrust(sta->wheels);
 
-  // if (status->mode.record) {
-  //   status->wheels[FONT_LEFT].thrust = 1;
-  //   status->wheels[FONT_RIGHT].thrust = 1;
+  // if (sta->mode.record) {
+  //   sta->wheels[FONT_LEFT].thrust = 1;
+  //   sta->wheels[FONT_RIGHT].thrust = 1;
   // }
 
   // wheels drive
-  status_wheels_drive(status->wheels);
+  status_wheels_drive(sta->wheels);
 
   // mode next
 }
