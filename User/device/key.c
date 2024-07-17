@@ -2,18 +2,21 @@
 #include "User/config.h"
 #include "User/status/status.h"
 #include "User/task/task.h"
+#include "led.h"
 #include "ti_msp_dl_config.h"
 
 void key1_callback() {
   status.mode.record = true;
   status.mode.repeat = false;
   status.record_or_repeat_reference_time = status.times;
+  led_blame(0, 2, 5, 5);
 }
 
 void key2_callback() {
   status.mode.repeat = true;
   status.mode.record = false;
   status.record_or_repeat_reference_time = status.times;
+  led_blame(0, 2, 5, 5);
 }
 
 bool key1_is_press() { return !DL_GPIO_readPins(KEY_PORT, KEY_KEY1_PIN); }
