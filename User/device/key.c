@@ -1,20 +1,30 @@
 #include "key.h"
 #include "User/config.h"
+#include "User/status/record.h"
 #include "User/status/status.h"
 #include "User/task/task.h"
 #include "led.h"
 #include "ti_msp_dl_config.h"
 
 void key1_callback() {
-  status.mode.record = true;
-  status.mode.repeat = false;
-  status.record_or_repeat_reference_time = status.times;
-  led_blame(0, 2, 5, 5);
+  static bool is_first = true;
+
+  if (is_first) {
+    status.mode.record = true;
+    status.mode.repeat = false;
+    status.record_or_repeat_reference_time = status.times;
+    led_blame(0, 2, 5, 5);
+    is_first = false;
+  } else {
+    status.mode.record = false;
+    status_record_force_swap_mem();
+    led_blame(0, 3, 10, 10);
+  }
 }
 
 void key2_callback() {
-  status.mode.repeat = true;
   status.mode.record = false;
+  status.mode.repeat = true;
   status.record_or_repeat_reference_time = status.times;
   led_blame(0, 2, 5, 5);
 }

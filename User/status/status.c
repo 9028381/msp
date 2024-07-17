@@ -1,9 +1,9 @@
 #include "status.h"
+#include "../device/cam.h"
 #include "../device/flash.h"
 #include "../device/gw_gray.h"
 #include "../device/gyroscope.h"
 #include "../utils/utils.h"
-#include "../device/cam.h"
 #include "User/device/wheel.h"
 #include "record.h"
 
@@ -24,9 +24,6 @@ void status_init(struct Status *status) {
   // wheels init
   status->base_speed = 0;
   status_wheels_init(status->wheels);
-
-  // record init
-  status_record_init();
 
   // mode init
   status->mode.turn = false;

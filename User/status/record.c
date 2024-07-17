@@ -24,6 +24,7 @@ void task_queue_push_flash_write(unsigned char page, const void *src,
                                  bool back_half);
 
 void status_record(int var) {
+  static bool is_first = true;
   static struct Record record = {
       .data.which = false, .data.index = 0, .page = 0};
 
@@ -31,6 +32,11 @@ void status_record(int var) {
   record.data.index += 1;
 
   if (record.data.index >= RECORD_BUF_LEN) {
+    if (is_first) {
+      task_queue_push_flash_erase(0);
+      is_first = false;
+    }
+
     task_queue_push_flash_write(record.page, &record.data.ab[record.data.which],
                                 record.data.which);
     // data B end need new flash page
