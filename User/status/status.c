@@ -79,8 +79,8 @@ void status_next(struct Status *sta) {
 
   if (sta->mode.repeat) {
     const void *rec = flash_use(0);
-    const int *tar =
-        rec + (sta->times - sta->record_or_repeat_reference_time) * 4 * 2;
+    const short *tar =
+        rec + (sta->times - sta->record_or_repeat_reference_time) * sizeof(short) * 2;
     sta->wheels[FONT_LEFT].target = tar[0];
     sta->wheels[FONT_RIGHT].target = tar[1];
   }

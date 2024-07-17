@@ -18,7 +18,7 @@ int main(void) {
 
   keyreact_init();
 
-  led_blame(0, 5, 5, 5);
+//   led_blame(0, 5, 5, 5);
 
   status.base_speed = 500;
   status.mode.follow = true;

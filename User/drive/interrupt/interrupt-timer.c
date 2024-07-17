@@ -10,8 +10,6 @@ void TIMER_INT_INST_IRQHandler() {
     DL_WWDT_restart(WWDT0_INST);
     status_next(&status);
 
-    PRINTLN("%d", get_cam_diff());
-
     break;
   default:
     break;

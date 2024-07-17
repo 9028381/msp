@@ -5,6 +5,7 @@
 #include "User/task/task.h"
 #include "led.h"
 #include "ti_msp_dl_config.h"
+#include "User/utils/log.h"
 
 void key1_callback() {
   static bool is_first = true;
@@ -14,11 +15,13 @@ void key1_callback() {
     status.mode.repeat = false;
     status.record_or_repeat_reference_time = status.times;
     led_blame(0, 2, 5, 5);
+    INFO("Start record");
     is_first = false;
   } else {
     status.mode.record = false;
     status_record_force_swap_mem();
     led_blame(0, 3, 10, 10);
+    INFO("Stop record");
   }
 }
 
@@ -26,7 +29,7 @@ void key2_callback() {
   status.mode.record = false;
   status.mode.repeat = true;
   status.record_or_repeat_reference_time = status.times;
-  led_blame(0, 2, 5, 5);
+//   led_blame(0, 2, 5, 5);
 }
 
 bool key1_is_press() { return !DL_GPIO_readPins(KEY_PORT, KEY_KEY1_PIN); }
@@ -41,7 +44,7 @@ void task_timed_key_react_new(void (*key_react)(void *), void *para,
 void key1_react(void *callback) {
   if (key1_is_press()) {
     ((void (*)())callback)();
-    task_timed_key_react_new(key1_react, callback, TIMER1_FREQ);
+    task_timed_key_react_new(key1_react, callback, STATUS_FREQ);
     return;
   }
 
@@ -51,7 +54,7 @@ void key1_react(void *callback) {
 void key2_react(void *callback) {
   if (key2_is_press()) {
     ((void (*)())callback)();
-    task_timed_key_react_new(key2_react, callback, TIMER1_FREQ);
+    task_timed_key_react_new(key2_react, callback, STATUS_FREQ);
     return;
   }
 

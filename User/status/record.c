@@ -7,7 +7,7 @@
 #define RECORD_BUF_LEN ((PAGE_SIZE / 2) / sizeof(short))
 
 struct RecordDataAB {
-  int32_t ab[2][RECORD_BUF_LEN];
+  short ab[2][RECORD_BUF_LEN];
   bool which; // false: A, true: B
   unsigned index;
 };
@@ -49,7 +49,7 @@ void status_record(int var) {
 }
 
 void status_record_force_swap_mem() {
-  for (unsigned i = 0; i < 4 * RECORD_BUF_LEN; i++)
+  for (unsigned i = 0; i < RECORD_BUF_LEN; i++)
     status_record(0);
 }
 
