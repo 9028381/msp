@@ -4,7 +4,7 @@
 #include "stdbool.h"
 #include "stdint.h"
 
-#define RECORD_BUF_LEN ((PAGE_SIZE / 2) / sizeof(int32_t))
+#define RECORD_BUF_LEN ((PAGE_SIZE / 2) / sizeof(short))
 
 struct RecordDataAB {
   int32_t ab[2][RECORD_BUF_LEN];
@@ -44,6 +44,11 @@ void status_record(int var) {
   }
 }
 
+void status_record_force_swap_mem() {
+  for (unsigned i = 0; i < 4 * RECORD_BUF_LEN; i++)
+    status_record(0);
+}
+
 uint32_t record_task_buf_page_bitor_back_half;
 
 void task_flash_erase(void *para) { flash_erase((unsigned)para); }
@@ -52,8 +57,8 @@ void task_flash_write(void *para) {
   unsigned short page = record_task_buf_page_bitor_back_half & 0xffff;
   bool back_half = record_task_buf_page_bitor_back_half & 0x80000000;
 
-  flash_write_to(page, back_half ? RECORD_BUF_LEN * 4 : 0, para,
-                 RECORD_BUF_LEN * 4);
+  flash_write_to(page, back_half ? RECORD_BUF_LEN * sizeof(short) : 0, para,
+                 RECORD_BUF_LEN * sizeof(short));
 }
 
 void task_queue_push_flash_erase(unsigned page) {
