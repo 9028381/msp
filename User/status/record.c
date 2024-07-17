@@ -17,8 +17,6 @@ struct Record {
   unsigned page;
 };
 
-void status_record_init() { flash_erase(0); }
-
 void task_queue_push_flash_erase(unsigned page);
 void task_queue_push_flash_write(unsigned char page, const void *src,
                                  bool back_half);
