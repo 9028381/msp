@@ -38,9 +38,9 @@ struct TimedTask *data_append(struct Timed *timed, struct TimedTask task) {
   return &timed->data[timed->index];
 }
 
-void task_timed_insert(struct Timed *timed, Task task, unsigned int time) {
-  struct TimedTask *data = data_append(
-      timed, (struct TimedTask){.task = task, .timed = time, .next = NULL});
+void task_timed_insert_task_queue_later(void *para) {
+  struct Timed *timed = &task.timed;
+  struct TimedTask *data = para;
 
   if (data == NULL)
     return;
@@ -69,6 +69,14 @@ void task_timed_insert(struct Timed *timed, Task task, unsigned int time) {
   }
 
   current->next = data;
+}
+
+void task_timed_insert(struct Timed *timed, Task timedtask, unsigned int time) {
+  struct TimedTask *data = data_append(
+      timed,
+      (struct TimedTask){.task = timedtask, .timed = time, .next = NULL});
+  Task t = task_new(task_timed_insert_task_queue_later, data);
+  task_queue_push(&task.queue, t);
 }
 
 void task_timed_append(struct Timed *timed, Task task, unsigned int later) {
