@@ -3,6 +3,7 @@
 #include "../device/gw_gray.h"
 #include "../device/gyroscope.h"
 #include "../utils/utils.h"
+#include "../device/cam.h"
 #include "User/device/wheel.h"
 #include "record.h"
 
@@ -90,10 +91,10 @@ void status_next(struct Status *status) {
   // update wheel thrust based on wheel target
   status_wheels_next_thrust(status->wheels);
 
-  if (status->mode.record) {
-    status->wheels[FONT_LEFT].thrust = 1;
-    status->wheels[FONT_RIGHT].thrust = 1;
-  }
+  // if (status->mode.record) {
+  //   status->wheels[FONT_LEFT].thrust = 1;
+  //   status->wheels[FONT_RIGHT].thrust = 1;
+  // }
 
   // wheels drive
   status_wheels_drive(status->wheels);
