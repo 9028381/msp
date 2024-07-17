@@ -22,7 +22,7 @@
 #define STATUS_FREQ TIMER1_FREQ
 
 /******* WHEEL *******/
-#define WHEEL_THRUST_MAX 9999
+#define WHEEL_THRUST_MAX 3000
 
 /*
  * task

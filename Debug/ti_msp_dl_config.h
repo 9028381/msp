@@ -220,11 +220,11 @@ extern "C" {
 #define UART_2_INST_DMA_TRIGGER                              (DMA_UART2_TX_TRIG)
 
 /* Defines for DMA_CH1 */
-#define DMA_CH1_CHAN_ID                                                      (1)
+#define DMA_CH1_CHAN_ID                                                      (2)
 #define UART_1_INST_DMA_TRIGGER                              (DMA_UART3_TX_TRIG)
 
 /* Defines for DMA_CH4 */
-#define DMA_CH4_CHAN_ID                                                      (4)
+#define DMA_CH4_CHAN_ID                                                      (1)
 #define UART_4_INST_DMA_TRIGGER                              (DMA_UART1_TX_TRIG)
 
 /* Defines for DMA_CH3 */
@@ -331,12 +331,21 @@ extern "C" {
 /* Port definition for Pin Group IIC */
 #define IIC_PORT                                                         (GPIOB)
 
-/* Defines for IIC_SCL: GPIOB.19 with pinCMx 45 on package pin 16 */
-#define IIC_IIC_SCL_PIN                                         (DL_GPIO_PIN_19)
-#define IIC_IIC_SCL_IOMUX                                        (IOMUX_PINCM45)
-/* Defines for IIC_SDA: GPIOB.21 with pinCMx 49 on package pin 20 */
-#define IIC_IIC_SDA_PIN                                         (DL_GPIO_PIN_21)
-#define IIC_IIC_SDA_IOMUX                                        (IOMUX_PINCM49)
+/* Defines for IIC_SCL: GPIOB.21 with pinCMx 49 on package pin 20 */
+#define IIC_IIC_SCL_PIN                                         (DL_GPIO_PIN_21)
+#define IIC_IIC_SCL_IOMUX                                        (IOMUX_PINCM49)
+/* Defines for IIC_SDA: GPIOB.22 with pinCMx 50 on package pin 21 */
+#define IIC_IIC_SDA_PIN                                         (DL_GPIO_PIN_22)
+#define IIC_IIC_SDA_IOMUX                                        (IOMUX_PINCM50)
+/* Port definition for Pin Group KEY */
+#define KEY_PORT                                                         (GPIOB)
+
+/* Defines for KEY1: GPIOB.3 with pinCMx 16 on package pin 51 */
+#define KEY_KEY1_PIN                                             (DL_GPIO_PIN_3)
+#define KEY_KEY1_IOMUX                                           (IOMUX_PINCM16)
+/* Defines for KEY2: GPIOB.19 with pinCMx 45 on package pin 16 */
+#define KEY_KEY2_PIN                                            (DL_GPIO_PIN_19)
+#define KEY_KEY2_IOMUX                                           (IOMUX_PINCM45)
 
 
 /* Defines for WWDT */

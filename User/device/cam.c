@@ -14,7 +14,7 @@ void update_cam_diff(uint8_t buf) {
   }
 }
 
-int16_t cam_get_diff(void)
+int16_t get_cam_diff(void)
 {
     switch (cam_diff)
     {

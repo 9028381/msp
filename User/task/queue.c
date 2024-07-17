@@ -1,5 +1,6 @@
 #include "../utils/log.h"
 #include "task.h"
+#include "User/device/cam.h"
 
 void task_queue_init(struct Queue *queue) {
   INFO("TASK_QUEUE_INIT.");

@@ -3,6 +3,7 @@
 #include "../device/gw_gray.h"
 #include "../device/gyroscope.h"
 #include "../utils/utils.h"
+#include "User/device/wheel.h"
 #include "record.h"
 
 struct Status status;
@@ -55,7 +56,7 @@ void status_next(struct Status *status) {
     status->sensor.gyro = gyr_get_value(gyr_z_yaw);
 
   if (status->mode.follow)
-    status->sensor.follow = gw_gray_get_diff();
+    status->sensor.follow = get_cam_diff();
 
   // update wheel target speed based on sensor
   if (status->mode.turn) {
@@ -87,6 +88,11 @@ void status_next(struct Status *status) {
 
   // update wheel thrust based on wheel target
   status_wheels_next_thrust(status->wheels);
+
+if (status->mode.record){
+  status->wheels[FONT_LEFT].thrust = 1;
+  status->wheels[FONT_RIGHT].thrust = 1;
+}
 
   // wheels drive
   status_wheels_drive(status->wheels);

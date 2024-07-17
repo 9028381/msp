@@ -2,6 +2,7 @@
 #include "User/utils/log.h"
 #include "ti/driverlib/dl_timerg.h"
 #include "ti_msp_dl_config.h"
+#include "User/device/cam.h"
 
 void TIMER_INT_INST_IRQHandler() {
   switch (DL_TimerG_getPendingInterrupt(TIMER_INT_INST)) {
@@ -9,7 +10,7 @@ void TIMER_INT_INST_IRQHandler() {
     DL_WWDT_restart(WWDT0_INST);
     status_next(&status);
 
-    // PRINTLN("%d", get_cam_diff());
+    PRINTLN("%d", get_cam_diff());
 
     break;
   default:

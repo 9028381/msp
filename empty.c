@@ -8,6 +8,7 @@
 #include "User/utils/log.h"
 #include "string.h"
 #include "ti_msp_dl_config.h"
+#include "User/device/key.h"
 
 int main(void) {
   SYSCFG_DL_init();
@@ -19,12 +20,13 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
+    // keyboard_init();
+
     led_blame(0, 5, 5, 5);
 
-    status.mode.record = true;
+    status.base_speed = 500;
+    status.mode.follow = true;
 
-    status.base_speed = 100;
-  //   status.mode.follow = true;
 
   while (1) {
     task_poll(&task);
