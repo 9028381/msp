@@ -4,13 +4,15 @@
 #include "ti/driverlib/dl_timerg.h"
 #include "ti_msp_dl_config.h"
 #include "User/device/cam.h"
+#include "User/status/status.h"
 
 void TIMER_INT_INST_IRQHandler() {
   switch (DL_TimerG_getPendingInterrupt(TIMER_INT_INST)) {
   case DL_TIMER_IIDX_ZERO:
     DL_WWDT_restart(WWDT0_INST);
     status_next(&status);
-    PRINTLN("%d,%d", status.wheels[FONT_LEFT].current, status.wheels[FONT_RIGHT].current)
+    PRINTLN("%f", status.dir.target);
+
     break;
   default:
     break;

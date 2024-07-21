@@ -14,7 +14,7 @@ void status_init(struct Status *sta) {
   sta->times = 0;
 
   // sensor init
-  // sta->dir.origin = gyr_get_value(gyr_z_yaw);
+  sta->dir.origin = gyr_get_value(gyr_z_yaw);
   sta->dir.target = 0.0;
 
   // move pid init
