@@ -25,9 +25,11 @@ int main(void) {
 
   led_blame(0, 5, 5, 5);
 
-  status.base_speed = 1000;
+  status.base_speed = 350;
+
   status.mode.follow = true;
-  
+
+//   status.mode.turn = true;
 //   status.dir.target = 0;
   
 

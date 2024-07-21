@@ -11,7 +11,6 @@ void TIMER_INT_INST_IRQHandler() {
   case DL_TIMER_IIDX_ZERO:
     DL_WWDT_restart(WWDT0_INST);
     status_next(&status);
-    PRINTLN("%f", status.dir.target);
 
     break;
   default:

@@ -1,6 +1,7 @@
 #include "keep_angle.h"
 #include "User/move/turn.h"
 #include "User/status/status.h"
+#include "User/utils/log.h"
 #include "User/utils/math.h"
 #include "User/utils/pid.h"
 #include "turn.h"

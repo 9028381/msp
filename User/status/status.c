@@ -5,6 +5,7 @@
 #include "../device/gyroscope.h"
 #include "../utils/utils.h"
 #include "User/device/wheel.h"
+#include "User/utils/log.h"
 #include "record.h"
 
 struct Status status;
@@ -18,7 +19,7 @@ void status_init(struct Status *sta) {
   sta->dir.target = 0.0;
 
   // move pid init
-  pid_init(&sta->pid.turn, 2, 0, 1, 5, 10);
+  pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
   pid_init(&sta->pid.follow, 1, 0, 0, 3, 10);
 
   // wheels init
@@ -54,12 +55,13 @@ void status_next(struct Status *sta) {
     sta->sensor.gyro = gyr_get_value(gyr_z_yaw);
 
   if (sta->mode.follow)
-    sta->sensor.follow = get_cam_diff();
+    sta->sensor.follow = gw_gray_get_diff();
 
   // update wheel target speed based on sensor
   if (sta->mode.turn) {
     float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro;
     diff = WARPPING(diff, -180.0, 180.0);
+    PRINTLN("origin:%f, tar:%f, diff:%f", sta->dir.origin, sta->dir.target, diff);
     int delta = pid_compute(&sta->pid.turn, 0, diff * 10);
     delta = CLAMP(delta, MAX_TURN_SPEED); // LIMIT MAX TURN SPEED
     sta->wheels[FONT_LEFT].target += delta;

@@ -5,11 +5,11 @@
 
 #define DEV
 
-#define MAX_TURN_SPEED 700
-#define MAX_FOLLOW_TURN_SPEED 700
+#define MAX_TURN_SPEED 350
+#define MAX_FOLLOW_TURN_SPEED 250
 
 /******* TIMER *******/
-#define TIMER1_FREQ 20
+#define TIMER1_FREQ 40
 
 /******** FLASH *******/
 #define BASE_ADDR 0x00008000
