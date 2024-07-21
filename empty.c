@@ -1,5 +1,6 @@
 #include "User/device/key.h"
 #include "User/device/led.h"
+#include "User/device/servo.h"
 #include "User/drive/interrupt/interrupt-timer.h"
 #include "User/drive/interrupt/interrupt.h"
 #include "User/status/status.h"
@@ -18,11 +19,11 @@ int main(void) {
 
   keyreact_init();
 
-//   led_blame(0, 5, 5, 5);
+  led_blame(0, 5, 5, 5);
 
-  status.base_speed = 500;
+  status.base_speed = 1000;
   status.mode.follow = true;
-
+  
   while (1) {
     task_poll(&task);
   }

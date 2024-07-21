@@ -6,7 +6,7 @@
 #define DEV
 
 #define MAX_TURN_SPEED 700
-#define MAX_FOLLOW_TURN_SPEED 900
+#define MAX_FOLLOW_TURN_SPEED 1000
 
 /******* TIMER *******/
 #define TIMER1_FREQ 20
@@ -22,7 +22,7 @@
 #define STATUS_FREQ TIMER1_FREQ
 
 /******* WHEEL *******/
-#define WHEEL_THRUST_MAX 3000
+#define WHEEL_THRUST_MAX 6000
 
 /*
  * task

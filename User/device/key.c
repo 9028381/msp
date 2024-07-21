@@ -29,7 +29,7 @@ void key2_callback() {
   status.mode.record = false;
   status.mode.repeat = true;
   status.record_or_repeat_reference_time = status.times;
-//   led_blame(0, 2, 5, 5);
+  led_blame(0, 2, 5, 5);
 }
 
 bool key1_is_press() { return !DL_GPIO_readPins(KEY_PORT, KEY_KEY1_PIN); }
