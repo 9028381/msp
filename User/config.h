@@ -6,7 +6,7 @@
 #define DEV
 
 #define MAX_TURN_SPEED 350
-#define MAX_FOLLOW_TURN_SPEED 250
+#define MAX_FOLLOW_TURN_SPEED 200
 
 /******* TIMER *******/
 #define TIMER1_FREQ 40

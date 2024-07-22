@@ -32,7 +32,7 @@ void IIC_Write_HW(uint8_t DEV_ADDR, uint8_t size, uint8_t *pData) {
     ;
 
   /* Add delay between transfers */
-  delay_cycles(1000);
+  //delay_cycles(1000);   可能没用？？？？？？？？
 }
 
 void IIC_Read_HW(uint8_t DEV_ADDR, uint8_t size, uint8_t *pData) {

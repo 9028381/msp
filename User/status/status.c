@@ -20,7 +20,7 @@ void status_init(struct Status *sta) {
 
   // move pid init
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
-  pid_init(&sta->pid.follow, 1, 0, 0, 3, 10);
+  pid_init(&sta->pid.follow, 1, 0, 1.5, 3, 10);
 
   // wheels init
   sta->base_speed = 0;
@@ -55,7 +55,7 @@ void status_next(struct Status *sta) {
     sta->sensor.gyro = gyr_get_value(gyr_z_yaw);
 
   if (sta->mode.follow)
-    sta->sensor.follow = gw_gray_get_diff();
+    sta->sensor.follow = get_cam_diff();       //gw_gray_get_diff();
 
   // update wheel target speed based on sensor
   if (sta->mode.turn) {
@@ -69,10 +69,20 @@ void status_next(struct Status *sta) {
   }
 
   if (sta->mode.follow) {
-    int delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
+    int delta = 0;
+    if(ABS(sta->sensor.follow) > 10000)
+    {
+        delta = -sta->sensor.follow;
+    }
+    else 
+    {
+        delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
+    }
+    
     // delta = CLAMP(delta, MAX_FOLLOW_TURN_SPEED);
     sta->wheels[FONT_LEFT].target += delta;
     sta->wheels[FONT_RIGHT].target -= delta;
+
     if(ABS(sta->sensor.follow) > 10000)
     {
         sta->wheels[FONT_LEFT].target =
