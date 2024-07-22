@@ -72,7 +72,7 @@ void rpc_register(RPC rpc, uint8_t id, const char *describe,
   if (rpc[id].fn != NULL)
     THROW_WARN("RPC_REGISTER_ERROR redefine id=%d. Will override.", id);
 
-  INFO("PRC_REGISTER id=%d %s", id, describe);
+  INFO("RPC_REGISTER id=%d %s", id, describe);
   rpc[id].fn = fn;
   rpc[id].para = para;
 }

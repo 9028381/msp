@@ -71,10 +71,13 @@ void status_next(struct Status *sta) {
     // delta = CLAMP(delta, MAX_FOLLOW_TURN_SPEED);
     sta->wheels[FONT_LEFT].target += delta;
     sta->wheels[FONT_RIGHT].target -= delta;
+    if(ABS(sta->sensor.follow) > 10000)
+    {
     sta->wheels[FONT_LEFT].target =
         CLAMP(sta->wheels[FONT_LEFT].target, MAX_FOLLOW_TURN_SPEED);
     sta->wheels[FONT_RIGHT].target =
-        CLAMP(sta->wheels[FONT_RIGHT].target, MAX_FOLLOW_TURN_SPEED);
+        CLAMP(sta->wheels[FONT_RIGHT].target, MAX_FOLLOW_TURN_SPEED); 
+    }
   }
 
   if (sta->mode.repeat) {
