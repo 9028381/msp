@@ -63,7 +63,6 @@ void status_next(struct Status *sta) {
 
     sta->wheels[FONT_LEFT].target = forward + theta;
     sta->wheels[FONT_RIGHT].target = forward - theta;
-    PRINTLN("%d", sta->remote_position.theta);
 
     goto THRUST_MOTOR;
   }
