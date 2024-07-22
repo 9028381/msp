@@ -18,8 +18,8 @@ int16_t get_cam_diff(void)
 {
     switch (cam_diff)
     {
-        case Left_road: return -30000;
-        case Right_road: return 30000;
+        case Left_road: return -20000;
+        case Right_road: return 20000;
         case T_R_road: return 0;
         case T_L_road: return 0;
         case T_B_road: status.base_speed = 0; return 0;

@@ -20,8 +20,9 @@ void status_init(struct Status *sta) {
 
   // move pid init
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
-  pid_init(&sta->pid.follow, 1, 0, 1.5, 3, 10);
-
+  //pid_init(&sta->pid.follow, 1, 0, 1.5, 3, 10);    gw
+  pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); //cam
+  
   // wheels init
   sta->base_speed = 0;
   status_wheels_init(sta->wheels);
@@ -78,6 +79,7 @@ void status_next(struct Status *sta) {
     {
         delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
     }
+    PRINTLN("%d", sta->sensor.follow);
     
     // delta = CLAMP(delta, MAX_FOLLOW_TURN_SPEED);
     sta->wheels[FONT_LEFT].target += delta;
