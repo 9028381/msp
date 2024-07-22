@@ -5,6 +5,7 @@
 #include "../device/gyroscope.h"
 #include "../utils/utils.h"
 #include "User/device/wheel.h"
+#include "User/utils/log.h"
 #include "User/utils/pid.h"
 #include "record.h"
 
@@ -24,8 +25,10 @@ void status_init(struct Status *sta) {
   pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // remote pid init
-  pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10);
-  pid_init(&sta->pid.remote_theta, 1, 0, 0, 3, 10);
+//   pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10);    // real remote
+//   pid_init(&sta->pid.remote_theta, 1, 0, 0, 3, 10);      // real remote
+  pid_init(&sta->pid.remote_forward, 4, 0, 2, 3, 10);  //cam
+  pid_init(&sta->pid.remote_theta, 2, 0, 1, 3, 10);   //cam
 
   // wheels init
   sta->base_speed = 0;
@@ -63,6 +66,9 @@ void status_next(struct Status *sta) {
 
     sta->wheels[FONT_LEFT].target = forward + theta;
     sta->wheels[FONT_RIGHT].target = forward - theta;
+
+    PRINTLN("f:%d, t:%d",sta->remote_position.forward,sta->remote_position.theta);
+    PRINTLN("L: %d, R: %d",forward + theta, forward - theta);
 
     goto THRUST_MOTOR;
   }
