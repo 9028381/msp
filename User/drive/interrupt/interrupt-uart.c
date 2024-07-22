@@ -81,7 +81,7 @@ void uart_rpc_drive(enum Uart which, uint8_t rev) {
   data[which] = data[which] << 8 | rev;
 
   if ((data[which] >> 24) == 0xff) {
-    INFO("RECEIVE %x", data[which]);
+    // INFO("RECEIVE %x", data[which]);
     Task t = task_new(uart_rpc_task_queue_call, (void *)data[which]);
     task_queue_push(&task.queue, t);
     data[which] = 0;

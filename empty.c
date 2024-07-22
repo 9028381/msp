@@ -25,7 +25,7 @@ int main(void) {
 
   led_blame(0, 5, 5, 5);
 
-  status.base_speed = 100;
+//   status.base_speed = 100;
   status.mode.remote = true;
 
   /* status.mode.follow = true; */
