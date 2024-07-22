@@ -18,8 +18,8 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
-  status_init(&status);
-  task_init(&task);
+//   status_init(&status);
+//   task_init(&task);
 
   keyreact_init();
 

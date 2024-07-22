@@ -58,13 +58,12 @@ void status_next(struct Status *sta) {
 
   // remote
   if (sta->mode.remote) {
-    int forward =
-        pid_compute(&sta->pid.remote_forward, sta->remote_position.forward, 0);
-    int theta =
-        pid_compute(&sta->pid.remote_theta, sta->remote_position.theta, 0);
+    int forward = pid_compute(&sta->pid.remote_forward, sta->remote_position.forward, 0);
+    int theta = pid_compute(&sta->pid.remote_theta, sta->remote_position.theta, 0);
 
-    sta->wheels[FONT_LEFT].target += forward + theta;
-    sta->wheels[FONT_RIGHT].target += forward - theta;
+    sta->wheels[FONT_LEFT].target = forward + theta;
+    sta->wheels[FONT_RIGHT].target = forward - theta;
+    PRINTLN("%d", sta->remote_position.theta);
 
     goto THRUST_MOTOR;
   }
