@@ -17,6 +17,7 @@ struct Mode {
   bool follow;
   bool record;
   bool repeat;
+  bool remote;
 };
 
 struct MovePid {

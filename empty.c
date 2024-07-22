@@ -3,6 +3,7 @@
 #include "User/device/servo.h"
 #include "User/drive/interrupt/interrupt-timer.h"
 #include "User/drive/interrupt/interrupt.h"
+#include "User/move/turn.h"
 #include "User/status/status.h"
 #include "User/task/task.h"
 #include "ti_msp_dl_config.h"
@@ -17,13 +18,21 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
+  status_init(&status);
+  task_init(&task);
+
   keyreact_init();
 
   led_blame(0, 5, 5, 5);
 
-  status.base_speed = 1000;
-  status.mode.follow = true;
-  
+  status.base_speed = 100;
+  status.mode.remote = true;
+
+  /* status.mode.follow = true; */
+
+  //   status.mode.turn = true;
+  //   status.dir.target = 0;
+
   while (1) {
     task_poll(&task);
   }
