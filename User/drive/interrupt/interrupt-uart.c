@@ -1,4 +1,5 @@
 #include "../../device/ms_gray.h"
+#include "User/utils/log.h"
 #include "../uart.h"
 #include "User/task/rpc.h"
 #include "User/task/task.h"
@@ -80,6 +81,7 @@ void uart_rpc_drive(enum Uart which, uint8_t rev) {
   data[which] = data[which] << 8 | rev;
 
   if ((data[which] >> 24) == 0xff) {
+    INFO("RECEIVE %x", data[which]);
     Task t = task_new(uart_rpc_task_queue_call, (void *)data[which]);
     task_queue_push(&task.queue, t);
     data[which] = 0;
