@@ -23,11 +23,18 @@ struct Mode {
 struct MovePid {
   Pid turn;
   Pid follow;
+  Pid remote_forward;
+  Pid remote_theta;
 };
 
 struct Direction {
   float origin;
   float target;
+};
+
+struct RemotePosition {
+  int forward;
+  int theta;
 };
 
 struct Status {
@@ -39,6 +46,7 @@ struct Status {
   short base_speed;
   struct Wheel wheels[WHEEL_NUMS];
   struct Mode mode;
+  struct RemotePosition remote_position;
   unsigned record_or_repeat_reference_time;
 };
 

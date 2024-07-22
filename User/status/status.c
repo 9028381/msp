@@ -5,6 +5,7 @@
 #include "../device/gyroscope.h"
 #include "../utils/utils.h"
 #include "User/device/wheel.h"
+#include "User/utils/pid.h"
 #include "record.h"
 
 struct Status status;
@@ -22,9 +23,17 @@ void status_init(struct Status *sta) {
   // pid_init(&sta->pid.follow, 1, 0, 1.5, 3, 10);    gw
   pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
+  // remote pid init
+  pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10);
+  pid_init(&sta->pid.remote_theta, 1, 0, 0, 3, 10);
+
   // wheels init
   sta->base_speed = 0;
   status_wheels_init(sta->wheels);
+
+  // remote position
+  sta->remote_position.forward = 0;
+  sta->remote_position.theta = 0;
 
   // mode init
   sta->mode.turn = false;
@@ -48,8 +57,17 @@ void status_next(struct Status *sta) {
   }
 
   // remote
-  if (sta->mode.remote)
+  if (sta->mode.remote) {
+    int forward =
+        pid_compute(&sta->pid.remote_forward, sta->remote_position.forward, 0);
+    int theta =
+        pid_compute(&sta->pid.remote_theta, sta->remote_position.theta, 0);
+
+    sta->wheels[FONT_LEFT].target += forward + theta;
+    sta->wheels[FONT_RIGHT].target += forward - theta;
+
     goto THRUST_MOTOR;
+  }
 
   // motor base speed
   for (int i = 0; i < WHEEL_NUMS; i++)
