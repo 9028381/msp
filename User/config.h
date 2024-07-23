@@ -42,4 +42,14 @@
 #define LOG_UART uart1
 #define LOG_FORMAT_BUF_LENGTH 256
 
+/****** GW_GRAY ******/
+#define GW_GRAY_CROSSROAD_MIN_RETURN_TIMES 8
+
+#define ROAD_CROSS -30000
+#define ROAD_TB 30000
+#define ROAD_TL -25000
+#define ROAD_TR 25000
+#define ROAD_LEFT -20000
+#define ROAD_RIGHT 20000
+
 #endif // !__CONFIG_H__

@@ -1,4 +1,5 @@
 #include "gw_gray.h"
+#include "User/config.h"
 #include "User/device/led.h"
 #include "User/drive/iic-hardware.h"
 #include "User/task/task.h"
@@ -77,6 +78,7 @@ void gw_gray_decision(uint8_t integral, uint8_t line) {
 short gw_gray_get_diff() {
   static uint8_t maybe = 0;
   static uint8_t integral = 0;
+  static uint8_t cross_cnt = 0;
 
   uint8_t line = gw_gray_get_line_digital_is_black();
 
@@ -86,6 +88,7 @@ short gw_gray_get_diff() {
     if (maybe == 1) {
       if (cross == Straight)
         gw_gray_decision(integral, line);
+
       switch (cross) {
       case UnknowRoad:
         INFO("Unknow road");
@@ -94,24 +97,40 @@ short gw_gray_get_diff() {
         return 0;
       case CrossRoad:
         INFO("Cross road");
-        cross = Straight;
-        maybe = 0;
-        return 0;
+        if (cross_cnt == 0)
+          cross_cnt = GW_GRAY_CROSSROAD_MIN_RETURN_TIMES;
+
+        if (cross_cnt >= 2) {
+          cross_cnt -= 1;
+          return ROAD_CROSS;
+        }
+
+        if (line & 0b00111100) {
+          cross = Straight;
+          maybe = 0;
+          cross_cnt = 0;
+          return gw_gray_diff(line & 0x7E);
+        }
+
+        return ROAD_CROSS;
       case TBRoad:
         INFO("T B road");
-        maybe = 1;
-        status.base_speed = 0;
-        return 0;
+        if (line & 0b00111100) {
+          cross = Straight;
+          maybe = 0;
+          return gw_gray_diff(line & 0x7E);
+        }
+        return ROAD_TB;
       case TLRoad:
         INFO("T L road");
         cross = Straight;
         maybe = 0;
-        return 0;
+        return ROAD_TL;
       case TRRoad:
         INFO("T R road");
         cross = Straight;
         maybe = 0;
-        return 0;
+        return ROAD_TR;
       case LeftRoad:
         INFO("Left road");
         if (line & 0b00111100) {
@@ -119,7 +138,7 @@ short gw_gray_get_diff() {
           maybe = 0;
           return gw_gray_diff(line & 0x7E);
         }
-        return 30000;
+        return ROAD_LEFT;
       case RightRoad:
         INFO("Right road");
         if (line & 0b00111100) {
@@ -127,7 +146,7 @@ short gw_gray_get_diff() {
           maybe = 0;
           return gw_gray_diff(line & 0x7E);
         }
-        return -30000;
+        return ROAD_RIGHT;
       case Straight:
         INFO("Straight road");
         maybe = 0;
