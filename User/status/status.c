@@ -104,8 +104,9 @@ void status_next(struct Status *sta) {
     int delta;
     switch (sta->sensor.follow) {
     case ROAD_LEFT:
-      sta->wheels[FONT_LEFT].target = MAX_FOLLOW_TURN_SPEED;
-      sta->wheels[FONT_RIGHT].target = -MAX_FOLLOW_TURN_SPEED;
+      sta->wheels[FONT_LEFT].target = -MAX_FOLLOW_TURN_SPEED;
+      sta->wheels[FONT_RIGHT].target = MAX_FOLLOW_TURN_SPEED;
+      break;
     case ROAD_RIGHT:
       sta->wheels[FONT_LEFT].target = -MAX_FOLLOW_TURN_SPEED;
       sta->wheels[FONT_RIGHT].target = MAX_FOLLOW_TURN_SPEED;
