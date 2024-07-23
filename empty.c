@@ -18,15 +18,12 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
-//   status_init(&status);
-//   task_init(&task);
-
   keyreact_init();
 
   led_blame(0, 5, 5, 5);
 
-//   status.base_speed = 400;
-//   status.mode.follow = true;
+  status.base_speed = 400;
+  status.mode.follow = true;
 
   /* status.mode.follow = true; */
 

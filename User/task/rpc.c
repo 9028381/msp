@@ -1,6 +1,7 @@
 #include "rpc.h"
 #include "../utils/log.h"
 #include "User/device/wheel.h"
+#include "User/status/status.h"
 #include "stdlib.h"
 
 void rpc_register(RPC rpc, uint8_t id, const char *describe,
@@ -109,6 +110,9 @@ void rpc_declare(RPC rpc) {
   /* RPC_DECLARE_SET_VAR(1, status.wheels[FONT_RIGHT].target); */
   RPC_DECLARE_SET_VAR(0, status.remote_position.forward);
   RPC_DECLARE_SET_VAR(1, status.remote_position.theta);
+  RPC_DECLARE_SET_VAR(11, status.pid.follow.kp);
+  RPC_DECLARE_SET_VAR(12, status.pid.follow.ki);
+  RPC_DECLARE_SET_VAR(13, status.pid.follow.kd);
   RPC_DECLARE_CALL_FN(10, echo, "hello");
   RPC_DECLARE_GET_VAR(5, status.wheels[FONT_LEFT].history);
   RPC_DECLARE_GET_VAR(6, status.wheels[FONT_RIGHT].history);
