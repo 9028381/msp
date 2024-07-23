@@ -21,8 +21,8 @@ void status_init(struct Status *sta) {
 
   // move pid init
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
-  // pid_init(&sta->pid.follow, 1, 0, 1.5, 3, 10);    gw
-  pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
+  pid_init(&sta->pid.follow, 1, 0, 0.2, 3, 10);    //gw
+  //pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // remote pid init
   pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10);    // real remote
@@ -82,14 +82,14 @@ void status_next(struct Status *sta) {
     sta->sensor.gyro = gyr_get_value(gyr_z_yaw);
 
   if (sta->mode.follow)
-    sta->sensor.follow = get_cam_diff(); // gw_gray_get_diff();
+    // sta->sensor.follow = get_cam_diff(); 
+    sta->sensor.follow = gw_gray_get_diff();
 
   // update wheel target speed based on sensor
   if (sta->mode.turn) {
     float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro;
     diff = WARPPING(diff, -180.0, 180.0);
-    PRINTLN("origin:%f, tar:%f, diff:%f", sta->dir.origin, sta->dir.target,
-            diff);
+    // PRINTLN("origin:%f, tar:%f, diff:%f", sta->dir.origin, sta->dir.target,diff);
     int delta = pid_compute(&sta->pid.turn, 0, diff * 10);
     delta = CLAMP(delta, MAX_TURN_SPEED); // LIMIT MAX TURN SPEED
     sta->wheels[FONT_LEFT].target += delta;
@@ -103,6 +103,8 @@ void status_next(struct Status *sta) {
 
     sta->wheels[FONT_LEFT].target += delta;
     sta->wheels[FONT_RIGHT].target -= delta;
+
+
 
     if (ABS(sta->sensor.follow) > 10000) {
       sta->wheels[FONT_LEFT].target =

@@ -14,7 +14,7 @@
 #define Analogue_Output_CMD 0xB0
 #define Get_error_CMD 0xDE
 
-const int16_t gw_bit_weight[8] = {0, -1500, -300, -100, 100, 300, 1500, 0};
+const int16_t gw_bit_weight[8] = {0, -800, -90, -30, 30, 90, 800, 0};
 
 short gw_gray_diff(uint8_t line) {
   short diff = 0;
@@ -42,10 +42,10 @@ void gw_gray_show(uint8_t line) {
     line <<= 1;
   }
 
-  PRINTLN("%s", str);
+//   PRINTLN("%s", str);
 }
 
-#define INTEGRAL_TIMES 6
+#define INTEGRAL_TIMES 10
 enum Road {           // L F R
   CrossRoad = 0b111,  // 1 1 1
   TBRoad = 0b101,     // 1 0 1
@@ -88,32 +88,32 @@ short gw_gray_get_diff() {
         gw_gray_decision(integral, line);
       switch (cross) {
       case UnknowRoad:
-        INFO("Unknow road");
+        // INFO("Unknow road");
         cross = Straight;
         maybe = 0;
         return 0;
       case CrossRoad:
-        INFO("Cross road");
+        // INFO("Cross road");
           cross = Straight;
           maybe = 0;
         return 0;
       case TBRoad:
-        INFO("T B road");
+        // INFO("T B road");
           maybe = 1;
           status.base_speed = 0;
         return 0;
       case TLRoad:
-        INFO("T L road");
+        // INFO("T L road");
           cross = Straight;
           maybe = 0;
         return 0;
       case TRRoad:
-        INFO("T R road");
+        // INFO("T R road");
           cross = Straight;
           maybe = 0;
         return 0;
       case LeftRoad:
-        INFO("Left road");
+        // INFO("Left road");
         if (line & 0b00111100) {
           cross = Straight;
           maybe = 0;
@@ -121,7 +121,7 @@ short gw_gray_get_diff() {
         }
         return 30000;
       case RightRoad:
-        INFO("Right road");
+        // INFO("Right road");
         if (line & 0b00111100) {
           cross = Straight;
           maybe = 0;
@@ -129,7 +129,7 @@ short gw_gray_get_diff() {
         }
         return -30000;
       case Straight:
-        INFO("Straight road");
+        // INFO("Straight road");
         maybe = 0;
         return gw_gray_diff(line & 0x7E);
       }
