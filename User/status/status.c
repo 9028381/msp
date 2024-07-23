@@ -21,14 +21,14 @@ void status_init(struct Status *sta) {
 
   // move pid init
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
-  pid_init(&sta->pid.follow, 1, 0, 0.2, 3, 10);    //gw
-  //pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
+  pid_init(&sta->pid.follow, 1, 0, 0.2, 3, 10); // gw
+  // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // remote pid init
-  pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10);    // real remote
-  pid_init(&sta->pid.remote_theta, 1, 0, 0, 3, 10);      // real remote
-//   pid_init(&sta->pid.remote_forward, 6, 0, 2.5, 3, 10);  //cam
-//   pid_init(&sta->pid.remote_theta, 2, 0, 1, 3, 10);   //cam
+  pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10); // real remote
+  pid_init(&sta->pid.remote_theta, 1, 0, 0, 3, 10);   // real remote
+  //   pid_init(&sta->pid.remote_forward, 6, 0, 2.5, 3, 10);  //cam
+  //   pid_init(&sta->pid.remote_theta, 2, 0, 1, 3, 10);   //cam
 
   // wheels init
   sta->base_speed = 0;
@@ -61,13 +61,16 @@ void status_next(struct Status *sta) {
 
   // remote
   if (sta->mode.remote) {
-    int forward = pid_compute(&sta->pid.remote_forward, sta->remote_position.forward, 0);
-    int theta = pid_compute(&sta->pid.remote_theta, sta->remote_position.theta, 0);
+    int forward =
+        pid_compute(&sta->pid.remote_forward, sta->remote_position.forward, 0);
+    int theta =
+        pid_compute(&sta->pid.remote_theta, sta->remote_position.theta, 0);
 
     sta->wheels[FONT_LEFT].target = forward + theta;
     sta->wheels[FONT_RIGHT].target = forward - theta;
 
-    // PRINTLN("f:%d, t:%d",sta->remote_position.forward,sta->remote_position.theta);
+    // PRINTLN("f:%d,
+    // t:%d",sta->remote_position.forward,sta->remote_position.theta);
     // PRINTLN("L: %d, R: %d",forward + theta, forward - theta);
 
     goto THRUST_MOTOR;
@@ -82,14 +85,15 @@ void status_next(struct Status *sta) {
     sta->sensor.gyro = gyr_get_value(gyr_z_yaw);
 
   if (sta->mode.follow)
-    // sta->sensor.follow = get_cam_diff(); 
+    // sta->sensor.follow = get_cam_diff();
     sta->sensor.follow = gw_gray_get_diff();
 
   // update wheel target speed based on sensor
   if (sta->mode.turn) {
     float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro;
     diff = WARPPING(diff, -180.0, 180.0);
-    // PRINTLN("origin:%f, tar:%f, diff:%f", sta->dir.origin, sta->dir.target,diff);
+    // PRINTLN("origin:%f, tar:%f, diff:%f", sta->dir.origin,
+    // sta->dir.target,diff);
     int delta = pid_compute(&sta->pid.turn, 0, diff * 10);
     delta = CLAMP(delta, MAX_TURN_SPEED); // LIMIT MAX TURN SPEED
     sta->wheels[FONT_LEFT].target += delta;
@@ -97,20 +101,31 @@ void status_next(struct Status *sta) {
   }
 
   if (sta->mode.follow) {
-    int delta = ABS(sta->sensor.follow) > 10000
-                    ? -sta->sensor.follow
-                    : pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
-
-    sta->wheels[FONT_LEFT].target += delta;
-    sta->wheels[FONT_RIGHT].target -= delta;
-
-
-
-    if (ABS(sta->sensor.follow) > 10000) {
-      sta->wheels[FONT_LEFT].target =
-          CLAMP(sta->wheels[FONT_LEFT].target, MAX_FOLLOW_TURN_SPEED);
-      sta->wheels[FONT_RIGHT].target =
-          CLAMP(sta->wheels[FONT_RIGHT].target, MAX_FOLLOW_TURN_SPEED);
+    int delta;
+    switch (sta->sensor.follow) {
+    case ROAD_LEFT:
+      sta->wheels[FONT_LEFT].target = -MAX_FOLLOW_TURN_SPEED;
+      sta->wheels[FONT_RIGHT].target = MAX_FOLLOW_TURN_SPEED;
+    case ROAD_RIGHT:
+      sta->wheels[FONT_LEFT].target = MAX_FOLLOW_TURN_SPEED;
+      sta->wheels[FONT_RIGHT].target = -MAX_FOLLOW_TURN_SPEED;
+      break;
+    case ROAD_CROSS:
+      sta->wheels[FONT_LEFT].target = 0;
+      sta->wheels[FONT_RIGHT].target = 0;
+      break;
+    case ROAD_TB:
+      sta->wheels[FONT_LEFT].target = 0;
+      sta->wheels[FONT_RIGHT].target = 0;
+      break;
+    case ROAD_TR:
+    case ROAD_TL:
+      break;
+    default:
+      delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
+      sta->wheels[FONT_LEFT].target += delta;
+      sta->wheels[FONT_RIGHT].target -= delta;
+      break;
     }
   }
 
