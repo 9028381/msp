@@ -25,6 +25,7 @@ struct MovePid {
   Pid follow;
   Pid remote_forward;
   Pid remote_theta;
+  Pid history[WHEEL_NUMS];
 };
 
 struct Direction {
