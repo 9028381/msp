@@ -147,13 +147,15 @@ THRUST_MOTOR:
     const int *rec = flash_use(0);
     const int *tar = rec + (sta->times - sta->rec_start.times) * 2;
     sta->wheels[FONT_LEFT].target =
-        pid_compute(&sta->pid.follow, 0,
+        pid_compute(&sta->pid.follow,
                     tar[0] - (sta->wheels[FONT_LEFT].history -
-                              sta->rec_start.wheels_history[FONT_LEFT]));
+                              sta->rec_start.wheels_history[FONT_LEFT]),
+                    0);
     sta->wheels[FONT_RIGHT].target =
-        pid_compute(&sta->pid.follow, 0,
+        pid_compute(&sta->pid.follow,
                     tar[1] - (sta->wheels[FONT_RIGHT].history -
-                              sta->rec_start.wheels_history[FONT_RIGHT]));
+                              sta->rec_start.wheels_history[FONT_RIGHT]),
+                    0);
   }
 
   // update wheel thrust based on wheel target
