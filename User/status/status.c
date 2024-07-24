@@ -48,6 +48,10 @@ void status_init(struct Status *sta) {
   sta->mode.record = false;
   sta->mode.repeat = false;
   sta->mode.remote = false;
+
+  sta->rec_start.times = 0;
+  for (int i = 0; i < WHEEL_NUMS; i++)
+    sta->rec_start.wheels_history[i] = 0;
 }
 
 void status_next(struct Status *sta) {
@@ -59,8 +63,10 @@ void status_next(struct Status *sta) {
 
   // record
   if (sta->mode.record) {
-    status_record(sta->wheels[FONT_LEFT].history);
-    status_record(sta->wheels[FONT_RIGHT].history);
+    status_record(sta->wheels[FONT_LEFT].history -
+                  sta->rec_start.wheels_history[FONT_LEFT]);
+    status_record(sta->wheels[FONT_RIGHT].history -
+                  sta->rec_start.wheels_history[FONT_RIGHT]);
   }
 
   // remote
@@ -139,12 +145,15 @@ void status_next(struct Status *sta) {
 THRUST_MOTOR:
   if (sta->mode.repeat) {
     const int *rec = flash_use(0);
-    const int *tar =
-        rec + (sta->times - sta->record_or_repeat_reference_time) * 2;
+    const int *tar = rec + (sta->times - sta->rec_start.times) * 2;
     sta->wheels[FONT_LEFT].target =
-        pid_compute(&sta->pid.follow, tar[0], sta->wheels[FONT_LEFT].history);
+        pid_compute(&sta->pid.follow, 0,
+                    tar[0] - (sta->wheels[FONT_LEFT].history -
+                              sta->rec_start.wheels_history[FONT_LEFT]));
     sta->wheels[FONT_RIGHT].target =
-        pid_compute(&sta->pid.follow, tar[1], sta->wheels[FONT_RIGHT].history);
+        pid_compute(&sta->pid.follow, 0,
+                    tar[1] - (sta->wheels[FONT_RIGHT].history -
+                              sta->rec_start.wheels_history[FONT_RIGHT]));
   }
 
   // update wheel thrust based on wheel target

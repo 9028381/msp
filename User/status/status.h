@@ -38,6 +38,11 @@ struct RemotePosition {
   int theta;
 };
 
+struct SnapShot {
+  unsigned times;
+  int wheels_history[WHEEL_NUMS];
+};
+
 struct Status {
   /// times / STATUS_FREQ == run time(s)
   unsigned times;
@@ -48,7 +53,7 @@ struct Status {
   struct Wheel wheels[WHEEL_NUMS];
   struct Mode mode;
   struct RemotePosition remote_position;
-  unsigned record_or_repeat_reference_time;
+  struct SnapShot rec_start;
 };
 
 extern struct Status status;

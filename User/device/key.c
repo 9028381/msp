@@ -3,9 +3,9 @@
 #include "User/status/record.h"
 #include "User/status/status.h"
 #include "User/task/task.h"
+#include "User/utils/log.h"
 #include "led.h"
 #include "ti_msp_dl_config.h"
-#include "User/utils/log.h"
 
 void key1_callback() {
   static bool is_first = true;
@@ -13,7 +13,9 @@ void key1_callback() {
   if (is_first) {
     status.mode.record = true;
     status.mode.repeat = false;
-    status.record_or_repeat_reference_time = status.times;
+    status.rec_start.times = status.times;
+    for (int i = 0; i < WHEEL_NUMS; i++)
+      status.rec_start.wheels_history[i] = status.wheels[i].history;
     led_blame(0, 2, 5, 5);
     INFO("Start record");
     is_first = false;
@@ -28,7 +30,9 @@ void key1_callback() {
 void key2_callback() {
   status.mode.record = false;
   status.mode.repeat = true;
-  status.record_or_repeat_reference_time = status.times;
+  status.rec_start.times = status.times;
+  for (int i = 0; i < WHEEL_NUMS; i++)
+    status.rec_start.wheels_history[i] = status.wheels[i].history;
   led_blame(0, 2, 5, 5);
 }
 
