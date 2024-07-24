@@ -55,8 +55,8 @@ void status_next(struct Status *sta) {
 
   // record
   if (sta->mode.record) {
-    status_record(sta->wheels[FONT_LEFT].current);
-    status_record(sta->wheels[FONT_RIGHT].current);
+    status_record(sta->wheels[FONT_LEFT].history);
+    status_record(sta->wheels[FONT_RIGHT].history);
   }
 
   // remote
@@ -135,7 +135,7 @@ void status_next(struct Status *sta) {
 THRUST_MOTOR:
   if (sta->mode.repeat) {
     const void *rec = flash_use(0);
-    const short *tar =
+    const int *tar =
         rec +
         (sta->times - sta->record_or_repeat_reference_time) * sizeof(short) * 2;
     sta->wheels[FONT_LEFT].target = tar[0];

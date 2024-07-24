@@ -4,10 +4,10 @@
 #include "stdbool.h"
 #include "stdint.h"
 
-#define RECORD_BUF_LEN ((PAGE_SIZE / 2) / sizeof(short))
+#define RECORD_BUF_LEN ((PAGE_SIZE / 2) / sizeof(int))
 
 struct RecordDataAB {
-  short ab[2][RECORD_BUF_LEN];
+  int ab[2][RECORD_BUF_LEN];
   bool which; // false: A, true: B
   unsigned index;
 };
@@ -61,8 +61,8 @@ void task_flash_write(void *para) {
   unsigned short page = record_task_buf_page_bitor_back_half & 0xffff;
   bool back_half = record_task_buf_page_bitor_back_half & 0x80000000;
 
-  flash_write_to(page, back_half ? RECORD_BUF_LEN * sizeof(short) : 0, para,
-                 RECORD_BUF_LEN * sizeof(short));
+  flash_write_to(page, back_half ? RECORD_BUF_LEN * sizeof(int) : 0, para,
+                 RECORD_BUF_LEN * sizeof(int));
 }
 
 void task_queue_push_flash_erase(unsigned page) {
