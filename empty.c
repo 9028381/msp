@@ -22,7 +22,7 @@ int main(void) {
 
   led_blame(0, 5, 5, 5);
 
-  status.base_speed = 400;
+  status.base_speed = 500;
   status.mode.follow = true;
 
   /* status.mode.follow = true; */

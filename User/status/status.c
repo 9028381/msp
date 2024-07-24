@@ -21,7 +21,7 @@ void status_init(struct Status *sta) {
 
   // move pid init
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
-  pid_init(&sta->pid.follow, 1, 0, 0.2, 3, 10); // gw
+  pid_init(&sta->pid.follow, 1, 0, 0.5, 3, 10); // gw
   // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // remote pid init
