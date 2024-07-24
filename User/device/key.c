@@ -20,6 +20,7 @@ void record_once_switch(void *para) {
     is_first = false;
   } else {
     status.mode.record = false;
+    status.rec.duration = status.times - status.rec.times;
     status_record_force_swap_mem();
     led_blame(0, 2, 10, 10);
     INFO("Stop record");
