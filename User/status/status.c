@@ -148,13 +148,15 @@ THRUST_MOTOR:
     const int *tar = rec + (sta->times - sta->rec_start.times) * 2;
     sta->wheels[FONT_LEFT].target =
         pid_compute(&sta->pid.follow,
-                    tar[0] - (sta->wheels[FONT_LEFT].history -
-                              sta->rec_start.wheels_history[FONT_LEFT]),
+                    (tar[0] - (sta->wheels[FONT_LEFT].history -
+                               sta->rec_start.wheels_history[FONT_LEFT])) /
+                        0xff,
                     0);
     sta->wheels[FONT_RIGHT].target =
         pid_compute(&sta->pid.follow,
-                    tar[1] - (sta->wheels[FONT_RIGHT].history -
-                              sta->rec_start.wheels_history[FONT_RIGHT]),
+                    (tar[1] - (sta->wheels[FONT_RIGHT].history -
+                               sta->rec_start.wheels_history[FONT_RIGHT])) /
+                        0xff,
                     0);
   }
 
