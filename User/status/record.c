@@ -82,7 +82,7 @@ void task_queue_push_flash_write(unsigned char page, const void *src,
   task_queue_push(&task.queue, t);
 }
 
-void record_once_switch(void *para) {
+void record_once_switch(unsigned short var, void *para) {
   static bool is_first = true;
 
   if (is_first) {
@@ -111,7 +111,7 @@ void repeat_auto_stop(void *para) {
   led_blame(0, 5, 10, 10);
 }
 
-void repeat_open(void *para) {
+void repeat_open(unsigned short var, void *para) {
   INFO("Start repeat");
   status.mode.repeat = true;
   status.rec.times = status.times;
