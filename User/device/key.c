@@ -28,6 +28,7 @@ void key1_callback() {
 }
 
 void key2_callback() {
+  INFO("Start repeat");
   status.mode.record = false;
   status.mode.repeat = true;
   status.rec_start.times = status.times;
@@ -47,6 +48,7 @@ void task_timed_key_react_new(void (*key_react)(void *), void *para,
 
 void key1_react(void *callback) {
   if (key1_is_press()) {
+    INFO("KEY_EVENT key1 press.");
     ((void (*)())callback)();
     task_timed_key_react_new(key1_react, callback, STATUS_FREQ);
     return;
@@ -57,6 +59,7 @@ void key1_react(void *callback) {
 
 void key2_react(void *callback) {
   if (key2_is_press()) {
+    INFO("KEY_EVENT key1 press.");
     ((void (*)())callback)();
     task_timed_key_react_new(key2_react, callback, STATUS_FREQ);
     return;
