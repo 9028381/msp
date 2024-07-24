@@ -1,8 +1,11 @@
 #include "User/config.h"
 #include "User/device/flash.h"
+#include "User/device/led.h"
 #include "User/task/task.h"
+#include "User/utils/utils.h"
 #include "stdbool.h"
 #include "stdint.h"
+#include "stdlib.h"
 
 #define RECORD_BUF_LEN ((PAGE_SIZE / 2) / sizeof(int))
 
@@ -77,4 +80,41 @@ void task_queue_push_flash_write(unsigned char page, const void *src,
 
   Task t = task_new(task_flash_write, (void *)src);
   task_queue_push(&task.queue, t);
+}
+
+void record_once_switch(void *para) {
+  static bool is_first = true;
+
+  if (is_first) {
+    INFO("Start record");
+    status.mode.record = true;
+    status.rec.times = status.times;
+    for (int i = 0; i < WHEEL_NUMS; i++)
+      status.rec.wheels_history[i] = status.wheels[i].history;
+    led_blame(0, 4, 5, 5);
+    is_first = false;
+  } else {
+    INFO("Stop record");
+    status.mode.record = false;
+    status.rec.duration = status.times - status.rec.times;
+    status_record_force_swap_mem();
+    led_blame(0, 2, 10, 10);
+  }
+}
+
+void repeat_auto_stop(void *para) {
+  INFO("Stop repeat");
+  status.mode.repeat = false;
+  led_blame(0, 5, 10, 10);
+}
+
+void repeat_open(void *para) {
+  INFO("Start repeat");
+  status.mode.repeat = true;
+  status.rec.times = status.times;
+  for (int i = 0; i < WHEEL_NUMS; i++)
+    status.rec.wheels_history[i] = status.wheels[i].history;
+  led_blame(0, 2, 10, 10);
+  Task t = task_new(repeat_auto_stop, NULL);
+  task_timed_append(&task.timed, t, status.rec.duration - 1);
 }

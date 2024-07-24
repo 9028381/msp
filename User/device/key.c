@@ -6,43 +6,7 @@
 #include "User/utils/log.h"
 #include "led.h"
 #include "ti_msp_dl_config.h"
-
-void record_once_switch(void *para) {
-  static bool is_first = true;
-
-  if (is_first) {
-    INFO("Start record");
-    status.mode.record = true;
-    status.rec.times = status.times;
-    for (int i = 0; i < WHEEL_NUMS; i++)
-      status.rec.wheels_history[i] = status.wheels[i].history;
-    led_blame(0, 4, 5, 5);
-    is_first = false;
-  } else {
-    INFO("Stop record");
-    status.mode.record = false;
-    status.rec.duration = status.times - status.rec.times;
-    status_record_force_swap_mem();
-    led_blame(0, 2, 10, 10);
-  }
-}
-
-void repeat_stop(void *para) {
-  INFO("Stop repeat");
-  status.mode.repeat = false;
-  led_blame(0, 5, 10, 10);
-}
-
-void repeat_open(void *para) {
-  INFO("Start repeat");
-  status.mode.repeat = true;
-  status.rec.times = status.times;
-  for (int i = 0; i < WHEEL_NUMS; i++)
-    status.rec.wheels_history[i] = status.wheels[i].history;
-  led_blame(0, 2, 10, 10);
-  Task t = task_new(repeat_stop, NULL);
-  task_timed_append(&task.timed, t, status.rec.duration - 1);
-}
+#include "User/status/record.h"
 
 bool key1_is_press() { return !DL_GPIO_readPins(KEY_PORT, KEY_KEY1_PIN); }
 bool key2_is_press() { return !DL_GPIO_readPins(KEY_PORT, KEY_KEY2_PIN); }
