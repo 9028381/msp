@@ -3,7 +3,7 @@
 #include "User/device/cam.h"
 
 void task_queue_init(struct Queue *queue) {
-  INFO("TASK_QUEUE_INIT.");
+  INFO("TASK_QUEUE_INIT");
 
   queue->head = 0;
   queue->tail = 0;

@@ -3,7 +3,7 @@
 #include "task.h"
 
 void task_timed_init(struct Timed *timed) {
-  INFO("TASK_TIMED_INIT.");
+  INFO("TASK_TIMED_INIT");
 
   timed->len = 0;
   timed->index = 0;
