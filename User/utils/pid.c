@@ -1,7 +1,6 @@
 #include "pid.h"
 #include "log.h"
 #include "math.h"
-#include "stdint.h"
 #include "stdlib.h"
 
 void pid_init(Pid *pid, float kp, float ki, float kd,
@@ -41,9 +40,6 @@ void pid_init(Pid *pid, float kp, float ki, float kd,
 }
 
 int pid_compute(Pid *pid, int target, int current) {
-  if (ABS(target - current) > 30000) {
-    THROW_WARN("PID_COMPUTE_ERROR: target - current > 30000.")
-  }
   short err = target - current;
 
   /*
