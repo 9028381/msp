@@ -97,6 +97,9 @@ void record_once_switch(void *para) {
     INFO("Stop record");
     status.mode.record = false;
     status.rec.duration = status.times - status.rec.times;
+    flash_erase(PAGE_NUM - 1);
+    flash_write(PAGE_NUM - 1, &status.rec.duration,
+                sizeof(status.rec.duration));
     status_record_force_swap_mem();
     led_blame(0, 2, 10, 10);
   }

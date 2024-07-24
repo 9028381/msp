@@ -48,6 +48,9 @@ void status_init(struct Status *sta) {
   sta->mode.remote = false;
 
   sta->rec.times = 0;
+  // read flash duration
+  unsigned duration = *(const unsigned *)flash_use(PAGE_NUM - 1);
+  sta->rec.duration = duration == 0xFFFFFFFF ? 0 : duration;
   for (int i = 0; i < WHEEL_NUMS; i++)
     sta->rec.wheels_history[i] = 0;
 }
