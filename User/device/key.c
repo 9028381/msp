@@ -7,34 +7,40 @@
 #include "led.h"
 #include "ti_msp_dl_config.h"
 
-void key1_callback() {
+void record_once_switch(void *para) {
   static bool is_first = true;
 
   if (is_first) {
     status.mode.record = true;
-    status.mode.repeat = false;
-    status.rec_start.times = status.times;
+    status.rec.times = status.times;
     for (int i = 0; i < WHEEL_NUMS; i++)
-      status.rec_start.wheels_history[i] = status.wheels[i].history;
-    led_blame(0, 2, 5, 5);
+      status.rec.wheels_history[i] = status.wheels[i].history;
+    led_blame(0, 4, 5, 5);
     INFO("Start record");
     is_first = false;
   } else {
     status.mode.record = false;
     status_record_force_swap_mem();
-    led_blame(0, 3, 10, 10);
+    led_blame(0, 2, 10, 10);
     INFO("Stop record");
   }
 }
 
-void key2_callback() {
+void repeat_stop(void *para) {
+  status.mode.repeat = false;
+  led_blame(0, 5, 10, 10);
+  INFO("Stop repeat");
+}
+
+void repeat_open(void *para) {
   INFO("Start repeat");
-  status.mode.record = false;
   status.mode.repeat = true;
-  status.rec_start.times = status.times;
+  status.rec.times = status.times;
   for (int i = 0; i < WHEEL_NUMS; i++)
-    status.rec_start.wheels_history[i] = status.wheels[i].history;
-  led_blame(0, 2, 5, 5);
+    status.rec.wheels_history[i] = status.wheels[i].history;
+  led_blame(0, 2, 10, 10);
+  Task t = task_new(repeat_stop, NULL);
+  task_timed_append(&task.timed, t, status.rec.duration);
 }
 
 bool key1_is_press() { return !DL_GPIO_readPins(KEY_PORT, KEY_KEY1_PIN); }
@@ -49,7 +55,7 @@ void task_timed_key_react_new(void (*key_react)(void *), void *para,
 void key1_react(void *callback) {
   if (key1_is_press()) {
     INFO("KEY_EVENT key1 press.");
-    ((void (*)())callback)();
+    ((void (*)(void *))callback)(NULL);
     task_timed_key_react_new(key1_react, callback, STATUS_FREQ);
     return;
   }
@@ -60,7 +66,7 @@ void key1_react(void *callback) {
 void key2_react(void *callback) {
   if (key2_is_press()) {
     INFO("KEY_EVENT key1 press.");
-    ((void (*)())callback)();
+    ((void (*)(void *))callback)(NULL);
     task_timed_key_react_new(key2_react, callback, STATUS_FREQ);
     return;
   }
@@ -69,6 +75,6 @@ void key2_react(void *callback) {
 }
 
 void keyreact_init() {
-  key1_react(key1_callback);
-  key2_react(key2_callback);
+  key1_react(record_once_switch);
+  key2_react(repeat_open);
 }

@@ -41,6 +41,7 @@ struct RemotePosition {
 struct SnapShot {
   unsigned times;
   int wheels_history[WHEEL_NUMS];
+  unsigned duration;
 };
 
 struct Status {
@@ -53,7 +54,7 @@ struct Status {
   struct Wheel wheels[WHEEL_NUMS];
   struct Mode mode;
   struct RemotePosition remote_position;
-  struct SnapShot rec_start;
+  struct SnapShot rec;
 };
 
 extern struct Status status;
