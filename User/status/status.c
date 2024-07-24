@@ -26,7 +26,7 @@ void status_init(struct Status *sta) {
 
   // repeat history pid
   for (int i = 0; i < WHEEL_NUMS; i++)
-    pid_init(&sta->pid.history[i], 1, 0, 0, 3, 10);
+    pid_init(&sta->pid.history[i], 0.01, 0, 0, 3, 10);
 
   // remote pid init
   pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10); // real remote
@@ -147,17 +147,13 @@ THRUST_MOTOR:
     const int *rec = flash_use(0);
     const int *tar = rec + (sta->times - sta->rec_start.times) * 2;
     sta->wheels[FONT_LEFT].target =
-        pid_compute(&sta->pid.follow,
-                    (tar[0] - (sta->wheels[FONT_LEFT].history -
-                               sta->rec_start.wheels_history[FONT_LEFT])) /
-                        0xff,
-                    0);
+        pid_compute(&sta->pid.follow, tar[0],
+                    (sta->wheels[FONT_LEFT].history -
+                     sta->rec_start.wheels_history[FONT_LEFT]));
     sta->wheels[FONT_RIGHT].target =
-        pid_compute(&sta->pid.follow,
-                    (tar[1] - (sta->wheels[FONT_RIGHT].history -
-                               sta->rec_start.wheels_history[FONT_RIGHT])) /
-                        0xff,
-                    0);
+        pid_compute(&sta->pid.follow, tar[1],
+                    sta->wheels[FONT_RIGHT].history -
+                        sta->rec_start.wheels_history[FONT_RIGHT]);
   }
 
   // update wheel thrust based on wheel target
