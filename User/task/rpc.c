@@ -114,9 +114,9 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_SET_VAR(11, status.pid.follow.kp);
   RPC_DECLARE_SET_VAR(12, status.pid.follow.ki);
   RPC_DECLARE_SET_VAR(13, status.pid.follow.kd);
-  RPC_DECLARE_CALL_FN(100, echo, "hello");
-  RPC_DECLARE_CALL_FN(101, record_once_switch, NULL);
-  RPC_DECLARE_CALL_FN(102, repeat_open, NULL);
+  RPC_DECLARE_CALL_FN(8, echo, "hello");
+  RPC_DECLARE_CALL_FN(9, record_once_switch, NULL);
+  RPC_DECLARE_CALL_FN(10, repeat_open, NULL);
   RPC_DECLARE_GET_VAR(5, status.wheels[FONT_LEFT].history);
   RPC_DECLARE_GET_VAR(6, status.wheels[FONT_RIGHT].history);
 }
