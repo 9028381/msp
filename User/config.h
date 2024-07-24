@@ -27,7 +27,7 @@
 /*
  * task
  */
-#define TASK_RPC_ID_LIMIT 30
+#define TASK_RPC_ID_LIMIT 128
 #define TASK_QUEUE_LIMIT 30
 #define TASK_TIMED_LIMIT 30
 
