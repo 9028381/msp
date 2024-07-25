@@ -14,11 +14,11 @@ void status_init(struct Status *sta) {
   sta->times = 0;
 
   // sensor init
-  // sta->dir.origin = gyr_get_value(gyr_z_yaw);
+  sta->dir.origin = gyr_get_value(gyr_z_yaw);
   sta->dir.target = 0.0;
 
   // move pid init
-  pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
+  pid_init(&sta->pid.turn, 1, 0, 1, 5, 10);
   pid_init(&sta->pid.follow, 1, 0, 0.5, 3, 10); // gw
   // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 

@@ -9,12 +9,13 @@ void rpc_register(RPC rpc, uint8_t id, const char *describe,
                   void fn(uint16_t, void *), void *para);
 void rpc_declare(RPC rpc);
 
+void set_bool(uint16_t var, void *p) {*(bool *)p = (bool)var; }
 void set_int(uint16_t var, void *p) { *(int *)p = (int16_t)var; }
 void set_uint(uint16_t var, void *p) { *(unsigned int *)p = (uint16_t)var; }
 void set_short(uint16_t var, void *p) { *(short *)p = (int16_t)var; }
 void set_ushort(uint16_t var, void *p) { *(unsigned short *)p = (uint16_t)var; }
 void set_float(uint16_t var, void *p) {
-  *(float *)p = (float)(int16_t)var / 1000;
+  *(float *)p = (float)(int16_t)var / 100;
 }
 
 void get_int(uint16_t var, void *p) { INFO("GET %d", *(int *)p); }
@@ -23,6 +24,7 @@ void get_short(uint16_t var, void *p) { INFO("GET %hd", *(short *)p); }
 void get_ushort(uint16_t var, void *p) {
   INFO("GET %hu", *(unsigned short *)p);
 }
+void get_bool(uint16_t var, void *p) { INFO("GET %s", *(bool *)p ? "true" : "false"); }
 void get_float(uint16_t var, void *p) { INFO("GET %f", *(float *)p); }
 
 void echo(uint16_t var, void *p) { INFO("ECHO %hx %s", var, p) }
@@ -33,6 +35,7 @@ void echo(uint16_t var, void *p) { INFO("ECHO %hx %s", var, p) }
       unsigned int: set_uint,                                                  \
       short: set_short,                                                        \
       unsigned short: set_ushort,                                              \
+      bool: set_bool,                                                          \
       float: set_float)
 
 #define GET_VAR_FN(x)                                                          \
@@ -41,6 +44,7 @@ void echo(uint16_t var, void *p) { INFO("ECHO %hx %s", var, p) }
       unsigned int: get_uint,                                                  \
       short: get_short,                                                        \
       unsigned short: get_ushort,                                              \
+      bool: get_bool,                                                          \
       float: get_float)
 
 #define RPC_DECLARE_SET_VAR(id, var)                                           \
@@ -108,15 +112,25 @@ void rpc_declare(RPC rpc) {
   /// RPC_DECLARE_GET_VAR(1, a);
   /// RPC_DECLARE_CALL_FN(2, echo, "Hello World!");
   /* RPC_DECLARE_SET_VAR(0, status.wheels[FONT_LEFT].target); */
-  /* RPC_DECLARE_SET_VAR(1, status.wheels[FONT_RIGHT].target); */
+  /* RPC_DECLARE_SET_VAR(1, status.wheels[FONT_RIGHT].target); */  
   RPC_DECLARE_SET_VAR(0, status.remote_position.forward);
   RPC_DECLARE_SET_VAR(1, status.remote_position.theta);
+
+  RPC_DECLARE_SET_VAR(2, status.dir.target);
+
+  RPC_DECLARE_SET_VAR(5, status.mode.remote);
+  RPC_DECLARE_SET_VAR(6, status.mode.follow);
+  RPC_DECLARE_SET_VAR(7, status.mode.turn);
+
   RPC_DECLARE_SET_VAR(11, status.pid.follow.kp);
   RPC_DECLARE_SET_VAR(12, status.pid.follow.ki);
   RPC_DECLARE_SET_VAR(13, status.pid.follow.kd);
-  RPC_DECLARE_CALL_FN(8, echo, "hello");
-  RPC_DECLARE_CALL_FN(9, record_once_switch, NULL);
-  RPC_DECLARE_CALL_FN(10, repeat_open, NULL);
-  RPC_DECLARE_GET_VAR(5, status.wheels[FONT_LEFT].history);
-  RPC_DECLARE_GET_VAR(6, status.wheels[FONT_RIGHT].history);
+
+  RPC_DECLARE_GET_VAR(50, status.wheels[FONT_LEFT].history);
+  RPC_DECLARE_GET_VAR(51, status.wheels[FONT_RIGHT].history);
+  RPC_DECLARE_GET_VAR(52, status.dir.target);
+
+  RPC_DECLARE_CALL_FN(100, echo, "hello");
+  RPC_DECLARE_CALL_FN(101, record_once_switch, NULL);
+  RPC_DECLARE_CALL_FN(102, repeat_open, NULL);
 }
