@@ -6,7 +6,11 @@
 #include "User/move/turn.h"
 #include "User/status/status.h"
 #include "User/task/task.h"
+#include "User/utils/log.h"
 #include "ti_msp_dl_config.h"
+#include "User/device/radar.h"
+#include "User/utils/utils.h"
+#include "ti/driverlib/dl_uart.h"
 
 int main(void) {
   SYSCFG_DL_init();
@@ -22,15 +26,15 @@ int main(void) {
 
   led_blame(0, 5, 5, 5);
 
+
 //   status.base_speed = 500;
-  //status.mode.follow = true;
+//   status.mode.follow = true;
 
-  /* status.mode.follow = true; */
-
-  //   status.mode.turn = true;
-  //   status.dir.target = 0;
+//   status.mode.turn = true;
+//   status.dir.target = 0;
 
   while (1) {
     task_poll(&task);
+    radar_data_process();
   }
 }
