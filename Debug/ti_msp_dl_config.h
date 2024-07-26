@@ -145,6 +145,11 @@ extern "C" {
 #define TIMER_INT_INST_IRQHandler                               TIMG0_IRQHandler
 #define TIMER_INT_INST_INT_IRQN                                 (TIMG0_INT_IRQn)
 #define TIMER_INT_INST_LOAD_VALUE                                        (3124U)
+/* Defines for RE_TIMER */
+#define RE_TIMER_INST                                                    (TIMG6)
+#define RE_TIMER_INST_IRQHandler                                TIMG6_IRQHandler
+#define RE_TIMER_INST_INT_IRQN                                  (TIMG6_INT_IRQn)
+#define RE_TIMER_INST_LOAD_VALUE                                           (31U)
 
 
 
@@ -216,7 +221,7 @@ extern "C" {
 
 
 /* Defines for DMA_CH2 */
-#define DMA_CH2_CHAN_ID                                                      (5)
+#define DMA_CH2_CHAN_ID                                                      (3)
 #define UART_2_INST_DMA_TRIGGER                              (DMA_UART2_TX_TRIG)
 
 /* Defines for DMA_CH1 */
@@ -364,6 +369,7 @@ void SYSCFG_DL_UART_1_init(void);
 void SYSCFG_DL_UART_4_init(void);
 void SYSCFG_DL_UART_3_init(void);
 void SYSCFG_DL_TIMER_INT_init(void);
+void SYSCFG_DL_RE_TIMER_init(void);
 void SYSCFG_DL_I2C_init(void);
 void SYSCFG_DL_M_PWM_init(void);
 void SYSCFG_DL_SERVO_init(void);
