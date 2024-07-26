@@ -27,14 +27,14 @@ int main(void) {
   led_blame(0, 5, 5, 5);
 
 
-  status.base_speed = 500;
-  status.mode.follow = true;
-
+//   status.base_speed = 500;
+//   status.mode.follow = true;
+    status.mode.remote = true;
 //   status.mode.turn = true;
 //   status.dir.target = 0;
 
   while (1) {
     task_poll(&task);
-    radar_data_process();
+    // radar_data_process();
   }
 }

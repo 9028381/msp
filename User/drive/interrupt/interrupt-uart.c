@@ -37,7 +37,7 @@ void UART_2_INST_IRQHandler(void) {
   case DL_UART_MAIN_IIDX_RX:
     uart_rpc_drive(uart2, DL_UART_Main_receiveData(UART_2_INST));
     // update_cam_diff(DL_UART_Main_receiveData(UART_2_INST));
-
+    PRINTLN("test");
     break;
   default:
     break;
