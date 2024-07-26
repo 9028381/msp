@@ -5,7 +5,7 @@
 
 #define DEV
 
-#define MAX_TURN_SPEED 250
+#define MAX_TURN_SPEED 300
 #define MAX_FOLLOW_TURN_SPEED 250
 
 /******* TIMER *******/
@@ -45,7 +45,7 @@
 #define LOG_FORMAT_BUF_LENGTH 256
 
 /****** GW_GRAY ******/
-#define GW_GRAY_ROAD_MIN_RETURN_TIMES 20
+#define GW_GRAY_ROAD_MIN_RETURN_TIMES 15
 
 #define ROAD_CROSS -30000
 #define ROAD_TB 30000

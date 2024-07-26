@@ -47,7 +47,7 @@ void gw_gray_show(uint8_t line) {
   //   PRINTLN("%s", str);
 }
 
-#define INTEGRAL_TIMES 6
+#define INTEGRAL_TIMES 8
 enum Road {           // L F R
   CrossRoad = 0b111,  // 1 1 1
   TBRoad = 0b101,     // 1 0 1
