@@ -28,10 +28,10 @@ void status_init(struct Status *sta) {
     pid_init(&sta->pid.history[i], 0.1, 0, 0, 3, 10);
 
   // remote pid init
-  pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10); // real remote
-  pid_init(&sta->pid.remote_theta, 1, 0, 0, 3, 10);   // real remote
-  //   pid_init(&sta->pid.remote_forward, 6, 0, 2.5, 3, 10);  //cam
-  //   pid_init(&sta->pid.remote_theta, 2, 0, 1, 3, 10);   //cam
+//   pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10); // real remote
+//   pid_init(&sta->pid.remote_theta, 1, 0, 0, 3, 10);   // real remote
+    pid_init(&sta->pid.remote_forward, 6, 0, 2.5, 3, 10);  //cam
+    pid_init(&sta->pid.remote_theta, 2, 0, 1, 3, 10);   //cam
 
   // wheels init
   sta->base_speed = 0;

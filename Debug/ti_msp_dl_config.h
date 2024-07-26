@@ -88,9 +88,9 @@ extern "C" {
 #define GPIO_UART_2_IOMUX_TX                                     (IOMUX_PINCM43)
 #define GPIO_UART_2_IOMUX_RX_FUNC                      IOMUX_PINCM44_PF_UART2_RX
 #define GPIO_UART_2_IOMUX_TX_FUNC                      IOMUX_PINCM43_PF_UART2_TX
-#define UART_2_BAUD_RATE                                                (460800)
-#define UART_2_IBRD_32_MHZ_460800_BAUD                                       (4)
-#define UART_2_FBRD_32_MHZ_460800_BAUD                                      (22)
+#define UART_2_BAUD_RATE                                                (115200)
+#define UART_2_IBRD_32_MHZ_115200_BAUD                                      (17)
+#define UART_2_FBRD_32_MHZ_115200_BAUD                                      (23)
 /* Defines for UART_1 */
 #define UART_1_INST                                                        UART3
 #define UART_1_INST_IRQHandler                                  UART3_IRQHandler
