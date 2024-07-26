@@ -123,10 +123,10 @@ void status_next(struct Status *sta) {
       sta->wheels[FONT_RIGHT].target = -MAX_FOLLOW_TURN_SPEED;
       break;
     case ROAD_CROSS:
-      sta->wheels[FONT_LEFT].target = 0;
-      sta->wheels[FONT_RIGHT].target = 0;
-      sta->wheels[FONT_LEFT].target = -MAX_FOLLOW_TURN_SPEED;
-      sta->wheels[FONT_RIGHT].target = MAX_FOLLOW_TURN_SPEED;
+    //   sta->wheels[FONT_LEFT].target = 0;
+    //   sta->wheels[FONT_RIGHT].target = 0;
+    //   sta->wheels[FONT_LEFT].target = -MAX_FOLLOW_TURN_SPEED;
+    //   sta->wheels[FONT_RIGHT].target = MAX_FOLLOW_TURN_SPEED;
       break;
     case ROAD_TB:
       sta->wheels[FONT_LEFT].target = 0;

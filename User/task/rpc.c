@@ -117,6 +117,7 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_SET_VAR(1, status.remote_position.theta);
 
   RPC_DECLARE_SET_VAR(2, status.dir.target);
+  RPC_DECLARE_SET_VAR(3, status.base_speed);
 
   RPC_DECLARE_SET_VAR(5, status.mode.remote);
   RPC_DECLARE_SET_VAR(6, status.mode.follow);
@@ -125,10 +126,11 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_SET_VAR(11, status.pid.follow.kp);
   RPC_DECLARE_SET_VAR(12, status.pid.follow.ki);
   RPC_DECLARE_SET_VAR(13, status.pid.follow.kd);
-
+  
   RPC_DECLARE_GET_VAR(50, status.wheels[FONT_LEFT].history);
   RPC_DECLARE_GET_VAR(51, status.wheels[FONT_RIGHT].history);
   RPC_DECLARE_GET_VAR(52, status.dir.target);
+  RPC_DECLARE_GET_VAR(53, status.base_speed);
 
   RPC_DECLARE_CALL_FN(100, echo, "hello");
   RPC_DECLARE_CALL_FN(101, record_once_switch, NULL);

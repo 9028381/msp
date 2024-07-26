@@ -15,7 +15,8 @@
 #define Analogue_Output_CMD 0xB0
 #define Get_error_CMD 0xDE
 
-const int16_t gw_bit_weight[8] = {0, -300, -100, -30, 30, 100, 300, 0};
+// const int16_t gw_bit_weight[8] = {0, -300, -100, -30, 30, 100, 300, 0}; //直角参数
+const int16_t gw_bit_weight[8] = {0, -500, -150, -30, 30, 150, 500, 0};
 
 short gw_gray_diff(uint8_t line) {
   short diff = 0;
@@ -46,7 +47,7 @@ void gw_gray_show(uint8_t line) {
   //   PRINTLN("%s", str);
 }
 
-#define INTEGRAL_TIMES 10
+#define INTEGRAL_TIMES 6
 enum Road {           // L F R
   CrossRoad = 0b111,  // 1 1 1
   TBRoad = 0b101,     // 1 0 1

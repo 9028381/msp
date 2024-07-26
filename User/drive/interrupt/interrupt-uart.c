@@ -35,9 +35,8 @@ void UART_1_INST_IRQHandler(void) {
 void UART_2_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_2_INST)) {
   case DL_UART_MAIN_IIDX_RX:
-    // uart_rpc_drive(uart2, DL_UART_Main_receiveData(UART_2_INST));
+    uart_rpc_drive(uart2, DL_UART_Main_receiveData(UART_2_INST));
     // update_cam_diff(DL_UART_Main_receiveData(UART_2_INST));
-    Ladar_drive(DL_UART_Main_receiveData(UART_2_INST));
 
     break;
   default:
@@ -81,7 +80,7 @@ void uart_rpc_drive(enum Uart which, uint8_t rev) {
 
   data[which] = data[which] << 8 | rev;
 
-  if ((data[which] >> 24) == 0xff) {
+  if ((data[which] >> 24) == 0x7f) {
     // INFO("RECEIVE %x", data[which]);
     Task t = task_new(uart_rpc_task_queue_call, (void *)data[which]);
     task_queue_push(&task.queue, t);
