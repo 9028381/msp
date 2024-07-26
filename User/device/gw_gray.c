@@ -79,7 +79,7 @@ void gw_gray_decision(uint8_t integral, uint8_t line) {
 short gw_gray_get_diff() {
   static uint8_t maybe = 0;
   static uint8_t integral = 0;
-  static uint8_t cross_cnt = 0;
+  static uint8_t ret_cnt = 0;
 
   uint8_t line = gw_gray_get_line_digital_is_black();
 
@@ -98,24 +98,24 @@ short gw_gray_get_diff() {
         return 0;
       case CrossRoad:
         INFO("Cross road");
-        if (cross_cnt == 0)
-          cross_cnt = GW_GRAY_CROSSROAD_MIN_RETURN_TIMES;
+        if (ret_cnt == 0)
+          ret_cnt = GW_GRAY_ROAD_MIN_RETURN_TIMES;
 
-        if (cross_cnt >= 2) {
-          cross_cnt -= 1;
+        if (ret_cnt >= 2) {
+          ret_cnt -= 1;
           return ROAD_CROSS;
         }
 
         if (line & 0b00111100) {
           cross = Straight;
           maybe = 0;
-          cross_cnt = 0;
+          ret_cnt = 0;
           return gw_gray_diff(line & 0x7E);
         }
 
         return ROAD_CROSS;
       case TBRoad:
-        INFO("T B road");
+        INFO("TB road");
         if (line & 0b00111100) {
           cross = Straight;
           maybe = 0;
@@ -123,14 +123,40 @@ short gw_gray_get_diff() {
         }
         return ROAD_TB;
       case TLRoad:
-        INFO("T L road");
-        cross = Straight;
-        maybe = 0;
+        INFO("TL road");
+        if (ret_cnt == 0)
+          ret_cnt = GW_GRAY_ROAD_MIN_RETURN_TIMES;
+
+        if (ret_cnt >= 2) {
+          ret_cnt -= 1;
+          return ROAD_TL;
+        }
+
+        if (line & 0b00111100) {
+          cross = Straight;
+          maybe = 0;
+          ret_cnt = 0;
+          return gw_gray_diff(line & 0x7E);
+        }
+
         return ROAD_TL;
       case TRRoad:
-        INFO("T R road");
-        cross = Straight;
-        maybe = 0;
+        INFO("TR road");
+        if (ret_cnt == 0)
+          ret_cnt = GW_GRAY_ROAD_MIN_RETURN_TIMES;
+
+        if (ret_cnt >= 2) {
+          ret_cnt -= 1;
+          return ROAD_TR;
+        }
+
+        if (line & 0b00111100) {
+          cross = Straight;
+          maybe = 0;
+          ret_cnt = 0;
+          return gw_gray_diff(line & 0x7E);
+        }
+
         return ROAD_TR;
       case LeftRoad:
         INFO("Left road");
