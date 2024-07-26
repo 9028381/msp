@@ -4,6 +4,7 @@
 #include "../config.h"
 #include "../device/wheel.h"
 #include "stdbool.h"
+#include "step.h"
 
 struct Sensor {
   /// [-180, 180]
@@ -44,6 +45,17 @@ struct SnapShot {
   unsigned duration;
 };
 
+struct RoadDecide {
+  // Cross road
+  struct Step C;
+  // T junction
+  struct Step TB;
+  // |- juction
+  struct Step TR;
+  // -| juction
+  struct Step TL;
+};
+
 struct Status {
   /// times / STATUS_FREQ == run time(s)
   unsigned times;
@@ -55,6 +67,7 @@ struct Status {
   struct Mode mode;
   struct RemotePosition remote_position;
   struct SnapShot rec;
+  struct RoadDecide step;
 };
 
 extern struct Status status;

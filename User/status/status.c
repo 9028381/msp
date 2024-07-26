@@ -6,6 +6,7 @@
 #include "../utils/utils.h"
 #include "User/device/wheel.h"
 #include "record.h"
+#include "step.h"
 
 struct Status status;
 
@@ -48,6 +49,28 @@ void status_init(struct Status *sta) {
   sta->mode.remote = false;
 
   sta->rec.times = 0;
+
+  /* step init */
+  // Cross road
+  step_init(&sta->step.C);
+  step_push(&sta->step.C, step_forward);
+  step_push(&sta->step.C, step_forward);
+  step_push(&sta->step.C, step_forward);
+  step_push(&sta->step.C, step_forward);
+
+  /* T junction */
+  step_init(&sta->step.TB);
+  step_push(&sta->step.TB, step_turn_left);
+  step_push(&sta->step.TB, step_turn_right);
+
+  /* |- juction */
+  step_init(&sta->step.TR);
+  step_push(&sta->step.TR, step_turn_right);
+
+  /* -| juction */
+  step_init(&sta->step.TL);
+  step_push(&sta->step.TL, step_turn_left);
+
   // read flash duration
   unsigned duration = *(const unsigned *)flash_use(PAGE_NUM - 1);
   sta->rec.duration = duration == 0xFFFFFFFF ? 0 : duration;
@@ -115,25 +138,22 @@ void status_next(struct Status *sta) {
     int delta;
     switch (sta->sensor.follow) {
     case ROAD_LEFT:
-      sta->wheels[FONT_LEFT].target = -MAX_FOLLOW_TURN_SPEED;
-      sta->wheels[FONT_RIGHT].target = MAX_FOLLOW_TURN_SPEED;
+      step_turn_left(sta);
       break;
     case ROAD_RIGHT:
-      sta->wheels[FONT_LEFT].target = MAX_FOLLOW_TURN_SPEED;
-      sta->wheels[FONT_RIGHT].target = -MAX_FOLLOW_TURN_SPEED;
+      step_turn_right(sta);
       break;
     case ROAD_CROSS:
-    //   sta->wheels[FONT_LEFT].target = 0;
-    //   sta->wheels[FONT_RIGHT].target = 0;
-    //   sta->wheels[FONT_LEFT].target = -MAX_FOLLOW_TURN_SPEED;
-    //   sta->wheels[FONT_RIGHT].target = MAX_FOLLOW_TURN_SPEED;
+      step_next(&sta->step.C, sta);
       break;
     case ROAD_TB:
-      sta->wheels[FONT_LEFT].target = 0;
-      sta->wheels[FONT_RIGHT].target = 0;
+      step_next(&sta->step.TB, sta);
       break;
     case ROAD_TR:
+      step_next(&sta->step.TR, sta);
+      break;
     case ROAD_TL:
+      step_next(&sta->step.TL, sta);
       break;
     default:
       delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);

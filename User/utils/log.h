@@ -12,6 +12,7 @@ void log_uprintf(enum Uart uart, const char *format, ...);
 
 /// minute:second:frequency
 #define LOG_TIME_FMT_TYPE "%02u:%02u:%02u"
+/// t -> status.time
 #define LOG_TIME_FMT(t)                                                        \
   ((t / STATUS_FREQ) / 60), ((t / STATUS_FREQ) % 60), (t % STATUS_FREQ)
 
