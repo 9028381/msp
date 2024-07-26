@@ -19,6 +19,8 @@ void step_push(struct Step *step, step_fn fn) {
 };
 
 void step_next(struct Step *step, struct Status *sta) {
+  static unsigned last = 0;
+
   if (step->no >= step->len) {
     THROW_WARN("STEP_NEXT_OVERFLOW len is %d, Will stop", step->len);
     step_stop(sta);
@@ -26,7 +28,12 @@ void step_next(struct Step *step, struct Status *sta) {
   }
 
   step->fn[step->no](sta);
-  step->no += 1;
+
+  // 当非连续调用时，进入下一个步骤
+  if (sta->times - last > 1)
+    step->no += 1;
+
+  last = sta->times;
 }
 
 void step_turn_left(struct Status *sta) {

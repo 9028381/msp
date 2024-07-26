@@ -58,16 +58,16 @@ void status_init(struct Status *sta) {
   step_push(&sta->step.C, step_forward);
   step_push(&sta->step.C, step_forward);
 
-  /* T junction */
+  // T junction
   step_init(&sta->step.TB);
   step_push(&sta->step.TB, step_turn_left);
   step_push(&sta->step.TB, step_turn_right);
 
-  /* |- juction */
+  // |- juction
   step_init(&sta->step.TR);
   step_push(&sta->step.TR, step_turn_right);
 
-  /* -| juction */
+  // -| juction
   step_init(&sta->step.TL);
   step_push(&sta->step.TL, step_turn_left);
 
