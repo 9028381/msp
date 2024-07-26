@@ -45,17 +45,6 @@ struct SnapShot {
   unsigned duration;
 };
 
-struct RoadDecide {
-  // Cross road
-  struct Step C;
-  // T junction
-  struct Step TB;
-  // |- juction
-  struct Step TR;
-  // -| juction
-  struct Step TL;
-};
-
 struct Status {
   /// times / STATUS_FREQ == run time(s)
   unsigned times;
@@ -67,7 +56,7 @@ struct Status {
   struct Mode mode;
   struct RemotePosition remote_position;
   struct SnapShot rec;
-  struct RoadDecide step;
+  struct Step step;
 };
 
 extern struct Status status;
