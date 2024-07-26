@@ -51,25 +51,16 @@ void status_init(struct Status *sta) {
   sta->rec.times = 0;
 
   /* step init */
-  // Cross road
-  step_init(&sta->step.C);
-  step_push(&sta->step.C, step_forward);
-  step_push(&sta->step.C, step_forward);
-  step_push(&sta->step.C, step_forward);
-  step_push(&sta->step.C, step_forward);
-
-  // T junction
-  step_init(&sta->step.TB);
-  step_push(&sta->step.TB, step_turn_left);
-  step_push(&sta->step.TB, step_turn_right);
-
-  // |- juction
-  step_init(&sta->step.TR);
-  step_push(&sta->step.TR, step_turn_right);
-
-  // -| juction
-  step_init(&sta->step.TL);
-  step_push(&sta->step.TL, step_turn_left);
+  step_init(&sta->step);
+  step_push(&sta->step, step_turn_right); // |- junction
+  step_push(&sta->step, step_forward);    // |
+  step_push(&sta->step, step_forward);    // |
+  step_push(&sta->step, step_turn_left);  // T junction
+  step_push(&sta->step, step_turn_left);  // -| junction
+  step_push(&sta->step, step_forward);    // |
+  step_push(&sta->step, step_forward);    // |
+  step_push(&sta->step, step_turn_right); // T junction
+  step_push(&sta->step, step_stop);       // T junction
 
   // read flash duration
   unsigned duration = *(const unsigned *)flash_use(PAGE_NUM - 1);
@@ -144,16 +135,10 @@ void status_next(struct Status *sta) {
       step_turn_right(sta);
       break;
     case ROAD_CROSS:
-      step_next(&sta->step.C, sta);
-      break;
     case ROAD_TB:
-      step_next(&sta->step.TB, sta);
-      break;
     case ROAD_TR:
-      step_next(&sta->step.TR, sta);
-      break;
     case ROAD_TL:
-      step_next(&sta->step.TL, sta);
+      step_next(&sta->step, sta);
       break;
     default:
       delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
