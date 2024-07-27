@@ -259,10 +259,7 @@ UART1.interruptPriority                = "2";
 UART1.rxFifoThreshold                  = "DL_UART_RX_FIFO_LEVEL_1_4_FULL";
 UART1.txFifoThreshold                  = "DL_UART_TX_FIFO_LEVEL_3_4_EMPTY";
 UART1.targetBaudRate                   = 115200;
-<<<<<<< HEAD
-=======
 UART1.enabledInterrupts                = ["RX"];
->>>>>>> 4dd18dbf5d6b37655d805bf71ee3005eee3df1f0
 UART1.peripheral.rxPin.$assign         = "PB18";
 UART1.peripheral.txPin.$assign         = "PB17";
 UART1.txPinConfig.direction            = scripting.forceWrite("OUTPUT");
