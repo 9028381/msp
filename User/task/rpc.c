@@ -139,6 +139,15 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(51, status.wheels[FONT_RIGHT].history);
   RPC_DECLARE_GET_VAR(52, status.dir.target);
   RPC_DECLARE_GET_VAR(53, status.base_speed);
+  RPC_DECLARE_GET_VAR(54, gw_bit_weight[1]);
+  RPC_DECLARE_GET_VAR(55, gw_bit_weight[2]);
+  RPC_DECLARE_GET_VAR(56, gw_bit_weight[3]);
+  RPC_DECLARE_GET_VAR(57, gw_bit_weight[4]);
+  RPC_DECLARE_GET_VAR(58, gw_bit_weight[5]);
+  RPC_DECLARE_GET_VAR(59, gw_bit_weight[6]);
+  RPC_DECLARE_GET_VAR(60, status.pid.follow.kp);
+  RPC_DECLARE_GET_VAR(61, status.pid.follow.ki);
+  RPC_DECLARE_GET_VAR(62, status.pid.follow.kd);
 
   RPC_DECLARE_CALL_FN(100, echo, "hello");
   RPC_DECLARE_CALL_FN(101, record_once_switch, NULL);

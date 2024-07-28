@@ -20,7 +20,7 @@ void status_init(struct Status *sta) {
 
   // move pid init
   pid_init(&sta->pid.turn, 1, 0, 1, 5, 10);
-  pid_init(&sta->pid.follow, 1, 0, 0.5, 3, 10); // gw
+  pid_init(&sta->pid.follow, 1, 0, 3, 3, 10); // gw
   // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // repeat history pid
@@ -139,7 +139,7 @@ void status_next(struct Status *sta) {
     case ROAD_TB:
     case ROAD_TR:
     case ROAD_TL:
-    //   step_next(&sta->step, sta);
+      step_next(&sta->step, sta);
       break;
     default:
       delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
