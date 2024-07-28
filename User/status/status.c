@@ -139,7 +139,7 @@ void status_next(struct Status *sta) {
     case ROAD_TB:
     case ROAD_TR:
     case ROAD_TL:
-      step_next(&sta->step, sta);
+    //   step_next(&sta->step, sta);
       break;
     default:
       delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
@@ -150,6 +150,7 @@ void status_next(struct Status *sta) {
   }
 
 THRUST_MOTOR:
+
   if (sta->mode.repeat) {
     const int *rec = flash_use(0);
     const int *tar = rec + (sta->times - sta->rec.times) * 2;
