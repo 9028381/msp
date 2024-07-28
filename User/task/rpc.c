@@ -3,6 +3,7 @@
 #include "User/device/wheel.h"
 #include "User/status/record.h"
 #include "User/status/status.h"
+#include "User/device/gw_gray.h"
 #include "stdlib.h"
 
 void rpc_register(RPC rpc, uint8_t id, const char *describe,
@@ -126,6 +127,13 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_SET_VAR(11, status.pid.follow.kp);
   RPC_DECLARE_SET_VAR(12, status.pid.follow.ki);
   RPC_DECLARE_SET_VAR(13, status.pid.follow.kd);
+  extern int16_t gw_bit_weight[8];
+  RPC_DECLARE_SET_VAR(14, gw_bit_weight[1]);
+  RPC_DECLARE_SET_VAR(15, gw_bit_weight[2]);
+  RPC_DECLARE_SET_VAR(16, gw_bit_weight[3]);
+  RPC_DECLARE_SET_VAR(17, gw_bit_weight[4]);
+  RPC_DECLARE_SET_VAR(18, gw_bit_weight[5]);
+  RPC_DECLARE_SET_VAR(19, gw_bit_weight[6]);
   
   RPC_DECLARE_GET_VAR(50, status.wheels[FONT_LEFT].history);
   RPC_DECLARE_GET_VAR(51, status.wheels[FONT_RIGHT].history);

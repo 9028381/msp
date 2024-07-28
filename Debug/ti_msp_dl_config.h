@@ -347,12 +347,6 @@ extern "C" {
 #define KEY_KEY2_PIN                                            (DL_GPIO_PIN_19)
 #define KEY_KEY2_IOMUX                                           (IOMUX_PINCM45)
 
-
-/* Defines for WWDT */
-#define WWDT0_INST                                                       (WWDT0)
-#define WWDT0_INT_IRQN                                          (WWDT0_INT_IRQn)
-
-
 /* clang-format on */
 
 void SYSCFG_DL_init(void);
@@ -369,7 +363,6 @@ void SYSCFG_DL_M_PWM_init(void);
 void SYSCFG_DL_SERVO_init(void);
 void SYSCFG_DL_DMA_init(void);
 
-void SYSCFG_DL_WWDT0_init(void);
 
 bool SYSCFG_DL_saveConfiguration(void);
 bool SYSCFG_DL_restoreConfiguration(void);

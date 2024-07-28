@@ -16,7 +16,7 @@
 #define Get_error_CMD 0xDE
 
 // const int16_t gw_bit_weight[8] = {0, -300, -100, -30, 30, 100, 300, 0}; //直角参数
-const int16_t gw_bit_weight[8] = {0, -500, -150, -30, 30, 150, 500, 0};
+int16_t gw_bit_weight[8] = {0, -500, -150, -30, 30, 150, 500, 0};
 
 short gw_gray_diff(uint8_t line) {
   short diff = 0;

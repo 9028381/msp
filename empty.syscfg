@@ -33,8 +33,6 @@ const UART1         = UART.addInstance();
 const UART2         = UART.addInstance();
 const UART3         = UART.addInstance();
 const UART4         = UART.addInstance();
-const WWDT          = scripting.addModule("/ti/driverlib/WWDT", {}, false);
-const WWDT1         = WWDT.addInstance();
 const ProjectConfig = scripting.addModule("/ti/project_config/ProjectConfig");
 
 /**
@@ -319,13 +317,6 @@ UART4.DMA_CHANNEL_TX.$name       = "DMA_CH3";
 UART4.DMA_CHANNEL_TX.addressMode = "b2f";
 UART4.DMA_CHANNEL_TX.srcLength   = "BYTE";
 UART4.DMA_CHANNEL_TX.dstLength   = "BYTE";
-
-WWDT1.$name               = "WWDT0";
-WWDT1.periodCount         = "10";
-WWDT1.clockDivider        = "2";
-WWDT1.window0ClosedPeriod = "12";
-WWDT1.sleepMode           = true;
-WWDT1.peripheral.$assign  = "WWDT0";
 
 ProjectConfig.deviceSpin = "MSPM0G3507";
 scripting.suppress("Migrating requires going through the Switch Board or Device menu in the Device View section\\.", ProjectConfig, "deviceSpin");
