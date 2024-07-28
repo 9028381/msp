@@ -1,3 +1,5 @@
+#include "math.h"
+
 #define WARPPING_FN_DEFINE(type)                                               \
   type warpping_##type(type var, type min, type max) {                         \
     type range = max - min;                                                    \
@@ -15,11 +17,6 @@ WARPPING_FN_DEFINE(long)
 WARPPING_FN_DEFINE(int)
 WARPPING_FN_DEFINE(short)
 WARPPING_FN_DEFINE(char)
-
-typedef unsigned long ulong;
-typedef unsigned int uint;
-typedef unsigned short ushort;
-typedef unsigned char uchar;
 
 WARPPING_FN_DEFINE(ulong)
 WARPPING_FN_DEFINE(uint)

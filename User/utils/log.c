@@ -10,8 +10,7 @@ void log_uprintf(enum Uart uart, const char *format, ...) {
 
   va_list args;
   va_start(args, format);
-  unsigned int len =
-      vsnprintf(buf[abbuf], LOG_FORMAT_BUF_LENGTH - 1, format, args);
+  unsigned len = vsnprintf(buf[abbuf], LOG_FORMAT_BUF_LENGTH - 1, format, args);
   va_end(args);
 
   uart_dma_send(uart, buf[abbuf], len);
