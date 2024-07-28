@@ -44,14 +44,64 @@ void log_uprintf(enum Uart uart, const char *format, ...);
 /// >>> W 00:00:00 func:8 ERROR_TYPE str
 #define THROW_WARN(fmt, ...) LOG_SPAN("W", fmt, ##__VA_ARGS__)
 
-#ifdef DEV
-#define LOG_ENABLE
+#ifndef DEV
+#define LOG_DISABLE
 #endif // DEV
 
-#ifndef LOG_ENABLE
-/// ignore log print
+#ifdef LOG_DISABLE
+/// ignore all log
 #undef LOG_EVENT
 #define LOG_EVENT(level, fmt, ...)
-#endif // !LOG_ENABLE
+#endif // !LOG_DISABLE
+
+#ifdef LOG_LEVEL_ERROR
+#define LOG_DISABLE_WARN
+#define LOG_DISABLE_INFO
+#define LOG_DISABLE_DEBUG
+#define LOG_DISABLE_TRACE
+#endif // LOG_LEVEL_ERROR
+
+#ifdef LOG_LEVEL_WARN
+#define LOG_DISABLE_INFO
+#define LOG_DISABLE_DEBUG
+#define LOG_DISABLE_TRACE
+#endif // LOG_LEVEL_WARN
+
+#ifdef LOG_LEVEL_INFO
+#define LOG_DISABLE_DEBUG
+#define LOG_DISABLE_TRACE
+#endif // LOG_LEVEL_INFO
+
+#ifdef LOG_LEVEL_DEBUG
+#define LOG_DISABLE_TRACE
+#endif // LOG_LEVEL_DEBUG
+
+#ifdef LOG_LEVEL_TRACE
+#endif // LOG_LEVEL_TRACE
+
+#ifdef LOG_DISABLE_ERROR
+#undef ERROR
+#define ERROR(fmt, ...)
+#endif // LOG_DISABLE_ERROR
+
+#ifdef LOG_DISABLE_WARN
+#undef WARN
+#define WARN(fmt, ...)
+#endif // LOG_DISABLE_WARN
+
+#ifdef LOG_DISABLE_INFO
+#undef INFO
+#define INFO(fmt, ...)
+#endif // LOG_DISABLE_INFO
+
+#ifdef LOG_DISABLE_DEBUG
+#undef DEBUG
+#define DEBUG(fmt, ...)
+#endif // LOG_DISABLE_DEBUG
+
+#ifdef LOG_DISABLE_TRACE
+#undef TRACE
+#define TRACE(var, fmt)
+#endif // LOG_DISABLE_TRACE
 
 #endif // !__LOG_H__
