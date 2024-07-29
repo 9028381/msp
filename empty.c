@@ -23,11 +23,10 @@ int main(void) {
   interrupt_timers_init();
 
   keyreact_init();
-
   led_blame(0, 5, 5, 5);
 
 
-  status.base_speed = 500;
+  status.base_speed = 650;
   status.mode.follow = true;
     // status.mode.remote = true;
 //   status.mode.turn = true;
@@ -35,6 +34,5 @@ int main(void) {
 
   while (1) {
     task_poll(&task);
-    // radar_data_process();
   }
 }

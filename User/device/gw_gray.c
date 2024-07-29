@@ -16,7 +16,7 @@
 #define Get_error_CMD 0xDE
 
 // const int16_t gw_bit_weight[8] = {0, -300, -100, -30, 30, 100, 300, 0}; //直角参数
-int16_t gw_bit_weight[8] = {0, -500, -150, -30, 30, 150, 500, 0};
+int16_t gw_bit_weight[8] = {-300, -150, -70, -30, 30, 70, 150, -300};
 
 short gw_gray_diff(uint8_t line) {
   short diff = 0;
@@ -47,34 +47,34 @@ void gw_gray_show(uint8_t line) {
   //   PRINTLN("%s", str);
 }
 
-#define INTEGRAL_TIMES 8
-enum Road {           // L F R
-  CrossRoad = 0b111,  // 1 1 1
-  TBRoad = 0b101,     // 1 0 1
-  TLRoad = 0b110,     // 1 1 0
-  TRRoad = 0b011,     // 0 1 1
-  LeftRoad = 0b100,   // 1 0 0
-  RightRoad = 0b001,  // 0 0 1
-  Straight = 0b010,   // 0 1 0
-  UnknowRoad = 0b000, // 0 0 0
-};
-enum Road cross = Straight;
+// #define INTEGRAL_TIMES 8
+// enum Road {           // L F R
+//   CrossRoad = 0b111,  // 1 1 1
+//   TBRoad = 0b101,     // 1 0 1
+//   TLRoad = 0b110,     // 1 1 0
+//   TRRoad = 0b011,     // 0 1 1
+//   LeftRoad = 0b100,   // 1 0 0
+//   RightRoad = 0b001,  // 0 0 1
+//   Straight = 0b010,   // 0 1 0
+//   UnknowRoad = 0b000, // 0 0 0
+// };
+// enum Road cross = Straight;
 
-enum Road road_new_from_bit(bool L, bool F, bool R) {
-  uint8_t left = L ? 0b100 : 0;
-  uint8_t font = F ? 0b010 : 0;
-  uint8_t right = R ? 0b001 : 0;
+// enum Road road_new_from_bit(bool L, bool F, bool R) {
+//   uint8_t left = L ? 0b100 : 0;
+//   uint8_t font = F ? 0b010 : 0;
+//   uint8_t right = R ? 0b001 : 0;
 
-  return left | font | right;
-}
+//   return left | font | right;
+// }
 
-void gw_gray_decision(uint8_t integral, uint8_t line) {
-  bool left = (integral >> 6) == 0x03;    // 0b1100_0000
-  bool right = (integral & 0x03) == 0x03; // 0b0000_0011
-  bool font = line & 0x3C;                // 0b0011_1100
-  enum Road road = road_new_from_bit(left, font, right);
-  cross = road;
-}
+// void gw_gray_decision(uint8_t integral, uint8_t line) {
+//   bool left = (integral >> 6) == 0x03;    // 0b1100_0000
+//   bool right = (integral & 0x03) == 0x03; // 0b0000_0011
+//   bool font = line & 0x3C;                // 0b0011_1100
+//   enum Road road = road_new_from_bit(left, font, right);
+//   cross = road;
+// }
 
 short gw_gray_get_diff() {
   static uint8_t maybe = 0;
@@ -83,112 +83,9 @@ short gw_gray_get_diff() {
 
   uint8_t line = gw_gray_get_line_digital_is_black();
 
-  gw_gray_show(line);
+//   gw_gray_show(line);
 
-  if (maybe) {
-    if (maybe == 1) {
-      if (cross == Straight)
-        gw_gray_decision(integral, line);
-
-      switch (cross) {
-      case UnknowRoad:
-        INFO("Unknow road");
-        cross = Straight;
-        maybe = 0;
-        return 0;
-      case CrossRoad:
-        INFO("Cross road");
-        if (ret_cnt == 0)
-          ret_cnt = GW_GRAY_ROAD_MIN_RETURN_TIMES;
-
-        if (ret_cnt >= 2) {
-          ret_cnt -= 1;
-          return ROAD_CROSS;
-        }
-
-        if (line & 0b00111100) {
-          cross = Straight;
-          maybe = 0;
-          ret_cnt = 0;
-          return gw_gray_diff(line & 0x7E);
-        }
-
-        return ROAD_CROSS;
-      case TBRoad:
-        INFO("TB road");
-        if (line & 0b00111100) {
-          cross = Straight;
-          maybe = 0;
-          return gw_gray_diff(line & 0x7E);
-        }
-        return ROAD_TB;
-      case TLRoad:
-        INFO("TL road");
-        if (ret_cnt == 0)
-          ret_cnt = GW_GRAY_ROAD_MIN_RETURN_TIMES;
-
-        if (ret_cnt >= 2) {
-          ret_cnt -= 1;
-          return ROAD_TL;
-        }
-
-        if (line & 0b00111100) {
-          cross = Straight;
-          maybe = 0;
-          ret_cnt = 0;
-          return gw_gray_diff(line & 0x7E);
-        }
-
-        return ROAD_TL;
-      case TRRoad:
-        INFO("TR road");
-        if (ret_cnt == 0)
-          ret_cnt = GW_GRAY_ROAD_MIN_RETURN_TIMES;
-
-        if (ret_cnt >= 2) {
-          ret_cnt -= 1;
-          return ROAD_TR;
-        }
-
-        if (line & 0b00111100) {
-          cross = Straight;
-          maybe = 0;
-          ret_cnt = 0;
-          return gw_gray_diff(line & 0x7E);
-        }
-
-        return ROAD_TR;
-      case LeftRoad:
-        INFO("Left road");
-        if (line & 0b00111100) {
-          cross = Straight;
-          maybe = 0;
-          return gw_gray_diff(line & 0x7E);
-        }
-        return ROAD_LEFT;
-      case RightRoad:
-        INFO("Right road");
-        if (line & 0b00111100) {
-          cross = Straight;
-          maybe = 0;
-          return gw_gray_diff(line & 0x7E);
-        }
-        return ROAD_RIGHT;
-      case Straight:
-        INFO("Straight road");
-        maybe = 0;
-        return gw_gray_diff(line & 0x7E);
-      }
-    }
-
-    integral = integral | line;
-    maybe--;
-  } else if (line & 0x81) {
-    maybe = INTEGRAL_TIMES;
-    integral = 0;
-  }
-
-  return gw_gray_diff(line & 0x7E); // 0b0111_1110
+  return gw_gray_diff(line & 0xFF); // 0b0111_1110
 }
 
 uint8_t gw_gray_get_line_digital_is_black() {
