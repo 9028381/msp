@@ -36,11 +36,13 @@ void action_keep_0(struct Status *sta);
 void action_keep_180(struct Status *sta);
 void action_keep_104(struct Status *sta);
 void action_keep_284(struct Status *sta);
+void action_keep_256(struct Status *sta);
 
 void action_turn_to_0(struct Status *sta);
 void action_turn_to_180(struct Status *sta);
 void action_turn_to_104(struct Status *sta);
 void action_turn_to_284(struct Status *sta);
+void action_turn_to_256(struct Status *sta);
 
 bool condition_turn_to(struct Status *sta);
 bool condition_findline(struct Status *sta);
