@@ -39,17 +39,22 @@ void action_forward(struct Status *sta);
 
 void action_follow(struct Status *sta);
 
-void action_keep_0(struct Status *sta);
-void action_keep_180(struct Status *sta);
-void action_keep_104(struct Status *sta);
-void action_keep_284(struct Status *sta);
-void action_keep_256(struct Status *sta);
+#define DECLARE_ACTION_TURN_TO(angle)                                          \
+  void action_turn_to_##angle(struct Status *sta);
 
-void action_turn_to_0(struct Status *sta);
-void action_turn_to_180(struct Status *sta);
-void action_turn_to_104(struct Status *sta);
-void action_turn_to_284(struct Status *sta);
-void action_turn_to_256(struct Status *sta);
+#define DECLARE_ACTION_KEEP(angle) void action_keep_##angle(struct Status *sta);
+
+DECLARE_ACTION_KEEP(0)
+DECLARE_ACTION_KEEP(180)
+DECLARE_ACTION_KEEP(104)
+DECLARE_ACTION_KEEP(284)
+DECLARE_ACTION_KEEP(256)
+
+DECLARE_ACTION_TURN_TO(0)
+DECLARE_ACTION_TURN_TO(180)
+DECLARE_ACTION_TURN_TO(104)
+DECLARE_ACTION_TURN_TO(284)
+DECLARE_ACTION_TURN_TO(256)
 
 void action_do_nothing(struct Status *sta);
 

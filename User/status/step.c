@@ -67,85 +67,35 @@ bool step_try_next(struct Step *step, struct Status *sta) {
   return false;
 }
 
-void action_turn_to_0(struct Status *sta) {
-  INFO("STEP_TURN_TO_0");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 0.0;
-  sta->base_speed = 0;
-}
+#define ACTION_TURN_TO(angle)                                                  \
+  void action_turn_to_##angle(struct Status *sta) {                            \
+    INFO("STEP_TURN_TO_" #angle);                                              \
+    sta->mode.turn = true;                                                     \
+    sta->mode.follow = false;                                                  \
+    sta->dir.target = angle;                                                   \
+    sta->base_speed = 0;                                                       \
+  }
 
-void action_turn_to_180(struct Status *sta) {
-  INFO("STEP_TURN_TO_180");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 180.0;
-  sta->base_speed = 0;
-}
+ACTION_TURN_TO(0)
+ACTION_TURN_TO(180)
+ACTION_TURN_TO(104)
+ACTION_TURN_TO(284)
+ACTION_TURN_TO(256)
 
-void action_turn_to_104(struct Status *sta) {
-  INFO("STEP_TURN_TO_104");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 104.0;
-  sta->base_speed = 0;
-}
+#define ACTION_KEEP(angle)                                                     \
+  void action_keep_##angle(struct Status *sta) {                               \
+    INFO("STEP_KEEP_" #angle);                                                 \
+    sta->mode.turn = true;                                                     \
+    sta->mode.follow = false;                                                  \
+    sta->dir.target = angle;                                                   \
+    sta->base_speed = TURN_ANGLE_SPEED;                                        \
+  }
 
-void action_turn_to_284(struct Status *sta) {
-  INFO("STEP_TURN_TO_284");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 284.0;
-  sta->base_speed = 0;
-}
-
-void action_turn_to_256(struct Status *sta) {
-  INFO("STEP_TURN_TO_256");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 256.0;
-  sta->base_speed = 0;
-}
-
-void action_keep_0(struct Status *sta) {
-  INFO("STEP_KEEP_0");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 0.0;
-  sta->base_speed = KEEP_ANGLE_SPEED;
-}
-
-void action_keep_180(struct Status *sta) {
-  INFO("STEP_KEEP_180");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 180.0;
-  sta->base_speed = KEEP_ANGLE_SPEED;
-}
-
-void action_keep_104(struct Status *sta) {
-  INFO("STEP_KEEP_104");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 104.0;
-  sta->base_speed = KEEP_ANGLE_SPEED;
-}
-
-void action_keep_284(struct Status *sta) {
-  INFO("STEP_KEEP_284");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 284.0;
-  sta->base_speed = KEEP_ANGLE_SPEED;
-}
-
-void action_keep_256(struct Status *sta) {
-  INFO("STEP_KEEP_256");
-  sta->mode.turn = true;
-  sta->mode.follow = false;
-  sta->dir.target = 256.0;
-  sta->base_speed = KEEP_ANGLE_SPEED;
-}
+ACTION_KEEP(0)
+ACTION_KEEP(180)
+ACTION_KEEP(104)
+ACTION_KEEP(284)
+ACTION_KEEP(256)
 
 void action_follow(struct Status *sta) {
   INFO("STEP_FOLLOW");
@@ -193,10 +143,14 @@ bool condition_roadless(struct Status *sta) {
 }
 
 bool condition_roadless_with_1000_history_limit(struct Status *sta) {
-  if (sta->step.ctx.start_history[FONT_LEFT] > 1000 ||
-      sta->step.ctx.start_history[FONT_RIGHT] > 1000)
+  int history_left =
+      sta->wheels[FONT_LEFT].history - sta->step.ctx.start_history[FONT_LEFT];
+  int history_right =
+      sta->wheels[FONT_RIGHT].history - sta->step.ctx.start_history[FONT_RIGHT];
+  if (history_left > 1000 || history_right > 1000)
     return true;
-  return sta->sensor.follow == ROAD_NO;
+
+  return condition_roadless(sta);
 }
 
 bool condition_never(struct Status *sta) { return false; }
