@@ -66,13 +66,21 @@ bool condition_findline(struct Status *sta);
 bool condition_findline_with_3_least_limit(struct Status *sta);
 bool condition_findline_with_60000_75000_history_limit(struct Status *sta);
 bool condition_findline_with_80000_90000_history_limit(struct Status *sta);
-bool condition_findline_with_80000_90000_history_limit_turn_left(struct Status *sta);
-bool condition_findline_with_80000_90000_history_limit_turn_right(struct Status *sta);
+bool condition_findline_with_80000_90000_history_limit_turn_left(
+    struct Status *sta);
+bool condition_findline_with_80000_90000_history_limit_turn_right(
+    struct Status *sta);
 
 bool condition_roadless(struct Status *sta);
 bool condition_roadless_with_3_least_limit(struct Status *sta);
 
 bool condition_never(struct Status *sta);
 bool condition_always(struct Status *sta);
+
+void action_turn_circle_left(struct Status *sta);
+void action_turn_circle_right(struct Status *sta);
+bool condition_turn_circle_left(struct Status *sta);
+bool condition_turn_circle_right(struct Status *sta);
+bool condition_forward_85000(struct Status *sta);
 
 #endif // !__STEP_H__
