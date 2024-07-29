@@ -5,6 +5,7 @@
 
 #define DEV
 
+#define BASE_SPEED 500
 #define MAX_TURN_SPEED 300
 #define MAX_FOLLOW_TURN_SPEED 250
 

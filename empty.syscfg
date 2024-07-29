@@ -248,7 +248,6 @@ UART1.enabledDMATXTriggers             = "DL_UART_DMA_INTERRUPT_TX";
 UART1.interruptPriority                = "2";
 UART1.rxFifoThreshold                  = "DL_UART_RX_FIFO_LEVEL_1_4_FULL";
 UART1.txFifoThreshold                  = "DL_UART_TX_FIFO_LEVEL_3_4_EMPTY";
-UART1.targetBaudRate                   = 115200;
 UART1.enabledInterrupts                = ["RX"];
 UART1.peripheral.rxPin.$assign         = "PB18";
 UART1.peripheral.txPin.$assign         = "PB17";
