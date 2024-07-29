@@ -5,8 +5,8 @@
 #include "User/task/task.h"
 #include "User/utils/log.h"
 #include "stdbool.h"
-#include <stdint.h>
 #include "ti_msp_dl_config.h"
+#include <stdint.h>
 
 #define GW_GRAY_ADDR 0x4C
 
@@ -21,37 +21,45 @@
 int16_t gw_bit_weight[8] = {-300, -250, -150, -70, 70, 150, 250, 300};
 
 short gw_gray_diff(uint8_t line) {
+  static char maybe = 0;
   static unsigned char times = 0;
   static unsigned last = 0;
   short diff = 0;
   unsigned char cnt = 0;
 
-  if(!(bool)DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN))
-  {
+  if (!DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN)) {
+    maybe = 1;
     return 500;
   }
-   if(!(bool)DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN))
-  {
+  if (!DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN)) {
+    maybe = -1;
     return -500;
   }
 
-//   if (line == 0) {
-//     if ((status.times - last) < 3)
-//       times = times >= 5 ? 5 : times + 1;
-//     else
-//       times = 0;
+  if (maybe != 0) {
+    if (line & 0b01111110)
+      maybe = 0;
+    else
+      return maybe * 500;
+  }
 
-//     last = status.times;
+  //   if (line == 0) {
+  //     if ((status.times - last) < 3)
+  //       times = times >= 5 ? 5 : times + 1;
+  //     else
+  //       times = 0;
 
-//     if (times >= 5) {
-//       return ROAD_NO;
-//     }
+  //     last = status.times;
 
-//     return 0;
-//   }
+  //     if (times >= 5) {
+  //       return ROAD_NO;
+  //     }
 
-    if (line == 0)
-        return ROAD_NO;
+  //     return 0;
+  //   }
+
+  if (line == 0)
+    return ROAD_NO;
 
   for (int i = 0; i < 8; i++) {
     if (((line >> i) & 0x01)) {
