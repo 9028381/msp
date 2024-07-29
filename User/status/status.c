@@ -3,7 +3,9 @@
 #include "../device/flash.h"
 #include "../device/gw_gray.h"
 #include "../device/gyroscope.h"
+#include "../device/led.h"
 #include "../utils/utils.h"
+#include "answer.h"
 #include "User/device/wheel.h"
 #include "record.h"
 #include "step.h"
@@ -54,15 +56,8 @@ void status_init(struct Status *sta) {
 
   /* step init */
   step_init(&sta->step);
-  step_push(&sta->step, step_turn_right); // |- junction
-  step_push(&sta->step, step_forward);    // |
-  step_push(&sta->step, step_forward);    // |
-  step_push(&sta->step, step_turn_left);  // T junction
-  step_push(&sta->step, step_turn_left);  // -| junction
-  step_push(&sta->step, step_forward);    // |
-  step_push(&sta->step, step_forward);    // |
-  step_push(&sta->step, step_turn_right); // T junction
-  step_push(&sta->step, step_stop);       // T junction
+  step_push(&sta->step, action_stop, condition_never);
+  answer2(sta);
 
   // read flash duration
   unsigned duration = *(const unsigned *)flash_use(PAGE_NUM - 1);
@@ -103,42 +98,22 @@ void status_next(struct Status *sta) {
     goto THRUST_MOTOR;
   }
 
-  // motor base speed
-  for (int i = 0; i < WHEEL_NUMS; i++)
-    sta->wheels[i].target = sta->base_speed;
-
   // sensor next
-  if (sta->mode.turn)
-    sta->sensor.gyro = gyr_get_value(gyr_z_yaw);
+  /* if (sta->mode.turn) */
+  // always open gryo
+  sta->sensor.gyro = gyr_get_value(gyr_z_yaw);
 
-  /* if (sta->mode.follow) */
   // sta->sensor.follow = get_cam_diff();
+  /* if (sta->mode.follow) */
   // always open follow
   sta->sensor.follow = gw_gray_get_diff();
 
-  if (sta->mode.follow && sta->sensor.follow == 30000) {
-    sta->mode.follow = false;
-    sta->mode.turn = true;
-    sta->dir.target = -180.0;
-    sta->base_speed = 0;
-    step_stop(sta);
-  }
+  // mode next
+  step_try_next(&sta->step, sta);
 
-  if (sta->base_speed == 0 && sta->mode.turn){
-    float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro;
-    diff = WARPPING(diff, -180.0, 180.0);
-    if (ABS(diff)< 1.0){
-      sta->base_speed = BASE_SPEED;
-      step_forward(sta);
-    }
-  }
-
-  if (sta->mode.turn && sta->sensor.follow != 30000){
-    sta->mode.turn = false;
-    sta->mode.follow = true;
-    sta->base_speed = BASE_SPEED;
-    step_forward(sta);
-  }
+  // motor base speed
+  for (int i = 0; i < WHEEL_NUMS; i++)
+    sta->wheels[i].target = sta->base_speed;
 
   // update wheel target speed based on sensor
   if (sta->mode.turn) {
@@ -153,9 +128,11 @@ void status_next(struct Status *sta) {
   }
 
   if (sta->mode.follow) {
-    int delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
-    sta->wheels[FONT_LEFT].target += delta;
-    sta->wheels[FONT_RIGHT].target -= delta;
+    if (sta->sensor.follow != ROAD_NO) {
+      int delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
+      sta->wheels[FONT_LEFT].target += delta;
+      sta->wheels[FONT_RIGHT].target -= delta;
+    }
   }
 
 THRUST_MOTOR:
@@ -181,6 +158,4 @@ THRUST_MOTOR:
 
   // wheels drive
   status_wheels_drive(sta->wheels);
-
-  // mode next
 }

@@ -6,6 +6,11 @@
 #define DEV
 
 #define BASE_SPEED 500
+#define KEEP_ANGLE_SPEED BASE_SPEED
+#define FOLLOW_LINE_SPEED BASE_SPEED
+
+#define TURN_ANGLE_RANGE 1.0
+
 #define MAX_TURN_SPEED 300
 #define MAX_FOLLOW_TURN_SPEED 250
 
@@ -48,6 +53,7 @@
 /****** GW_GRAY ******/
 #define GW_GRAY_ROAD_MIN_RETURN_TIMES 15
 
+#define ROAD_NO 30001
 #define ROAD_CROSS -30000
 #define ROAD_TB 30000
 #define ROAD_TL -25000
