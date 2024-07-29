@@ -194,7 +194,7 @@ bool condition_findline_with_80000_90000_history_limit_turn_left(
     if (sta->sensor.follow == ROAD_NO)
       return true;
 
-    sta->sensor.follow = 500;
+    sta->sensor.follow = -500;
     return false;
   }
 
@@ -211,8 +211,13 @@ bool condition_findline_with_80000_90000_history_limit_turn_right(
   if (history_left < 80000 || history_right < 80000)
     return false;
 
-  if (history_left > 90000 || history_right > 90000)
-    return true;
+  if (history_left > 90000 || history_right > 90000) {
+    if (sta->sensor.follow == ROAD_NO)
+      return true;
+
+    sta->sensor.follow = 500;
+    return false;
+  }
 
   return condition_findline(sta);
 }
