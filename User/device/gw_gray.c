@@ -17,15 +17,14 @@
 
 // const int16_t gw_bit_weight[8] = {0, -300, -100, -30, 30, 100, 300, 0};
 // //直角参数
-int16_t gw_bit_weight[8] = {-300, -150, -70, -30, 30, 70, 150, -300};
+int16_t gw_bit_weight[8] = {-300, -250, -150, -70, 70, 150, 250, 300};
 
 short gw_gray_diff(uint8_t line) {
   short diff = 0;
   unsigned char cnt = 0;
 
-  if (line == 0) {
+  if (line == 0)
     return ROAD_NO;
-  }
 
   for (int i = 0; i < 8; i++) {
     if (((line >> i) & 0x01)) {
@@ -33,11 +32,8 @@ short gw_gray_diff(uint8_t line) {
       diff += gw_bit_weight[i];
     }
   }
-  if (cnt != 0) {
-    return diff / cnt;
-  } else {
-    return 0;
-  }
+
+  return diff / cnt;
 }
 
 void gw_gray_show(uint8_t line) {
