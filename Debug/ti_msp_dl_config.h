@@ -346,6 +346,14 @@ extern "C" {
 /* Defines for KEY2: GPIOB.19 with pinCMx 45 on package pin 16 */
 #define KEY_KEY2_PIN                                            (DL_GPIO_PIN_19)
 #define KEY_KEY2_IOMUX                                           (IOMUX_PINCM45)
+/* Defines for PIN1: GPIOA.25 with pinCMx 55 on package pin 26 */
+#define GRAY_PIN1_PORT                                                   (GPIOA)
+#define GRAY_PIN1_PIN                                           (DL_GPIO_PIN_25)
+#define GRAY_PIN1_IOMUX                                          (IOMUX_PINCM55)
+/* Defines for PIN2: GPIOB.23 with pinCMx 51 on package pin 22 */
+#define GRAY_PIN2_PORT                                                   (GPIOB)
+#define GRAY_PIN2_PIN                                           (DL_GPIO_PIN_23)
+#define GRAY_PIN2_IOMUX                                          (IOMUX_PINCM51)
 
 /* clang-format on */
 
