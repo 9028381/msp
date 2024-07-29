@@ -37,6 +37,8 @@ short gw_gray_diff(uint8_t line) {
       times = 0;
       return ROAD_NO;
     }
+
+    return 0;
   }
 
   for (int i = 0; i < 8; i++) {
