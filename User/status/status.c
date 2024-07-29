@@ -106,7 +106,7 @@ void status_next(struct Status *sta) {
   /* if (sta->mode.follow) */
   // always open follow
   sta->sensor.follow = gw_gray_get_diff();
-
+    PRINTLN("%d", sta->sensor.follow);
   // mode next
   step_try_next(&sta->step, sta);
 

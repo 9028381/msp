@@ -18,29 +18,29 @@
 
 // const int16_t gw_bit_weight[8] = {0, -300, -100, -30, 30, 100, 300, 0};
 // //直角参数
-int16_t gw_bit_weight[8] = {-300, -250, -150, -70, 70, 150, 250, 300};
+int16_t gw_bit_weight[8] = {-250, -250, -150, -70, 70, 150, 250, 250};
 
 short gw_gray_diff(uint8_t line) {
-  static char maybe = 0;
+  static int maybe = 0;
   static unsigned char times = 0;
   static unsigned last = 0;
   short diff = 0;
   unsigned char cnt = 0;
 
-  if (!DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN)) {
+  if (!DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN) && !maybe) {
     maybe = 1;
-    return 500;
+    return 250;
   }
-  if (!DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN)) {
+  if (!DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN) && !maybe) {
     maybe = -1;
-    return -500;
+    return -250;
   }
 
   if (maybe != 0) {
     if (line & 0b01111110)
       maybe = 0;
     else
-      return maybe * 500;
+      return maybe * 250;
   }
 
   //   if (line == 0) {

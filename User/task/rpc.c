@@ -135,6 +135,9 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_SET_VAR(17, gw_bit_weight[4]);
   RPC_DECLARE_SET_VAR(18, gw_bit_weight[5]);
   RPC_DECLARE_SET_VAR(19, gw_bit_weight[6]);
+  RPC_DECLARE_SET_VAR(20, status.pid.turn.kp);
+  RPC_DECLARE_SET_VAR(21, status.pid.turn.ki);
+  RPC_DECLARE_SET_VAR(22, status.pid.turn.kd);
   
   RPC_DECLARE_GET_VAR(50, status.wheels[FONT_LEFT].history);
   RPC_DECLARE_GET_VAR(51, status.wheels[FONT_RIGHT].history);
@@ -149,6 +152,9 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(60, status.pid.follow.kp);
   RPC_DECLARE_GET_VAR(61, status.pid.follow.ki);
   RPC_DECLARE_GET_VAR(62, status.pid.follow.kd);
+  RPC_DECLARE_GET_VAR(63, status.pid.turn.kp);
+  RPC_DECLARE_GET_VAR(64, status.pid.turn.ki);
+  RPC_DECLARE_GET_VAR(65, status.pid.turn.kd);
 
   RPC_DECLARE_GET_VAR(70, status.dir.origin);
   RPC_DECLARE_GET_VAR(71, status.sensor.gyro);

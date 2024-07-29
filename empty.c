@@ -22,6 +22,8 @@ int main(void) {
   interrupt_uarts_init();
   interrupt_timers_init();
 
+//   status.mode.remote = true;
+
   keyreact_init();
   led_blame(0, 5, 5, 5);
 
