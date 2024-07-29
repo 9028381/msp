@@ -180,6 +180,43 @@ bool condition_findline_with_80000_90000_history_limit(struct Status *sta) {
   return condition_findline(sta);
 }
 
+bool condition_findline_with_80000_90000_history_limit_turn_left(
+    struct Status *sta) {
+  int history_left =
+      sta->wheels[FONT_LEFT].history - sta->step.ctx.start_history[FONT_LEFT];
+  int history_right =
+      sta->wheels[FONT_RIGHT].history - sta->step.ctx.start_history[FONT_RIGHT];
+
+  if (history_left < 80000 || history_right < 80000)
+    return false;
+
+  if (history_left > 90000 || history_right > 90000) {
+    if (sta->sensor.follow == ROAD_NO)
+      return true;
+
+    sta->sensor.follow = 500;
+    return false;
+  }
+
+  return condition_findline(sta);
+}
+
+bool condition_findline_with_80000_90000_history_limit_turn_right(
+    struct Status *sta) {
+  int history_left =
+      sta->wheels[FONT_LEFT].history - sta->step.ctx.start_history[FONT_LEFT];
+  int history_right =
+      sta->wheels[FONT_RIGHT].history - sta->step.ctx.start_history[FONT_RIGHT];
+
+  if (history_left < 80000 || history_right < 80000)
+    return false;
+
+  if (history_left > 90000 || history_right > 90000)
+    return true;
+
+  return condition_findline(sta);
+}
+
 bool condition_never(struct Status *sta) { return false; }
 
 bool condition_always(struct Status *sta) { return true; }
