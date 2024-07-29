@@ -56,8 +56,7 @@ void status_init(struct Status *sta) {
 
   /* step init */
   step_init(&sta->step);
-  step_push(&sta->step, action_stop, condition_never);
-  answer2(sta);
+  answer_do_nothing(sta);
 
   // read flash duration
   unsigned duration = *(const unsigned *)flash_use(PAGE_NUM - 1);

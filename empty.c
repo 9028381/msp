@@ -26,8 +26,6 @@ int main(void) {
   led_blame(0, 5, 5, 5);
 
 
-  status.base_speed = 650;
-  status.mode.follow = true;
     // status.mode.remote = true;
 //   status.mode.turn = true;
 //   status.dir.target = 0;

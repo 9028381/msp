@@ -6,8 +6,8 @@
 #define DEV
 
 #define BASE_SPEED 500
-#define KEEP_ANGLE_SPEED BASE_SPEED
-#define FOLLOW_LINE_SPEED BASE_SPEED
+#define KEEP_ANGLE_SPEED 700
+#define FOLLOW_LINE_SPEED 650
 
 #define TURN_ANGLE_RANGE 1.0
 
@@ -27,7 +27,7 @@
  */
 #define STATUS_FREQ TIMER1_FREQ
 
-#define STATUS_STEP_LIMIT 10
+#define STATUS_STEP_LIMIT 50
 
 /******* WHEEL *******/
 #define WHEEL_THRUST_MAX 6000
@@ -35,7 +35,7 @@
 /*
  * task
  */
-#define TASK_RPC_ID_LIMIT 128
+#define TASK_RPC_ID_LIMIT 160
 #define TASK_QUEUE_LIMIT 30
 #define TASK_TIMED_LIMIT 30
 

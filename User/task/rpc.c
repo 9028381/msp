@@ -150,9 +150,9 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(61, status.pid.follow.ki);
   RPC_DECLARE_GET_VAR(62, status.pid.follow.kd);
 
-  RPC_DECLARE_CALL_FN(99, answer_select_rpc, NULL);
-
   RPC_DECLARE_CALL_FN(100, echo, "hello");
   RPC_DECLARE_CALL_FN(101, record_once_switch, NULL);
   RPC_DECLARE_CALL_FN(102, repeat_open, NULL);
+
+  RPC_DECLARE_CALL_FN(153, answer_select_rpc, NULL);
 }
