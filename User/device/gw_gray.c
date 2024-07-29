@@ -20,11 +20,24 @@
 int16_t gw_bit_weight[8] = {-300, -250, -150, -70, 70, 150, 250, 300};
 
 short gw_gray_diff(uint8_t line) {
+  static unsigned char times = 0;
+  static unsigned last = 0;
   short diff = 0;
   unsigned char cnt = 0;
 
-  if (line == 0)
-    return ROAD_NO;
+  if (line == 0) {
+    if (last - status.times < 3)
+      times++;
+    else
+      times = 0;
+
+    last = status.times;
+
+    if (times == 5) {
+      times = 0;
+      return ROAD_NO;
+    }
+  }
 
   for (int i = 0; i < 8; i++) {
     if (((line >> i) & 0x01)) {
