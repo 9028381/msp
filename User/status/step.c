@@ -142,12 +142,26 @@ bool condition_roadless(struct Status *sta) {
   return sta->sensor.follow == ROAD_NO;
 }
 
-bool condition_roadless_with_1000_history_limit(struct Status *sta) {
+bool condition_findline_with_3_least_limit(struct Status *sta) {
+  static unsigned char times = 0;
+  times += condition_findline(sta) ? 1 : 0;
+  if (times <= 3)
+    return false;
+
+  times = 0;
+  return true;
+}
+
+bool condition_roadless_with_60000_70000_history_limit(struct Status *sta) {
   int history_left =
       sta->wheels[FONT_LEFT].history - sta->step.ctx.start_history[FONT_LEFT];
   int history_right =
       sta->wheels[FONT_RIGHT].history - sta->step.ctx.start_history[FONT_RIGHT];
-  if (history_left > 1000 || history_right > 1000)
+
+  if (history_left < 60000 || history_right < 60000)
+    return false;
+
+  if (history_left > 70000 || history_right > 70000)
     return true;
 
   return condition_roadless(sta);

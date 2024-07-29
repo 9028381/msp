@@ -59,8 +59,12 @@ DECLARE_ACTION_TURN_TO(256)
 void action_do_nothing(struct Status *sta);
 
 bool condition_turn_to(struct Status *sta);
+
 bool condition_findline(struct Status *sta);
+bool condition_findline_with_3_least_limit(struct Status *sta);
+
 bool condition_roadless(struct Status *sta);
+bool condition_roadless_with_60000_70000_history_limit(struct Status *sta);
 
 bool condition_never(struct Status *sta);
 bool condition_always(struct Status *sta);
