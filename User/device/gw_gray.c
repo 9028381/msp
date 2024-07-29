@@ -6,6 +6,7 @@
 #include "User/utils/log.h"
 #include "stdbool.h"
 #include <stdint.h>
+#include "ti_msp_dl_config.h"
 
 #define GW_GRAY_ADDR 0x4C
 
@@ -24,6 +25,15 @@ short gw_gray_diff(uint8_t line) {
   static unsigned last = 0;
   short diff = 0;
   unsigned char cnt = 0;
+
+  if(!(bool)DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN))
+  {
+    return 500;
+  }
+   if(!(bool)DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN))
+  {
+    return -500;
+  }
 
 //   if (line == 0) {
 //     if ((status.times - last) < 3)
