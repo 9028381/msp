@@ -70,6 +70,14 @@ void action_turn_to_104(struct Status *sta) {
   sta->base_speed = 0;
 }
 
+void action_turn_to_284(struct Status *sta){
+  INFO("STEP_TURN_TO_284");
+  sta->mode.turn = true;
+  sta->mode.follow = false;
+  sta->dir.target = 284.0;
+  sta->base_speed = 0;
+}
+
 void action_keep_0(struct Status *sta) {
   INFO("STEP_KEEP_0");
   sta->mode.turn = true;
@@ -91,6 +99,14 @@ void action_keep_104(struct Status *sta) {
   sta->mode.turn = true;
   sta->mode.follow = false;
   sta->dir.target = 104.0;
+  sta->base_speed = KEEP_ANGLE_SPEED;
+}
+
+void action_keep_284(struct Status *sta){
+  INFO("STEP_KEEP_284");
+  sta->mode.turn = true;
+  sta->mode.follow = false;
+  sta->dir.target = 284.0;
   sta->base_speed = KEEP_ANGLE_SPEED;
 }
 
