@@ -28,12 +28,12 @@ void status_init(struct Status *sta) {
     pid_init(&sta->pid.history[i], 0.1, 0, 0, 3, 10);
 
   // remote pid init
-//   pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10); // wifi
-//   pid_init(&sta->pid.remote_theta, 1, 0, 0, 3, 10);   // wifi
-    // pid_init(&sta->pid.remote_forward, 2, 0, 1.5, 3, 10);  //cam
-    // pid_init(&sta->pid.remote_theta, 1, 0, 0.5, 3, 10);   //cam
-    pid_init(&sta->pid.remote_forward, 2, 0, 1, 3, 10);  //cam
-    pid_init(&sta->pid.remote_theta, 0.5, 0, 3, 3, 10);   //cam
+  //   pid_init(&sta->pid.remote_forward, 1, 0, 0, 3, 10); // wifi
+  //   pid_init(&sta->pid.remote_theta, 1, 0, 0, 3, 10);   // wifi
+  // pid_init(&sta->pid.remote_forward, 2, 0, 1.5, 3, 10);  //cam
+  // pid_init(&sta->pid.remote_theta, 1, 0, 0.5, 3, 10);   //cam
+  pid_init(&sta->pid.remote_forward, 2, 0, 1, 3, 10); // cam
+  pid_init(&sta->pid.remote_theta, 0.5, 0, 3, 3, 10); // cam
 
   // wheels init
   sta->base_speed = 0;
@@ -95,7 +95,8 @@ void status_next(struct Status *sta) {
 
     sta->wheels[FONT_LEFT].target = forward + theta;
     sta->wheels[FONT_RIGHT].target = forward - theta;
-    // PRINTLN("%d %d",sta->remote_position.forward, sta->remote_position.theta);
+    // PRINTLN("%d %d",sta->remote_position.forward,
+    // sta->remote_position.theta);
     // PRINTLN("f:%d,t:%d",sta->remote_position.forward,sta->remote_position.theta);
     // PRINTLN("L: %d, R: %d",forward + theta, forward - theta);
 
@@ -129,18 +130,8 @@ void status_next(struct Status *sta) {
   if (sta->mode.follow) {
     int delta;
     switch (sta->sensor.follow) {
-    case ROAD_LEFT:
-      step_turn_left(sta);
-      break;
-    case ROAD_RIGHT:
-      step_turn_right(sta);
-      break;
-    case ROAD_CROSS:
-    case ROAD_TB:
-    case ROAD_TR:
-    case ROAD_TL:
-      step_next(&sta->step, sta);
-      break;
+    case 30000:
+      step_stop(sta);
     default:
       delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
       sta->wheels[FONT_LEFT].target += delta;

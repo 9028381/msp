@@ -22,6 +22,10 @@ short gw_gray_diff(uint8_t line) {
   short diff = 0;
   unsigned char cnt = 0;
 
+  if (line == 0xff) {
+    return 30000;
+  }
+
   for (int i = 0; i < 8; i++) {
     if (((line >> i) & 0x01)) {
       cnt++;
@@ -46,35 +50,6 @@ void gw_gray_show(uint8_t line) {
 
   //   PRINTLN("%s", str);
 }
-
-// #define INTEGRAL_TIMES 8
-// enum Road {           // L F R
-//   CrossRoad = 0b111,  // 1 1 1
-//   TBRoad = 0b101,     // 1 0 1
-//   TLRoad = 0b110,     // 1 1 0
-//   TRRoad = 0b011,     // 0 1 1
-//   LeftRoad = 0b100,   // 1 0 0
-//   RightRoad = 0b001,  // 0 0 1
-//   Straight = 0b010,   // 0 1 0
-//   UnknowRoad = 0b000, // 0 0 0
-// };
-// enum Road cross = Straight;
-
-// enum Road road_new_from_bit(bool L, bool F, bool R) {
-//   uint8_t left = L ? 0b100 : 0;
-//   uint8_t font = F ? 0b010 : 0;
-//   uint8_t right = R ? 0b001 : 0;
-
-//   return left | font | right;
-// }
-
-// void gw_gray_decision(uint8_t integral, uint8_t line) {
-//   bool left = (integral >> 6) == 0x03;    // 0b1100_0000
-//   bool right = (integral & 0x03) == 0x03; // 0b0000_0011
-//   bool font = line & 0x3C;                // 0b0011_1100
-//   enum Road road = road_new_from_bit(left, font, right);
-//   cross = road;
-// }
 
 short gw_gray_get_diff() {
   static uint8_t maybe = 0;
