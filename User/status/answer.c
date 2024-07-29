@@ -36,15 +36,15 @@ void answer_select_rpc(unsigned short var, void *para) {
 void answer1(struct Status *sta) {
   INFO("ANSWER1");
   step_clear(&sta->step);
-  step_push(&sta->step, action_keep_0, condition_findline_with_60000_70000_history_limit);
+  step_push(&sta->step, action_keep_0, condition_findline_with_60000_75000_history_limit);
   step_push(&sta->step, action_stop, condition_never);
 }
 
 void answer2(struct Status *sta) {
   step_clear(&sta->step);
-  step_push(&sta->step, action_keep_0, condition_findline_with_60000_70000_history_limit);
+  step_push(&sta->step, action_keep_0, condition_findline_with_60000_75000_history_limit);
   step_push(&sta->step, action_follow, condition_roadless);
-  step_push(&sta->step, action_keep_180, condition_findline_with_60000_70000_history_limit);
+  step_push(&sta->step, action_keep_180, condition_findline_with_60000_75000_history_limit);
   step_push(&sta->step, action_follow, condition_roadless);
   step_push(&sta->step, action_stop, condition_never);
 }

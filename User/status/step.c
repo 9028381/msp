@@ -150,7 +150,7 @@ bool condition_findline_with_3_least_limit(struct Status *sta) {
   return true;
 }
 
-bool condition_findline_with_60000_70000_history_limit(struct Status *sta) {
+bool condition_findline_with_60000_75000_history_limit(struct Status *sta) {
   int history_left =
       sta->wheels[FONT_LEFT].history - sta->step.ctx.start_history[FONT_LEFT];
   int history_right =
@@ -159,7 +159,7 @@ bool condition_findline_with_60000_70000_history_limit(struct Status *sta) {
   if (history_left < 60000 || history_right < 60000)
     return false;
 
-  if (history_left > 70000 || history_right > 70000)
+  if (history_left > 75000 || history_right > 75000)
     return true;
 
   return condition_findline(sta);
