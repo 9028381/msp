@@ -70,7 +70,7 @@ void action_turn_to_104(struct Status *sta) {
   sta->base_speed = 0;
 }
 
-void action_turn_to_284(struct Status *sta){
+void action_turn_to_284(struct Status *sta) {
   INFO("STEP_TURN_TO_284");
   sta->mode.turn = true;
   sta->mode.follow = false;
@@ -78,7 +78,7 @@ void action_turn_to_284(struct Status *sta){
   sta->base_speed = 0;
 }
 
-void action_turn_to_256(struct Status *sta){
+void action_turn_to_256(struct Status *sta) {
   INFO("STEP_TURN_TO_256");
   sta->mode.turn = true;
   sta->mode.follow = false;
@@ -110,7 +110,7 @@ void action_keep_104(struct Status *sta) {
   sta->base_speed = KEEP_ANGLE_SPEED;
 }
 
-void action_keep_284(struct Status *sta){
+void action_keep_284(struct Status *sta) {
   INFO("STEP_KEEP_284");
   sta->mode.turn = true;
   sta->mode.follow = false;
@@ -118,7 +118,7 @@ void action_keep_284(struct Status *sta){
   sta->base_speed = KEEP_ANGLE_SPEED;
 }
 
-void action_keep_256(struct Status *sta){
+void action_keep_256(struct Status *sta) {
   INFO("STEP_KEEP_256");
   sta->mode.turn = true;
   sta->mode.follow = false;
@@ -154,6 +154,8 @@ void action_forward(struct Status *sta) {
   INFO("STEP_FORWARD");
   sta->base_speed = BASE_SPEED;
 }
+
+void action_do_nothing(struct Status *sta) { INFO("STEP_DO_NOTHING"); }
 
 bool condition_turn_to(struct Status *sta) {
   float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro;
