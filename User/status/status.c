@@ -132,6 +132,7 @@ void status_next(struct Status *sta) {
     switch (sta->sensor.follow) {
     case 30000:
       step_stop(sta);
+      break;
     default:
       delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
       sta->wheels[FONT_LEFT].target += delta;
