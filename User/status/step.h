@@ -2,6 +2,7 @@
 #define __STEP_H__
 
 #include "../config.h"
+#include "../device/wheel.h"
 #include "stdbool.h"
 
 struct Status;
@@ -9,11 +10,17 @@ struct Status;
 typedef void (*step_action)(struct Status *sta);
 typedef bool (*step_next_condition)(struct Status *sta);
 
+struct StepContext {
+  unsigned start_time;
+  unsigned start_history[WHEEL_NUMS];
+};
+
 struct Step {
   unsigned no;
   unsigned len;
   step_action actions[STATUS_STEP_LIMIT];
   step_next_condition conditions[STATUS_STEP_LIMIT];
+  struct StepContext ctx;
 };
 
 void step_init(struct Step *step);
@@ -44,9 +51,12 @@ void action_turn_to_104(struct Status *sta);
 void action_turn_to_284(struct Status *sta);
 void action_turn_to_256(struct Status *sta);
 
+void action_do_nothing(struct Status *sta);
+
 bool condition_turn_to(struct Status *sta);
 bool condition_findline(struct Status *sta);
 bool condition_roadless(struct Status *sta);
+
 bool condition_never(struct Status *sta);
 bool condition_always(struct Status *sta);
 

@@ -5,12 +5,30 @@
 void step_init(struct Step *step) {
   step->no = 0;
   step->len = 0;
+  step->ctx.start_time = 0;
+  for (int i = 0; i < WHEEL_NUMS; i++)
+    step->ctx.start_history[i] = 0;
+  step_push(step, action_do_nothing, condition_always);
 }
 
-void step_clear(struct Step *step) {
-  step->no = 0;
-  step->len = 0;
+void step_ctx_next(struct StepContext *ctx, struct Status *sta) {
+  ctx->start_time = sta->times;
+  for (int i = 0; i < WHEEL_NUMS; i++)
+    ctx->start_history[i] = sta->wheels[i].history;
 }
+
+void step_ctx_display(struct StepContext *ctx, struct Status *sta) {
+  INFO("STEP_CTX_DISPLAY");
+  INFO("  start_time=%d, duration_time=%d", ctx->start_time,
+       sta->times - ctx->start_time);
+  for (int i = 0; i < WHEEL_NUMS; i++) {
+    INFO("  start_history[%d]=%d, duration_history[%d]=%d", i,
+         ctx->start_history[i], i,
+         sta->wheels[i].history - ctx->start_history[i]);
+  }
+}
+
+void step_clear(struct Step *step) { step_init(step); }
 
 void step_push(struct Step *step, step_action action,
                step_next_condition next_condition) {
@@ -34,6 +52,9 @@ void step_next(struct Step *step, struct Status *sta) {
     return;
   }
 
+  INFO("STEP_NEXT %d", step->no);
+  step_ctx_display(&step->ctx, sta);
+  step_ctx_next(&step->ctx, sta);
   step->actions[step->no](sta);
 }
 
@@ -43,7 +64,6 @@ bool step_try_next(struct Step *step, struct Status *sta) {
     return true;
   }
 
-  step->actions[step->no](sta);
   return false;
 }
 
@@ -169,6 +189,13 @@ bool condition_findline(struct Status *sta) {
 }
 
 bool condition_roadless(struct Status *sta) {
+  return sta->sensor.follow == ROAD_NO;
+}
+
+bool condition_roadless_with_1000_history_limit(struct Status *sta) {
+  if (sta->step.ctx.start_history[FONT_LEFT] > 1000 ||
+      sta->step.ctx.start_history[FONT_RIGHT] > 1000)
+    return true;
   return sta->sensor.follow == ROAD_NO;
 }
 
