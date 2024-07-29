@@ -43,6 +43,7 @@ bool step_try_next(struct Step *step, struct Status *sta) {
     return true;
   }
 
+  step->actions[step->no](sta);
   return false;
 }
 

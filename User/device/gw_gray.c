@@ -25,21 +25,23 @@ short gw_gray_diff(uint8_t line) {
   short diff = 0;
   unsigned char cnt = 0;
 
-  if (line == 0) {
-    if (last - status.times < 3)
-      times = times >= 5 ? 5 : times + 1;
-    else
-      times = 0;
+//   if (line == 0) {
+//     if ((status.times - last) < 3)
+//       times = times >= 5 ? 5 : times + 1;
+//     else
+//       times = 0;
 
-    last = status.times;
+//     last = status.times;
 
-    if (times >= 5) {
-      times = 0;
-      return ROAD_NO;
-    }
+//     if (times >= 5) {
+//       return ROAD_NO;
+//     }
 
-    return 0;
-  }
+//     return 0;
+//   }
+
+    if (line == 0)
+        return ROAD_NO;
 
   for (int i = 0; i < 8; i++) {
     if (((line >> i) & 0x01)) {

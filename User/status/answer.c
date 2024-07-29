@@ -2,6 +2,7 @@
 #include "../device/led.h"
 #include "User/status/step.h"
 #include "status.h"
+#include "../utils/utils.h"
 
 void answer_select(unsigned short which) {
   switch (which) {
@@ -33,6 +34,7 @@ void answer_select_rpc(unsigned short var, void *para) {
 }
 
 void answer1(struct Status *sta) {
+  INFO("ANSWER1");
   step_clear(&sta->step);
   step_push(&sta->step, action_keep_0, condition_findline);
   step_push(&sta->step, action_stop, condition_never);
@@ -42,7 +44,7 @@ void answer2(struct Status *sta) {
   step_clear(&sta->step);
   step_push(&sta->step, action_keep_0, condition_findline);
   step_push(&sta->step, action_follow, condition_roadless);
-  step_push(&sta->step, action_turn_to_180, condition_turn_to);
+//   step_push(&sta->step, action_turn_to_180, condition_turn_to);
   step_push(&sta->step, action_keep_180, condition_findline);
   step_push(&sta->step, action_follow, condition_roadless);
   step_push(&sta->step, action_stop, condition_never);
