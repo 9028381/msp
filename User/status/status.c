@@ -36,7 +36,7 @@ void status_init(struct Status *sta) {
   pid_init(&sta->pid.remote_theta, 0.5, 0, 3, 3, 10); // cam
 
   // wheels init
-  sta->base_speed = 0;
+  sta->base_speed = BASE_SPEED;
   status_wheels_init(sta->wheels);
 
   // remote position
@@ -111,9 +111,34 @@ void status_next(struct Status *sta) {
   if (sta->mode.turn)
     sta->sensor.gyro = gyr_get_value(gyr_z_yaw);
 
-  if (sta->mode.follow)
-    // sta->sensor.follow = get_cam_diff();
-    sta->sensor.follow = gw_gray_get_diff();
+  /* if (sta->mode.follow) */
+  // sta->sensor.follow = get_cam_diff();
+  // always open follow
+  sta->sensor.follow = gw_gray_get_diff();
+
+  if (sta->mode.follow && sta->sensor.follow == 30000) {
+    sta->mode.follow = false;
+    sta->mode.turn = true;
+    sta->dir.target = -180.0;
+    sta->base_speed = 0;
+    step_stop(sta);
+  }
+
+  if (sta->base_speed == 0 && sta->mode.turn){
+    float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro;
+    diff = WARPPING(diff, -180.0, 180.0);
+    if (ABS(diff)< 1.0){
+      sta->base_speed = BASE_SPEED;
+      step_forward(sta);
+    }
+  }
+
+  if (sta->mode.turn && sta->sensor.follow != 30000){
+    sta->mode.turn = false;
+    sta->mode.follow = true;
+    sta->base_speed = BASE_SPEED;
+    step_forward(sta);
+  }
 
   // update wheel target speed based on sensor
   if (sta->mode.turn) {
@@ -128,16 +153,9 @@ void status_next(struct Status *sta) {
   }
 
   if (sta->mode.follow) {
-    int delta;
-    switch (sta->sensor.follow) {
-    case 30000:
-      step_stop(sta);
-    default:
-      delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
-      sta->wheels[FONT_LEFT].target += delta;
-      sta->wheels[FONT_RIGHT].target -= delta;
-      break;
-    }
+    int delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
+    sta->wheels[FONT_LEFT].target += delta;
+    sta->wheels[FONT_RIGHT].target -= delta;
   }
 
 THRUST_MOTOR:

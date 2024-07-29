@@ -67,7 +67,7 @@ short gw_gray_get_diff() {
 
   //   gw_gray_show(line);
 
-  return gw_gray_diff(line & 0xFF); // 0b0111_1110
+  return gw_gray_diff(line); // 0b0111_1110
 }
 
 uint8_t gw_gray_get_line_digital_is_black() {
