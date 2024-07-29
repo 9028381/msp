@@ -61,6 +61,7 @@ bool condition_turn_to(struct Status *sta);
 bool condition_findline(struct Status *sta);
 bool condition_findline_with_3_least_limit(struct Status *sta);
 bool condition_findline_with_60000_75000_history_limit(struct Status *sta);
+bool condition_findline_with_80000_90000_history_limit(struct Status *sta);
 
 bool condition_roadless(struct Status *sta);
 
