@@ -27,13 +27,13 @@ short gw_gray_diff(uint8_t line) {
 
   if (line == 0) {
     if (last - status.times < 3)
-      times++;
+      times = times >= 5 ? 5 : times + 1;
     else
       times = 0;
 
     last = status.times;
 
-    if (times == 5) {
+    if (times >= 5) {
       times = 0;
       return ROAD_NO;
     }
