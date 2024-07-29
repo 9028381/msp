@@ -5,6 +5,7 @@
 #include "User/status/status.h"
 #include "User/device/gw_gray.h"
 #include "stdlib.h"
+#include "../status/answer.h"
 
 void rpc_register(RPC rpc, uint8_t id, const char *describe,
                   void fn(uint16_t, void *), void *para);
@@ -148,6 +149,8 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(60, status.pid.follow.kp);
   RPC_DECLARE_GET_VAR(61, status.pid.follow.ki);
   RPC_DECLARE_GET_VAR(62, status.pid.follow.kd);
+
+  RPC_DECLARE_CALL_FN(99, answer_select_rpc, NULL);
 
   RPC_DECLARE_CALL_FN(100, echo, "hello");
   RPC_DECLARE_CALL_FN(101, record_once_switch, NULL);

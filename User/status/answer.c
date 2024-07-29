@@ -1,5 +1,36 @@
 #include "answer.h"
+#include "../device/led.h"
+#include "User/status/step.h"
 #include "status.h"
+
+void answer_select(unsigned short which) {
+  switch (which) {
+  case 1:
+    led_blame(0, 3, 10, 10);
+    answer1(&status);
+    break;
+  case 2:
+    led_blame(0, 3, 10, 10);
+    answer2(&status);
+    break;
+  case 3:
+    led_blame(0, 3, 10, 10);
+    answer3(&status);
+    break;
+  case 4:
+    led_blame(0, 3, 10, 10);
+    answer4(&status);
+    break;
+  default:
+    answer_do_nothing(&status);
+    break;
+  }
+}
+
+void answer_select_rpc(unsigned short var, void *para) {
+  unsigned char which = var & 0xff;
+  answer_select(which);
+}
 
 void answer1(struct Status *sta) {
   step_clear(&sta->step);
@@ -36,5 +67,10 @@ void answer4(struct Status *sta) {
     step_push(&sta->step, action_keep_256, condition_findline);
     step_push(&sta->step, action_follow, condition_roadless);
   }
+  step_push(&sta->step, action_stop, condition_never);
+}
+
+void answer_do_nothing(struct Status *sta) {
+  step_clear(&sta->step);
   step_push(&sta->step, action_stop, condition_never);
 }
