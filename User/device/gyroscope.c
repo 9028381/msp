@@ -6,7 +6,10 @@
 float gyr_get_value(enum Gyroscope key) {
   uint8_t buf[2];
 
-  iic_software_read_to_mem(GYR_ADDR, key, 2, buf);
+  unsigned err = 0;
+  do {
+    err = iic_software_read_to_mem(GYR_ADDR, key, 2, buf);
+  } while (err);
   float value = (short)(((short)buf[1] << 8) | buf[0]);
 
   switch (key) {
