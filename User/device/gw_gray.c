@@ -15,14 +15,21 @@
 #define Analogue_Output_CMD 0xB0
 #define Get_error_CMD 0xDE
 
-// const int16_t gw_bit_weight[8] = {0, -300, -100, -30, 30, 100, 300, 0}; //直角参数
+// const int16_t gw_bit_weight[8] = {0, -300, -100, -30, 30, 100, 300, 0};
+// //直角参数
 int16_t gw_bit_weight[8] = {-300, -150, -70, -30, 30, 70, 150, -300};
 
 short gw_gray_diff(uint8_t line) {
+  static unsigned char last = 3;
   short diff = 0;
   unsigned char cnt = 0;
 
-  if (line == 0xff) {
+  if (line == 0) {
+    if (last) {
+      last--;
+      return 0;
+    }
+    last = 3;
     return 30000;
   }
 
@@ -58,7 +65,7 @@ short gw_gray_get_diff() {
 
   uint8_t line = gw_gray_get_line_digital_is_black();
 
-//   gw_gray_show(line);
+  //   gw_gray_show(line);
 
   return gw_gray_diff(line & 0xFF); // 0b0111_1110
 }
