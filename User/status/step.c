@@ -78,9 +78,8 @@ bool step_try_next(struct Step *step, struct Status *sta) {
 
 ACTION_TURN_TO(0)
 ACTION_TURN_TO(180)
-ACTION_TURN_TO(104)
-ACTION_TURN_TO(284)
-ACTION_TURN_TO(256)
+ACTION_TURN_TO(103)
+ACTION_TURN_TO(257)
 
 #define ACTION_KEEP(angle)                                                     \
   void action_keep_##angle(struct Status *sta) {                               \
@@ -93,9 +92,8 @@ ACTION_TURN_TO(256)
 
 ACTION_KEEP(0)
 ACTION_KEEP(180)
-ACTION_KEEP(104)
-ACTION_KEEP(284)
-ACTION_KEEP(256)
+ACTION_KEEP(103)
+ACTION_KEEP(257)
 
 void action_follow(struct Status *sta) {
   INFO("STEP_FOLLOW");
