@@ -27,8 +27,14 @@ void step_push(struct Step *step, step_action action,
 };
 
 void step_next(struct Step *step, struct Status *sta) {
-  step->actions[step->no](sta);
   step->no += 1;
+  if (step->no >= step->len) {
+    THROW_WARN("STEP_NEXT_OVERFLOW no is %d, but step->len is %d. Will ignore.",
+               step->no, step->len);
+    return;
+  }
+
+  step->actions[step->no](sta);
 }
 
 bool step_try_next(struct Step *step, struct Status *sta) {
