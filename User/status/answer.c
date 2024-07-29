@@ -36,7 +36,7 @@ void answer_select_rpc(unsigned short var, void *para) {
 void answer1(struct Status *sta) {
   INFO("ANSWER1");
   step_clear(&sta->step);
-  step_push(&sta->step, action_keep_0, condition_findline);
+  step_push(&sta->step, action_keep_0, condition_findline_with_60000_70000_history_limit);
   step_push(&sta->step, action_stop, condition_never);
 }
 
