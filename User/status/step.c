@@ -80,6 +80,8 @@ ACTION_TURN_TO(0)
 ACTION_TURN_TO(180)
 ACTION_TURN_TO(103)
 ACTION_TURN_TO(257)
+ACTION_TURN_TO(256)
+ACTION_TURN_TO(255)
 
 #define ACTION_KEEP(angle)                                                     \
   void action_keep_##angle(struct Status *sta) {                               \
@@ -94,6 +96,8 @@ ACTION_KEEP(0)
 ACTION_KEEP(180)
 ACTION_KEEP(103)
 ACTION_KEEP(257)
+ACTION_KEEP(256)
+ACTION_KEEP(255)
 
 void action_follow(struct Status *sta) {
   INFO("STEP_FOLLOW");
@@ -150,6 +154,17 @@ bool condition_findline_with_3_least_limit(struct Status *sta) {
   return true;
 }
 
+bool condition_roadless_with_3_least_limit(struct Status *sta) {
+  static unsigned char times = 0;
+  times += condition_roadless(sta) ? 1 : 0;
+  if (times <= 3)
+    return false;
+
+  times = 0;
+  return true;
+}
+
+
 bool condition_findline_with_60000_75000_history_limit(struct Status *sta) {
   int history_left =
       sta->wheels[FONT_LEFT].history - sta->step.ctx.start_history[FONT_LEFT];
@@ -189,12 +204,16 @@ bool condition_findline_with_80000_90000_history_limit_turn_left(
 
   if (history_left < 80000 || history_right < 80000)
     return false;
+  else
+     sta->base_speed = FOLLOW_LINE_SPEED;
 
   if (history_left > 90000 || history_right > 90000) {
-    if (sta->sensor.follow == ROAD_NO)
+    if (sta->sensor.follow != ROAD_NO)
       return true;
 
-    sta->sensor.follow = -500;
+    sta->mode.turn = false;
+    sta->mode.follow = true;
+    sta->sensor.follow = 400;
     return false;
   }
 
@@ -210,12 +229,16 @@ bool condition_findline_with_80000_90000_history_limit_turn_right(
 
   if (history_left < 80000 || history_right < 80000)
     return false;
+  else 
+    sta->base_speed = FOLLOW_LINE_SPEED;
 
   if (history_left > 90000 || history_right > 90000) {
-    if (sta->sensor.follow == ROAD_NO)
+    if (sta->sensor.follow != ROAD_NO)
       return true;
 
-    sta->sensor.follow = 500;
+    sta->mode.turn = false;
+    sta->mode.follow = true;
+    sta->sensor.follow = -400;
     return false;
   }
 

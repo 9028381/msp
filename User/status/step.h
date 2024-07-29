@@ -48,11 +48,15 @@ DECLARE_ACTION_KEEP(0)
 DECLARE_ACTION_KEEP(180)
 DECLARE_ACTION_KEEP(103)
 DECLARE_ACTION_KEEP(257)
+DECLARE_ACTION_KEEP(256)
+DECLARE_ACTION_KEEP(255)
 
 DECLARE_ACTION_TURN_TO(0)
 DECLARE_ACTION_TURN_TO(180)
 DECLARE_ACTION_TURN_TO(103)
 DECLARE_ACTION_TURN_TO(257)
+DECLARE_ACTION_TURN_TO(256)
+DECLARE_ACTION_TURN_TO(255)
 
 void action_do_nothing(struct Status *sta);
 
@@ -66,6 +70,7 @@ bool condition_findline_with_80000_90000_history_limit_turn_left(struct Status *
 bool condition_findline_with_80000_90000_history_limit_turn_right(struct Status *sta);
 
 bool condition_roadless(struct Status *sta);
+bool condition_roadless_with_3_least_limit(struct Status *sta);
 
 bool condition_never(struct Status *sta);
 bool condition_always(struct Status *sta);
