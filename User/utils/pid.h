@@ -2,7 +2,6 @@
 #define __PID_H__
 
 #include "../config.h"
-#include "stdbool.h"
 
 struct Pid {
   float kp, ki, kd;
@@ -11,7 +10,6 @@ struct Pid {
   unsigned char len;
   int sum;
   int i_max;
-  bool is_first;
 };
 typedef struct Pid Pid;
 

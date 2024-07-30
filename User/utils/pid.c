@@ -3,7 +3,6 @@
 #include "math.h"
 #include "stdlib.h"
 
-
 void pid_init(Pid *pid, float kp, float ki, float kd,
               unsigned char integral_length, unsigned int integral_max) {
   if (pid == NULL) {
@@ -36,7 +35,6 @@ void pid_init(Pid *pid, float kp, float ki, float kd,
   pid->sum = 0;
   pid->len = integral_length;
   pid->i_max = integral_max;
-  pid->is_first = true;
   for (unsigned i = 0; i < pid->len; i++)
     pid->data[i] = 0;
 }
@@ -69,12 +67,6 @@ int pid_compute(Pid *pid, int target, int current) {
   // index: 0 -> 1 -> 2 -> ... -> pid.len - 1 ----> 0 -> 1 -> 2 -> ...
   pid->index += 1;
   pid->index = pid->index == pid->len ? 0 : pid->index;
-
-  if(pid->is_first)
-  {
-    d = 0;
-    pid->is_first = false;
-  }
 
   return pid->kp * p + pid->ki * i + pid->kd * d;
 }
