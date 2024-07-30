@@ -10,7 +10,8 @@ struct Sensor {
   /// [-180, 180]
   float gyro;
   /// [-1000, 1000]
-  short follow;
+  short follow_gw;
+  short follow_ms;
 };
 
 struct Mode {
@@ -23,7 +24,8 @@ struct Mode {
 
 struct MovePid {
   Pid turn;
-  Pid follow;
+  Pid follow_gw;
+  Pid follow_ms;
   Pid remote_forward;
   Pid remote_theta;
   Pid history[WHEEL_NUMS];

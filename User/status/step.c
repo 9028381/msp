@@ -1,6 +1,7 @@
 #include "step.h"
 #include "../utils/utils.h"
 #include "status.h"
+#include "stdlib.h"
 
 void step_init(struct Step *step) {
   step->no = 0;
@@ -40,9 +41,26 @@ void step_push(struct Step *step, step_action action,
   }
 
   step->actions[step->len] = action;
+  step->updates[step->len] = NULL;
   step->conditions[step->len] = next_condition;
   step->len += 1;
 };
+
+void step_push_with_update(struct Step *step, step_action action,
+                           step_update update,
+                           step_next_condition next_condition) {
+  if (step->len > STATUS_STEP_LIMIT) {
+    THROW_WARN("STEP_PUSH_OVERFLOW len is %d, but STATUS_STEP_LIMIT is %d. "
+               "Will ignore.",
+               step->len, STATUS_STEP_LIMIT);
+    return;
+  }
+
+  step->actions[step->len] = action;
+  step->updates[step->len] = update;
+  step->conditions[step->len] = next_condition;
+  step->len += 1;
+}
 
 void step_next(struct Step *step, struct Status *sta) {
   step->no += 1;
@@ -64,6 +82,8 @@ bool step_try_next(struct Step *step, struct Status *sta) {
     return true;
   }
 
+  if (step->updates[step->no] != NULL)
+    step->updates[step->no](sta);
   return false;
 }
 
@@ -217,11 +237,11 @@ bool condition_turn_to(struct Status *sta) {
 }
 
 bool condition_findline(struct Status *sta) {
-  return sta->sensor.follow != ROAD_NO;
+  return sta->sensor.follow_gw != ROAD_NO;
 }
 
 bool condition_roadless(struct Status *sta) {
-  return sta->sensor.follow == ROAD_NO;
+  return sta->sensor.follow_gw == ROAD_NO;
 }
 
 bool condition_findline_with_3_least_limit(struct Status *sta) {
@@ -287,12 +307,12 @@ bool condition_findline_with_80000_90000_history_limit_turn_left(
     sta->base_speed = FOLLOW_LINE_SPEED;
 
   if (history_left > 90000 || history_right > 90000) {
-    if (sta->sensor.follow != ROAD_NO)
+    if (sta->sensor.follow_gw != ROAD_NO)
       return true;
 
     sta->mode.turn = false;
     sta->mode.follow = true;
-    sta->sensor.follow = 400;
+    sta->sensor.follow_gw = 400;
     return false;
   }
 
@@ -312,12 +332,12 @@ bool condition_findline_with_80000_90000_history_limit_turn_right(
     sta->base_speed = FOLLOW_LINE_SPEED;
 
   if (history_left > 90000 || history_right > 90000) {
-    if (sta->sensor.follow != ROAD_NO)
+    if (sta->sensor.follow_gw != ROAD_NO)
       return true;
 
     sta->mode.turn = false;
     sta->mode.follow = true;
-    sta->sensor.follow = -400;
+    sta->sensor.follow_gw = -400;
     return false;
   }
 

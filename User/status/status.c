@@ -4,9 +4,10 @@
 #include "../device/gw_gray.h"
 #include "../device/gyroscope.h"
 #include "../device/led.h"
+#include "../device/ms_gray.h"
 #include "../utils/utils.h"
-#include "answer.h"
 #include "User/device/wheel.h"
+#include "answer.h"
 #include "record.h"
 #include "step.h"
 
@@ -17,12 +18,14 @@ void status_init(struct Status *sta) {
   sta->times = 0;
 
   // sensor init
-  sta->dir.origin = gyr_get_value(gyr_z_yaw);
+  /* sta->dir.origin = gyr_get_value(gyr_z_yaw); */
+  sta->dir.origin = 0.0;
   sta->dir.target = 0.0;
 
   // move pid init
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
-  pid_init(&sta->pid.follow, 0.7, 0, 3, 3, 10); // gw
+  pid_init(&sta->pid.follow_gw, 0.7, 0, 3, 3, 10); // gw
+  pid_init(&sta->pid.follow_ms, 0.7, 0, 3, 3, 10); // ms
   // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // repeat history pid
@@ -73,81 +76,84 @@ void status_next(struct Status *sta) {
   status_wheels_next_speed(sta->wheels);
 
   // record
-  if (sta->mode.record) {
-    status_record(sta->wheels[FONT_LEFT].history -
-                  sta->rec.wheels_history[FONT_LEFT]);
-    status_record(sta->wheels[FONT_RIGHT].history -
-                  sta->rec.wheels_history[FONT_RIGHT]);
-  }
+  /* if (sta->mode.record) { */
+  /*   status_record(sta->wheels[FONT_LEFT].history - */
+  /*                 sta->rec.wheels_history[FONT_LEFT]); */
+  /*   status_record(sta->wheels[FONT_RIGHT].history - */
+  /*                 sta->rec.wheels_history[FONT_RIGHT]); */
+  /* } */
 
   // remote
-  if (sta->mode.remote) {
-    int forward =
-        pid_compute(&sta->pid.remote_forward, sta->remote_position.forward, 0);
-    int theta =
-        pid_compute(&sta->pid.remote_theta, sta->remote_position.theta, 0);
-
-    sta->wheels[FONT_LEFT].target = forward + theta;
-    sta->wheels[FONT_RIGHT].target = forward - theta;
-    // PRINTLN("%d %d",sta->remote_position.forward,
-    // sta->remote_position.theta);
-    // PRINTLN("f:%d,t:%d",sta->remote_position.forward,sta->remote_position.theta);
-    // PRINTLN("L: %d, R: %d",forward + theta, forward - theta);
-
-    goto THRUST_MOTOR;
-  }
+  /* if (sta->mode.remote) { */
+  /*   int forward = */
+  /*       pid_compute(&sta->pid.remote_forward, sta->remote_position.forward,
+   * 0); */
+  /*   int theta = */
+  /*       pid_compute(&sta->pid.remote_theta, sta->remote_position.theta, 0);
+   */
+  /**/
+  /*   sta->wheels[FONT_LEFT].target = forward + theta; */
+  /*   sta->wheels[FONT_RIGHT].target = forward - theta; */
+  /*   // PRINTLN("%d %d",sta->remote_position.forward, */
+  /*   // sta->remote_position.theta); */
+  /*   //
+   * PRINTLN("f:%d,t:%d",sta->remote_position.forward,sta->remote_position.theta);
+   */
+  /*   // PRINTLN("L: %d, R: %d",forward + theta, forward - theta); */
+  /**/
+  /*   goto THRUST_MOTOR; */
+  /* } */
 
   // sensor next
   /* if (sta->mode.turn) */
   // always open gryo
-  sta->sensor.gyro = gyr_get_value(gyr_z_yaw);
+  /* sta->sensor.gyro = gyr_get_value(gyr_z_yaw); */
 
   // sta->sensor.follow = get_cam_diff();
   /* if (sta->mode.follow) */
   // always open follow
-  sta->sensor.follow = gw_gray_get_diff();
+  sta->sensor.follow_gw = gw_gray_get_diff();
+  sta->sensor.follow_ms = get_ms_diff();
 
-  
   // motor base speed
-  for (int i = 0; i < WHEEL_NUMS; i++)
-    sta->wheels[i].target = sta->base_speed;
+  /* for (int i = 0; i < WHEEL_NUMS; i++) */
+  /*   sta->wheels[i].target = sta->base_speed; */
 
   // mode next
   step_try_next(&sta->step, sta);
 
-
   // update wheel target speed based on sensor
-  if (sta->mode.turn) {
-    float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro;
-    diff = WARPPING(diff, -180.0, 180.0);
-    // PRINTLN("origin:%f, tar:%f, diff:%f", sta->dir.origin,
-    // sta->dir.target,diff);
-    int delta = pid_compute(&sta->pid.turn, 0, diff * 10);
-    delta = CLAMP(delta, MAX_TURN_SPEED); // LIMIT MAX TURN SPEED
-    sta->wheels[FONT_LEFT].target += delta;
-    sta->wheels[FONT_RIGHT].target -= delta;
-  }
+  /* if (sta->mode.turn) { */
+  /*   float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro; */
+  /*   diff = WARPPING(diff, -180.0, 180.0); */
+  /*   // PRINTLN("origin:%f, tar:%f, diff:%f", sta->dir.origin, */
+  /*   // sta->dir.target,diff); */
+  /*   int delta = pid_compute(&sta->pid.turn, 0, diff * 10); */
+  /*   delta = CLAMP(delta, MAX_TURN_SPEED); // LIMIT MAX TURN SPEED */
+  /*   sta->wheels[FONT_LEFT].target += delta; */
+  /*   sta->wheels[FONT_RIGHT].target -= delta; */
+  /* } */
 
-  if (sta->mode.follow) {
-    if (sta->sensor.follow != ROAD_NO) {
-      int delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow);
-      sta->wheels[FONT_LEFT].target += delta;
-      sta->wheels[FONT_RIGHT].target -= delta;
-    }
-  }
+  /* if (sta->mode.follow) { */
+  /*   if (sta->sensor.follow != ROAD_NO) { */
+  /*     int delta = pid_compute(&sta->pid.follow, 0, sta->sensor.follow); */
+  /*     sta->wheels[FONT_LEFT].target += delta; */
+  /*     sta->wheels[FONT_RIGHT].target -= delta; */
+  /*   } */
+  /* } */
 
 THRUST_MOTOR:
 
-  if (sta->mode.repeat) {
-    const int *rec = flash_use(0);
-    const int *tar = rec + (sta->times - sta->rec.times) * 2;
-    sta->wheels[FONT_LEFT].target = pid_compute(
-        &sta->pid.history[FONT_LEFT], tar[0],
-        sta->wheels[FONT_LEFT].history - sta->rec.wheels_history[FONT_LEFT]);
-    sta->wheels[FONT_RIGHT].target = pid_compute(
-        &sta->pid.history[FONT_RIGHT], tar[1],
-        sta->wheels[FONT_RIGHT].history - sta->rec.wheels_history[FONT_RIGHT]);
-  }
+  /* if (sta->mode.repeat) { */
+  /*   const int *rec = flash_use(0); */
+  /*   const int *tar = rec + (sta->times - sta->rec.times) * 2; */
+  /*   sta->wheels[FONT_LEFT].target = pid_compute( */
+  /*       &sta->pid.history[FONT_LEFT], tar[0], */
+  /*       sta->wheels[FONT_LEFT].history - sta->rec.wheels_history[FONT_LEFT]); */
+  /*   sta->wheels[FONT_RIGHT].target = pid_compute( */
+  /*       &sta->pid.history[FONT_RIGHT], tar[1], */
+  /*       sta->wheels[FONT_RIGHT].history - sta->rec.wheels_history[FONT_RIGHT]); */
+  /* } */
 
   // update wheel thrust based on wheel target
   status_wheels_next_thrust(sta->wheels);

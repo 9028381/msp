@@ -8,6 +8,7 @@
 struct Status;
 
 typedef void (*step_action)(struct Status *sta);
+typedef void (*step_update)(struct Status *sta);
 typedef bool (*step_next_condition)(struct Status *sta);
 
 struct StepContext {
@@ -19,6 +20,7 @@ struct Step {
   unsigned no;
   unsigned len;
   step_action actions[STATUS_STEP_LIMIT];
+  step_update updates[STATUS_STEP_LIMIT];
   step_next_condition conditions[STATUS_STEP_LIMIT];
   struct StepContext ctx;
 };
@@ -28,6 +30,9 @@ void step_clear(struct Step *step);
 
 void step_push(struct Step *step, step_action action,
                step_next_condition next_condition);
+void step_push_with_update(struct Step *step, step_action action,
+                           step_update update,
+                           step_next_condition next_condition);
 bool step_try_next(struct Step *step, struct Status *sta);
 
 /// <-

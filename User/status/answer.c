@@ -2,6 +2,7 @@
 #include "../device/led.h"
 #include "../utils/utils.h"
 #include "User/status/step.h"
+#include "answer4_step.h"
 #include "status.h"
 
 void answer_select(unsigned short which) {
@@ -63,9 +64,34 @@ void answer3(struct Status *sta) {
   step_push(&sta->step, action_stop, condition_never);
 }
 
+#define STEP_PUSH(name)                                                        \
+  step_push_with_update(&sta->step, action_4_##name, update_4_##name,          \
+                        condition_4_##name)
+
 void answer4(struct Status *sta) {
   step_clear(&sta->step);
-    //   step_push(&sta->step, action_turn_circle_right, condition_turn_circle_right_little);
+  STEP_PUSH(arc_start);
+
+  for (int i = 0; i < 7; i++) {
+    STEP_PUSH(forward);
+    STEP_PUSH(arc_enter);
+    STEP_PUSH(semicircle_enter);
+    STEP_PUSH(semicircle_match);
+    STEP_PUSH(arc_continue);
+    /* STEP_PUSH(forward); */
+  }
+
+  STEP_PUSH(forward);
+  STEP_PUSH(arc_enter);
+  STEP_PUSH(semicircle_enter);
+  STEP_PUSH(semicircle_match);
+  step_push(&sta->step, action_stop, condition_never);
+}
+
+void answer4_bak(struct Status *sta) {
+  step_clear(&sta->step);
+  //   step_push(&sta->step, action_turn_circle_right,
+  //   condition_turn_circle_right_little);
   for (int i = 0; i < 4; i++) {
     /* step_push(&sta->step, action_keep_0,
      * condition_findline_with_80000_90000_history_limit_turn_left); */
