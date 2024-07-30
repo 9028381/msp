@@ -93,9 +93,10 @@ void update_4_semicircle_enter(struct Status *sta) {
   if (sta->sensor.follow_gw != ROAD_NO) {
     int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
 
-    sta->wheels[FONT_LEFT].target += delta;
-    sta->wheels[FONT_RIGHT].target -= delta;
-     INFO("%4.d %4.d %4.d %4.d",sta->sensor.follow_gw, delta, sta->wheels[FONT_LEFT].target, sta->wheels[FONT_RIGHT].target);
+    sta->wheels[FONT_LEFT].target = 500 + delta;
+    sta->wheels[FONT_RIGHT].target = 700 - delta;
+    INFO("%4.d %4.d %4.d %4.d", sta->sensor.follow_gw, delta,
+         sta->wheels[FONT_LEFT].target, sta->wheels[FONT_RIGHT].target);
   }
 }
 

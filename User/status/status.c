@@ -24,10 +24,9 @@ void status_init(struct Status *sta) {
 
   // move pid init
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
-//   pid_init(&sta->pid.follow_gw, 0.7, 0, 3, 3, 10); // gw
-  pid_init(&sta->pid.follow_gw, 0.16, 0, 3
-  , 3, 10); // gw
-  pid_init(&sta->pid.follow_ms, 0.7, 0, 3, 3, 10); // ms
+  //   pid_init(&sta->pid.follow_gw, 0.7, 0, 3, 3, 10); // gw
+  pid_init(&sta->pid.follow_gw, 0.16, 0, 3, 3, 10); // gw
+  pid_init(&sta->pid.follow_ms, 0.7, 0, 3, 3, 10);  // ms
   // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // repeat history pid
@@ -151,10 +150,12 @@ THRUST_MOTOR:
   /*   const int *tar = rec + (sta->times - sta->rec.times) * 2; */
   /*   sta->wheels[FONT_LEFT].target = pid_compute( */
   /*       &sta->pid.history[FONT_LEFT], tar[0], */
-  /*       sta->wheels[FONT_LEFT].history - sta->rec.wheels_history[FONT_LEFT]); */
+  /*       sta->wheels[FONT_LEFT].history - sta->rec.wheels_history[FONT_LEFT]);
+   */
   /*   sta->wheels[FONT_RIGHT].target = pid_compute( */
   /*       &sta->pid.history[FONT_RIGHT], tar[1], */
-  /*       sta->wheels[FONT_RIGHT].history - sta->rec.wheels_history[FONT_RIGHT]); */
+  /*       sta->wheels[FONT_RIGHT].history -
+   * sta->rec.wheels_history[FONT_RIGHT]); */
   /* } */
 
   // update wheel thrust based on wheel target
