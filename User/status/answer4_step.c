@@ -37,7 +37,7 @@ void speed_cache_store(struct Status *sta) {
 void action_4_arc_start(struct Status *sta) {
   INFO("ACTION_4_ARC_START");
   sta->wheels[FONT_LEFT].target = 700;
-  sta->wheels[FONT_RIGHT].target = 500;
+  sta->wheels[FONT_RIGHT].target = 520;
 }
 
 void update_4_arc_start(struct Status *sta) {}
@@ -85,16 +85,16 @@ bool condition_4_arc_enter(struct Status *sta) {
 /// semicircle_enter
 void action_4_semicircle_enter(struct Status *sta) {
   INFO("ACTION_4_SEMICIRCLE_ENTER");
-  sta->wheels[FONT_LEFT].target = 500;
-  sta->wheels[FONT_RIGHT].target = 700;
+  sta->wheels[FONT_LEFT].target = 700;
+  sta->wheels[FONT_RIGHT].target = 520;
 }
 
 void update_4_semicircle_enter(struct Status *sta) {
   if (sta->sensor.follow_gw != ROAD_NO) {
     int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
 
-    sta->wheels[FONT_LEFT].target = 500 + delta;
-    sta->wheels[FONT_RIGHT].target = 700 - delta;
+    sta->wheels[FONT_LEFT].target = 700 + delta;
+    sta->wheels[FONT_RIGHT].target = 520 - delta;
     INFO("%4.d %4.d %4.d %4.d", sta->sensor.follow_gw, delta,
          sta->wheels[FONT_LEFT].target, sta->wheels[FONT_RIGHT].target);
   }
