@@ -88,8 +88,7 @@ bool condition_4_arc_enter(struct Status *sta) {
 /// semicircle_enter
 void action_4_semicircle_enter(struct Status *sta) {
   INFO("ACTION_4_SEMICIRCLE_ENTER");
-  sta->wheels[FONT_LEFT].target = 700;
-  sta->wheels[FONT_RIGHT].target = 520;
+  speed_cache_recover(sta);
 }
 
 void update_4_semicircle_enter(struct Status *sta) {
@@ -127,11 +126,12 @@ bool condition_4_semicircle_match(struct Status *sta) {
 /// arc_continue
 void action_4_arc_continue(struct Status *sta) {
   INFO("ACTION_4_ARC_CONTINUE");
+  speed_cache_recover(sta);
 }
 
 void update_4_arc_continue(struct Status *sta) {}
 
 bool condition_4_arc_continue(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
-  return history.left + history.right > 42000;
+  return history.left + history.right > 80000;
 }
