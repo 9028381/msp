@@ -62,7 +62,7 @@ void update_4_forward(struct Status *sta) {}
 
 bool condition_4_forward(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
-  return history.left + history.right > 84000;
+  return history.left + history.right > 78000;
 }
 
 /// arc_enter
@@ -78,7 +78,7 @@ bool condition_4_arc_enter(struct Status *sta) {
     return true;
 
   struct DurationHistory history = duration_history_get(sta);
-  if (history.right + history.right < 42000)
+  if (history.left + history.right < 42000)
     return false;
 
   // try to recover
@@ -95,9 +95,10 @@ void update_4_semicircle_enter(struct Status *sta) {
   if (sta->sensor.follow_gw != ROAD_NO) {
     int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
 
-    sta->wheels[FONT_LEFT].target = 700 + delta;
-    sta->wheels[FONT_RIGHT].target = 520 - delta;
-    INFO("%4.d %4.d %4.d %4.d", sta->sensor.follow_gw, delta,
+    speed_cache_recover(sta);
+    sta->wheels[FONT_LEFT].target += delta;
+    sta->wheels[FONT_RIGHT].target -= delta;
+    INFO("%d %d %d %d", sta->sensor.follow_gw, delta,
          sta->wheels[FONT_LEFT].target, sta->wheels[FONT_RIGHT].target);
   }
 }
@@ -133,5 +134,5 @@ void update_4_arc_continue(struct Status *sta) {}
 
 bool condition_4_arc_continue(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
-  return history.left + history.right > 80000;
+  return history.left + history.right > 56000;
 }

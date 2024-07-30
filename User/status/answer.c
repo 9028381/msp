@@ -72,7 +72,6 @@ void answer4(struct Status *sta) {
   step_clear(&sta->step);
   STEP_PUSH(semicircle_enter);
   STEP_PUSH(arc_continue);
-  step_push(&sta->step, action_stop, condition_never);
 
   for (int i = 0; i < 7; i++) {
     STEP_PUSH(forward);
