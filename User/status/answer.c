@@ -76,7 +76,7 @@ void answer4(struct Status *sta) {
     STEP_PUSH(forward);
     STEP_PUSH(arc_enter);
     STEP_PUSH(semicircle_enter);
-    STEP_PUSH(semicircle_match);
+    /* STEP_PUSH(semicircle_match); */
     STEP_PUSH(arc_continue);
     /* STEP_PUSH(forward); */
   }
@@ -84,7 +84,7 @@ void answer4(struct Status *sta) {
   STEP_PUSH(forward);
   STEP_PUSH(arc_enter);
   STEP_PUSH(semicircle_enter);
-  STEP_PUSH(semicircle_match);
+  /* STEP_PUSH(semicircle_match); */
   step_push(&sta->step, action_stop, condition_never);
 }
 
