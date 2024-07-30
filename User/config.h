@@ -16,7 +16,7 @@
 #define MAX_FOLLOW_TURN_SPEED 250
 
 /******* TIMER *******/
-#define TIMER1_FREQ 40
+#define TIMER1_FREQ 100
 
 /******** FLASH *******/
 #define BASE_ADDR 0x0010000
@@ -28,7 +28,7 @@
  */
 #define STATUS_FREQ TIMER1_FREQ
 
-#define STATUS_STEP_LIMIT 50
+#define STATUS_STEP_LIMIT 100
 
 /******* WHEEL *******/
 #define WHEEL_THRUST_MAX 6000

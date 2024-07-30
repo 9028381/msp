@@ -25,19 +25,34 @@ int16_t gw_bit_weight[8] = {-35, -25, -15, -7, 7, 15, 25, 35};
 short gw_gray_diff(uint8_t line) {
   static int maybe = 0;
   static uint8_t last = 0;
+  static bool gw_single_1 = false;
+  static bool gw_single_2 = false;
   short diff = 0;
   unsigned char cnt = 0;
 
+
   if (maybe == 0) {
     if (!DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN)) {
+        if (gw_single_1){
       maybe = 1;
       last = line;
       return maybe * GW_SINGLE_BIT_WEIGHT;
+        }else {
+            gw_single_1 = true;
+        }
+    } else {
+        gw_single_1 = false;
     }
     if (!DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN)) {
+        if (gw_single_2){
       maybe = -1;
       last = line;
       return maybe * GW_SINGLE_BIT_WEIGHT;
+        } else {
+        gw_single_2 = true;
+        }
+    } else {
+        gw_single_2 = false;        
     }
   } else {
     if (line & 0b01111110)
