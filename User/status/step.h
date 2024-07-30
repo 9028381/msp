@@ -82,5 +82,7 @@ void action_turn_circle_right(struct Status *sta);
 bool condition_turn_circle_left(struct Status *sta);
 bool condition_turn_circle_right(struct Status *sta);
 bool condition_forward_85000(struct Status *sta);
+bool condition_forward_little(struct Status *sta);
+bool condition_turn_circle_right_little(struct Status *sta);
 
 #endif // !__STEP_H__

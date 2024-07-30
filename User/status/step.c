@@ -127,25 +127,25 @@ void action_forward(struct Status *sta) {
   INFO("STEP_FORWARD");
   sta->mode.turn = false;
   sta->mode.follow = false;
-  sta->base_speed = BASE_SPEED;
+  sta->base_speed = 700;
 }
 
 void action_turn_circle_left(struct Status *sta) {
   INFO("STEP_TURN_CIRCLE");
   sta->mode.turn = false;
   sta->mode.follow = false;
-  sta->base_speed = 500;
-  sta->wheels[FONT_LEFT].target = 358;
-  sta->wheels[FONT_RIGHT].target = 500;
+  sta->base_speed = 700;
+  sta->wheels[FONT_LEFT].target = 479;
+  sta->wheels[FONT_RIGHT].target = 700;
 }
 
 void action_turn_circle_right(struct Status *sta) {
   INFO("STEP_TURN_CIRCLE");
   sta->mode.turn = false;
   sta->mode.follow = false;
-  sta->base_speed = 500;
-  sta->wheels[FONT_LEFT].target = 500;
-  sta->wheels[FONT_RIGHT].target = 358;
+  sta->base_speed = 700;
+  sta->wheels[FONT_LEFT].target = 700;
+  sta->wheels[FONT_RIGHT].target = 479;
 }
 
 void action_do_nothing(struct Status *sta) { INFO("STEP_DO_NOTHING"); }
@@ -154,11 +154,11 @@ bool condition_turn_circle_left(struct Status *sta) {
   int history_right =
       sta->wheels[FONT_RIGHT].history - sta->step.ctx.start_history[FONT_RIGHT];
 
-  if (history_right > 108000)
+  if (history_right > 152000)
     return true;
 
-  sta->wheels[FONT_LEFT].target = 358;
-  sta->wheels[FONT_RIGHT].target = 500;
+  sta->wheels[FONT_LEFT].target = 500;
+  sta->wheels[FONT_RIGHT].target = 700;
   return false;
 }
 
@@ -166,11 +166,23 @@ bool condition_turn_circle_right(struct Status *sta) {
   int history_left =
       sta->wheels[FONT_LEFT].history - sta->step.ctx.start_history[FONT_LEFT];
 
-  if (history_left > 108000)
+  if (history_left > 152000)
     return true;
 
-  sta->wheels[FONT_LEFT].target = 500;
-  sta->wheels[FONT_RIGHT].target = 358;
+  sta->wheels[FONT_LEFT].target = 700;
+  sta->wheels[FONT_RIGHT].target = 500;
+  return false;
+}
+
+bool condition_turn_circle_right_little(struct Status *sta) {
+  int history_left =
+      sta->wheels[FONT_LEFT].history - sta->step.ctx.start_history[FONT_LEFT];
+
+  if (history_left > 25000)
+    return true;
+
+  sta->wheels[FONT_LEFT].target = 700;
+  sta->wheels[FONT_RIGHT].target = 500;
   return false;
 }
 
@@ -180,7 +192,19 @@ bool condition_forward_85000(struct Status *sta) {
   int history_right =
       sta->wheels[FONT_RIGHT].history - sta->step.ctx.start_history[FONT_RIGHT];
 
-  if (history_left < 85000 || history_right < 85000)
+  if (history_left < 42000 || history_right < 42000)
+    return false;
+
+  return true;
+}
+
+bool condition_forward_little(struct Status *sta) {
+  int history_left =
+      sta->wheels[FONT_LEFT].history - sta->step.ctx.start_history[FONT_LEFT];
+  int history_right =
+      sta->wheels[FONT_RIGHT].history - sta->step.ctx.start_history[FONT_RIGHT];
+
+  if (history_left < 18000 || history_right < 18000)
     return false;
 
   return true;

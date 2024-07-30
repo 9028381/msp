@@ -65,6 +65,7 @@ void answer3(struct Status *sta) {
 
 void answer4(struct Status *sta) {
   step_clear(&sta->step);
+    //   step_push(&sta->step, action_turn_circle_right, condition_turn_circle_right_little);
   for (int i = 0; i < 4; i++) {
     /* step_push(&sta->step, action_keep_0,
      * condition_findline_with_80000_90000_history_limit_turn_left); */

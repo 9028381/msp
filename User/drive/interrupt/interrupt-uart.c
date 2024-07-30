@@ -46,8 +46,9 @@ void UART_3_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_3_INST)) {
   case DL_UART_MAIN_IIDX_RX:
 
-    uart_rpc_drive(uart3, DL_UART_Main_receiveData(UART_3_INST));
-
+    // uart_rpc_drive(uart3, DL_UART_Main_receiveData(UART_3_INST));
+    update_ms_diff(DL_UART_Main_receiveData(UART_3_INST));
+    
     break;
   default:
     break;

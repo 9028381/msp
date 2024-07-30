@@ -106,13 +106,15 @@ void status_next(struct Status *sta) {
   /* if (sta->mode.follow) */
   // always open follow
   sta->sensor.follow = gw_gray_get_diff();
-  // mode next
-  step_try_next(&sta->step, sta);
-    PRINTLN("%d", sta->sensor.follow);
 
+  
   // motor base speed
   for (int i = 0; i < WHEEL_NUMS; i++)
     sta->wheels[i].target = sta->base_speed;
+
+  // mode next
+  step_try_next(&sta->step, sta);
+
 
   // update wheel target speed based on sensor
   if (sta->mode.turn) {
