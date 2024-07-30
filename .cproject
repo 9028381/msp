@@ -109,6 +109,11 @@
                             <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.225654640" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.2" valueType="enumerated"/>
                         </tool>
                     </fileInfo>
+                    <fileInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1179157250.User/status/answer.c" name="answer.c" rcbsApplicability="disable" resourcePath="User/status/answer.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.252397123">
+                        <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.252397123" name="Arm Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637">
+                            <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.1431545774" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.2" valueType="enumerated"/>
+                        </tool>
+                    </fileInfo>
                 </configuration>
             </storageModule>
             <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
