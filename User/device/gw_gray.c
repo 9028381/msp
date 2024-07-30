@@ -20,28 +20,29 @@
 // //直角参数
 // int16_t gw_bit_weight[8] = {-250, -250, -150, -70, 70, 150, 250, 250};
 int16_t gw_bit_weight[8] = {-35, -25, -15, -7, 7, 15, 25, 35};
+#define GW_SINGLE_BIT_WEIGHT 100
 
 short gw_gray_diff(uint8_t line) {
   static int maybe = 0;
-  static unsigned char times = 0;
-  static unsigned last = 0;
   short diff = 0;
   unsigned char cnt = 0;
 
-  if (!DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN) && !maybe) {
-    maybe = 1;
-    return 50;
-  }
-  if (!DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN) && !maybe) {
-    maybe = -1;
-    return -50;
-  }
-
-  if (maybe != 0) {
+  if (maybe == 0) {
+    if (!DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN)) {
+      maybe = 1;
+      return maybe * GW_SINGLE_BIT_WEIGHT;
+    }
+    if (!DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN)) {
+      maybe = -1;
+      return maybe * GW_SINGLE_BIT_WEIGHT;
+    }
+  } else {
     if (line & 0b01111110)
       maybe = 0;
-    else
+    else {
+      INFO("continue turn.")
       return maybe * 50;
+    }
   }
 
   //   if (line == 0) {
@@ -81,7 +82,7 @@ void gw_gray_show(uint8_t line) {
     line <<= 1;
   }
 
-    PRINTLN("%s", str);
+  PRINTLN("%s", str);
 }
 
 short gw_gray_get_diff() {
@@ -91,7 +92,7 @@ short gw_gray_get_diff() {
 
   uint8_t line = gw_gray_get_line_digital_is_black();
 
-    gw_gray_show(line);
+  gw_gray_show(line);
 
   return gw_gray_diff(line); // 0b0111_1110
 }
