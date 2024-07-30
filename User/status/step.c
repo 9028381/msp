@@ -1,5 +1,6 @@
 #include "step.h"
 #include "../utils/utils.h"
+#include "User/device/wheel.h"
 #include "status.h"
 #include "stdlib.h"
 
@@ -141,6 +142,8 @@ void action_turn_right(struct Status *sta) {
 void action_stop(struct Status *sta) {
   INFO("STEP_STOP");
   sta->base_speed = 0;
+  sta->wheels[FONT_LEFT].target = 0;
+  sta->wheels[FONT_RIGHT].target = 0;
 }
 
 void action_forward(struct Status *sta) {
