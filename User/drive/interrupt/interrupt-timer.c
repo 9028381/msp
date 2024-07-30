@@ -13,8 +13,7 @@ uint8_t cnt = 0;
 void TIMER_INT_INST_IRQHandler() {
   switch (DL_TimerG_getPendingInterrupt(TIMER_INT_INST)) {
   case DL_TIMER_IIDX_ZERO:
-    status_next(&status);  
-    PRINTLN("%d", get_ms_diff());
+    status_next(&status);
     
     break;
   default:

@@ -18,7 +18,8 @@
 
 // const int16_t gw_bit_weight[8] = {0, -300, -100, -30, 30, 100, 300, 0};
 // //直角参数
-int16_t gw_bit_weight[8] = {-250, -250, -150, -70, 70, 150, 250, 250};
+// int16_t gw_bit_weight[8] = {-250, -250, -150, -70, 70, 150, 250, 250};
+int16_t gw_bit_weight[8] = {-35, -25, -15, -7, 7, 15, 25, 35};
 
 short gw_gray_diff(uint8_t line) {
   static int maybe = 0;
@@ -29,18 +30,18 @@ short gw_gray_diff(uint8_t line) {
 
   if (!DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN) && !maybe) {
     maybe = 1;
-    return 250;
+    return 50;
   }
   if (!DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN) && !maybe) {
     maybe = -1;
-    return -250;
+    return -50;
   }
 
   if (maybe != 0) {
     if (line & 0b01111110)
       maybe = 0;
     else
-      return maybe * 250;
+      return maybe * 50;
   }
 
   //   if (line == 0) {
@@ -80,7 +81,7 @@ void gw_gray_show(uint8_t line) {
     line <<= 1;
   }
 
-  //   PRINTLN("%s", str);
+    PRINTLN("%s", str);
 }
 
 short gw_gray_get_diff() {
@@ -90,7 +91,7 @@ short gw_gray_get_diff() {
 
   uint8_t line = gw_gray_get_line_digital_is_black();
 
-  //   gw_gray_show(line);
+    gw_gray_show(line);
 
   return gw_gray_diff(line); // 0b0111_1110
 }

@@ -125,9 +125,9 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_SET_VAR(6, status.mode.follow);
   RPC_DECLARE_SET_VAR(7, status.mode.turn);
 
-  RPC_DECLARE_SET_VAR(11, status.pid.follow.kp);
-  RPC_DECLARE_SET_VAR(12, status.pid.follow.ki);
-  RPC_DECLARE_SET_VAR(13, status.pid.follow.kd);
+  RPC_DECLARE_SET_VAR(11, status.pid.follow_gw.kp);
+  RPC_DECLARE_SET_VAR(12, status.pid.follow_gw.ki);
+  RPC_DECLARE_SET_VAR(13, status.pid.follow_gw.kd);
   extern int16_t gw_bit_weight[8];
   RPC_DECLARE_SET_VAR(14, gw_bit_weight[1]);
   RPC_DECLARE_SET_VAR(15, gw_bit_weight[2]);
@@ -149,9 +149,9 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(57, gw_bit_weight[4]);
   RPC_DECLARE_GET_VAR(58, gw_bit_weight[5]);
   RPC_DECLARE_GET_VAR(59, gw_bit_weight[6]);
-  RPC_DECLARE_GET_VAR(60, status.pid.follow.kp);
-  RPC_DECLARE_GET_VAR(61, status.pid.follow.ki);
-  RPC_DECLARE_GET_VAR(62, status.pid.follow.kd);
+  RPC_DECLARE_GET_VAR(60, status.pid.follow_gw.kp);
+  RPC_DECLARE_GET_VAR(61, status.pid.follow_gw.ki);
+  RPC_DECLARE_GET_VAR(62, status.pid.follow_gw.kd);
   RPC_DECLARE_GET_VAR(63, status.pid.turn.kp);
   RPC_DECLARE_GET_VAR(64, status.pid.turn.ki);
   RPC_DECLARE_GET_VAR(65, status.pid.turn.kd);
