@@ -70,6 +70,13 @@ void answer3(struct Status *sta) {
 
 void answer4(struct Status *sta) {
   step_clear(&sta->step);
+//   for (int i = 0 ; i < 10; i++){
+//     STEP_PUSH(semicircle_enter);
+//   STEP_PUSH(arc_enter);
+//   }
+//     step_push(&sta->step, action_stop, condition_never);
+
+
   STEP_PUSH(semicircle_enter);
   STEP_PUSH(arc_continue);
 

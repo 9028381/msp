@@ -166,6 +166,8 @@ THRUST_MOTOR:
   //   sta->wheels[FONT_RIGHT].thrust = 1;
   // }
 
+  TRACE(sta->wheels[FONT_LEFT].thrust, "%d");
+
   // wheels drive
   status_wheels_drive(sta->wheels);
 }
