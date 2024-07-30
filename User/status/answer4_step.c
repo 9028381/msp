@@ -22,7 +22,7 @@ struct SpeedCache {
   int left;
   int right;
 };
-struct SpeedCache speed_cache = {.left = 900, .right = 669};
+struct SpeedCache speed_cache = {.left = 1000, .right = 743};
 void speed_cache_recover(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = speed_cache.left;
   sta->wheels[FONT_RIGHT].target = speed_cache.right;
@@ -98,8 +98,6 @@ void update_4_semicircle_enter(struct Status *sta) {
     speed_cache_recover(sta);
     sta->wheels[FONT_LEFT].target += delta;
     sta->wheels[FONT_RIGHT].target -= delta;
-    INFO("%d %d %d %d", sta->sensor.follow_gw, delta,
-         sta->wheels[FONT_LEFT].target, sta->wheels[FONT_RIGHT].target);
   }
 }
 
@@ -134,5 +132,5 @@ void update_4_arc_continue(struct Status *sta) {}
 
 bool condition_4_arc_continue(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
-  return history.left + history.right > 56000;
+  return history.left + history.right > 53000;
 }

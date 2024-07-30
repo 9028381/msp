@@ -25,7 +25,7 @@ void status_init(struct Status *sta) {
   // move pid init
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
   //   pid_init(&sta->pid.follow_gw, 0.7, 0, 3, 3, 10); // gw
-  pid_init(&sta->pid.follow_gw, 5, 0, 1, 3, 10); // gw
+  pid_init(&sta->pid.follow_gw, 4, 0, 3, 3, 10); // gw
   pid_init(&sta->pid.follow_ms, 0.7, 0, 3, 3, 10);  // ms
   // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
@@ -165,8 +165,6 @@ THRUST_MOTOR:
   //   sta->wheels[FONT_LEFT].thrust = 1;
   //   sta->wheels[FONT_RIGHT].thrust = 1;
   // }
-
-  TRACE(sta->wheels[FONT_LEFT].thrust, "%d");
 
   // wheels drive
   status_wheels_drive(sta->wheels);
