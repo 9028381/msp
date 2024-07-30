@@ -71,7 +71,6 @@ void answer3(struct Status *sta) {
 void answer4(struct Status *sta) {
   step_clear(&sta->step);
 
-
 //   for (int i = 0 ; i < 40; i++){
 //     STEP_PUSH(semicircle_enter);
 //   STEP_PUSH(arc_enter);

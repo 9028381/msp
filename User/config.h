@@ -31,7 +31,7 @@
 #define STATUS_STEP_LIMIT 100
 
 /******* WHEEL *******/
-#define WHEEL_THRUST_MAX 6000
+#define WHEEL_THRUST_MAX 8000
 
 /*
  * task

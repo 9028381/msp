@@ -22,7 +22,7 @@ struct SpeedCache {
   int left;
   int right;
 };
-struct SpeedCache speed_cache = {.left = 520, .right = 386};
+struct SpeedCache speed_cache = {.left = 560, .right = 410}; // 520 700
 void speed_cache_recover(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = speed_cache.left;
   sta->wheels[FONT_RIGHT].target = speed_cache.right;
@@ -54,8 +54,8 @@ bool condition_4_arc_start(struct Status *sta) {
 void action_4_forward(struct Status *sta) {
   INFO("ACTION_4_FORWARD");
   speed_cache_rev();
-  sta->wheels[FONT_LEFT].target = 520;
-  sta->wheels[FONT_RIGHT].target = 520;
+  sta->wheels[FONT_LEFT].target = 560;
+  sta->wheels[FONT_RIGHT].target = 560;
 }
 
 void update_4_forward(struct Status *sta) {}
