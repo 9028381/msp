@@ -15,18 +15,22 @@ struct DurationHistory duration_history_get(struct Status *sta) {
       sta->wheels[FONT_RIGHT].history - sta->step.ctx.start_history[FONT_RIGHT];
   return history;
 }
+int duration_history_sum(struct DurationHistory *history) {
+  return history->left + history->right;
+}
 struct SpeedCache {
   int left;
   int right;
 };
-struct SpeedCache speed_cache = {.left = 0, .right = 0};
+struct SpeedCache speed_cache = {.left = 700, .right = 520};
 void speed_cache_recover(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = speed_cache.left;
   sta->wheels[FONT_RIGHT].target = speed_cache.right;
 }
-void speed_cache_rev_recover(struct Status *sta) {
-  sta->wheels[FONT_LEFT].target = speed_cache.right;
-  sta->wheels[FONT_RIGHT].target = speed_cache.left;
+void speed_cache_rev() {
+  int tmp = speed_cache.left;
+  speed_cache.left = speed_cache.right;
+  speed_cache.right = tmp;
 }
 void speed_cache_store(struct Status *sta) {
   speed_cache.left = sta->wheels[FONT_LEFT].target;
@@ -36,8 +40,7 @@ void speed_cache_store(struct Status *sta) {
 /// arc_start
 void action_4_arc_start(struct Status *sta) {
   INFO("ACTION_4_ARC_START");
-  sta->wheels[FONT_LEFT].target = 700;
-  sta->wheels[FONT_RIGHT].target = 520;
+  speed_cache_recover(sta);
 }
 
 void update_4_arc_start(struct Status *sta) {}
@@ -50,7 +53,7 @@ bool condition_4_arc_start(struct Status *sta) {
 /// forward
 void action_4_forward(struct Status *sta) {
   INFO("ACTION_4_FORWARD");
-  speed_cache_store(sta);
+  speed_cache_rev();
   sta->wheels[FONT_LEFT].target = 700;
   sta->wheels[FONT_RIGHT].target = 700;
 }
@@ -65,7 +68,7 @@ bool condition_4_forward(struct Status *sta) {
 /// arc_enter
 void action_4_arc_enter(struct Status *sta) {
   INFO("ACTION_4_ARC_ENTER");
-  speed_cache_rev_recover(sta);
+  speed_cache_recover(sta);
 }
 
 void update_4_arc_enter(struct Status *sta) {}
