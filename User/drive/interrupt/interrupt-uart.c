@@ -4,6 +4,7 @@
 #include "User/task/rpc.h"
 #include "User/task/task.h"
 #include "stdint.h"
+#include "ti/driverlib/dl_uart_main.h"
 #include "ti_msp_dl_config.h"
 #include "User/device/radar.h"
 
@@ -45,9 +46,10 @@ void UART_2_INST_IRQHandler(void) {
 void UART_3_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_3_INST)) {
   case DL_UART_MAIN_IIDX_RX:
+    PRINTLN("%d", DL_UART_Main_receiveData(UART_3_INST));
+    //uart_rpc_drive(uart3, DL_UART_Main_receiveData(UART_3_INST));
+    // update_ms_diff(DL_UART_Main_receiveData(UART_3_INST));
 
-    // uart_rpc_drive(uart3, DL_UART_Main_receiveData(UART_3_INST));
-    update_ms_diff(DL_UART_Main_receiveData(UART_3_INST));
     
     break;
   default:
@@ -58,8 +60,8 @@ void UART_3_INST_IRQHandler(void) {
 void UART_4_INST_IRQHandler(void) {
   switch (DL_UART_Main_getPendingInterrupt(UART_4_INST)) {
   case DL_UART_MAIN_IIDX_RX:
-
     uart_rpc_drive(uart4, DL_UART_Main_receiveData(UART_4_INST));
+    //  update_ms_diff(DL_UART_Main_receiveData(UART_4_INST));
 
     break;
   default:
