@@ -1,4 +1,5 @@
 #include "answer4_step.h"
+#include "../device/led.h"
 #include "../utils/log.h"
 #include "User/device/wheel.h"
 #include "status.h"
@@ -37,17 +38,18 @@ void speed_cache_store(struct Status *sta) {
   speed_cache.right = sta->wheels[FONT_RIGHT].target;
 }
 
-/// arc_start
-void action_4_arc_start(struct Status *sta) {
-  INFO("ACTION_4_ARC_START");
-  speed_cache_recover(sta);
+/// semicircle_start
+void action_4_semicircle_start(struct Status *sta) {
+  INFO("ACTION_4_SEMICIRCLE_START");
+  action_4_semicircle_match(sta);
 }
 
-void update_4_arc_start(struct Status *sta) {}
+void update_4_semicircle_start(struct Status *sta) {
+  update_4_semicircle_match(sta);
+}
 
-bool condition_4_arc_start(struct Status *sta) {
-  struct DurationHistory history = duration_history_get(sta);
-  return history.left + history.right > 42000;
+bool condition_4_semicircle_start(struct Status *sta) {
+  return condition_4_semicircle_match(sta);
 }
 
 /// forward
@@ -88,6 +90,7 @@ bool condition_4_arc_enter(struct Status *sta) {
 /// semicircle_match
 void action_4_semicircle_match(struct Status *sta) {
   INFO("ACTION_4_SEMICIRcle_match");
+  led_indicate_step_complete();
   speed_cache_recover(sta);
 }
 
@@ -109,6 +112,7 @@ bool condition_4_semicircle_match(struct Status *sta) {
 /// arc_continue
 void action_4_arc_continue(struct Status *sta) {
   INFO("ACTION_4_ARC_CONTINUE");
+  led_indicate_step_complete();
   speed_cache_recover(sta);
 }
 
