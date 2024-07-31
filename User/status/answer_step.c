@@ -193,7 +193,10 @@ void update_2_semicircle_match(struct Status *sta) {
 bool condition_2_semicircle_match(struct Status *sta) {
   static bool last = false;
   bool no_road = sta->sensor.follow_ms == ROAD_NO;
-  bool ret = no_road & last;
+
+  if (no_road && last)
+    return true;
+
   last = no_road;
-  return ret;
+  return false;
 }
