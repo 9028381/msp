@@ -21,14 +21,14 @@ void step_ctx_next(struct StepContext *ctx, struct Status *sta) {
 }
 
 void step_ctx_display(struct StepContext *ctx, struct Status *sta) {
-//   INFO("STEP_CTX_DISPLAY");
+  //   INFO("STEP_CTX_DISPLAY");
   INFO("start_time=%d, duration_time=%d", ctx->start_time,
        sta->times - ctx->start_time);
-//   for (int i = 0; i < WHEEL_NUMS; i++) {
-    // INFO("  start_history[%d]=%d, duration_history[%d]=%d", i,
-        //  ctx->start_history[i], i,
-        //  sta->wheels[i].history - ctx->start_history[i]);
-//   }
+  //   for (int i = 0; i < WHEEL_NUMS; i++) {
+  // INFO("  start_history[%d]=%d, duration_history[%d]=%d", i,
+  //  ctx->start_history[i], i,
+  //  sta->wheels[i].history - ctx->start_history[i]);
+  //   }
 }
 
 void step_clear(struct Step *step) { step_init(step); }

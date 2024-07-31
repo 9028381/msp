@@ -28,7 +28,7 @@ void status_init(struct Status *sta) {
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
   //   pid_init(&sta->pid.follow_gw, 0.7, 0, 3, 3, 10); // gw
   pid_init(&sta->pid.follow_gw, 1, 0, 30.0, 3, 10); // gw
-  pid_init(&sta->pid.follow_ms, 0.7, 0, 3, 3, 10);  // ms
+  pid_init(&sta->pid.follow_ms, 1, 0, 30.0, 3, 10); // ms
   // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // repeat history pid
@@ -118,9 +118,6 @@ void status_next(struct Status *sta) {
   /* sta->sensor.follow_ms = get_ms_diff(); */
   sta->sensor.follow_gw = gw_gray_get_diff();
   sta->sensor.follow_ms = ccd_compute();
-
-  TRACE(sta->sensor.follow_gw, "%d");
-  TRACE(sta->sensor.follow_ms, "%d");
 
   // motor base speed
   /* for (int i = 0; i < WHEEL_NUMS; i++) */

@@ -89,21 +89,45 @@ void action_4_arc_enter(struct Status *sta) {
 void update_4_arc_enter(struct Status *sta) {}
 
 bool condition_4_arc_enter(struct Status *sta) {
-  if (sta->sensor.follow_gw != ROAD_NO)
-    return true;
-
   struct DurationHistory history = duration_history_get(sta);
   if (history.left + history.right < 42000)
     return false;
+
+  if (sta->sensor.follow_gw != ROAD_NO)
+    return true;
+
+  if (history.left + history.right > 99999)
+    return true;
 
   // try to recover
   return false;
 }
 
+/// semicircle_enter
+void action_4_semicircle_enter(struct Status *sta) {
+  INFO("ACTION_4_SEMICIRcle_enter");
+  led_indicate_step_complete();
+  speed_cache_recover(sta);
+}
+
+void update_4_semicircle_enter(struct Status *sta) {
+  if (sta->sensor.follow_gw != ROAD_NO) {
+    int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
+
+    speed_cache_recover(sta);
+    sta->wheels[FONT_LEFT].target += delta;
+    sta->wheels[FONT_RIGHT].target -= delta;
+  }
+}
+
+bool condition_4_semicircle_enter(struct Status *sta) {
+  // TODO:
+  return sta->sensor.follow_ms != ROAD_NO;
+}
+
 /// semicircle_match
 void action_4_semicircle_match(struct Status *sta) {
   INFO("ACTION_4_SEMICIRcle_match");
-  led_indicate_step_complete();
   speed_cache_recover(sta);
 }
 
