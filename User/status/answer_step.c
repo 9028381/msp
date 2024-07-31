@@ -136,14 +136,6 @@ void action_4_semicircle_match(struct Status *sta) {
 }
 
 void update_4_semicircle_match(struct Status *sta) {
-<<<<<<< HEAD
-  if (sta->sensor.follow_ms != ROAD_NO) {
-    int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
-    speed_cache_recover(sta);
-    sta->wheels[FONT_LEFT].target += delta; // +
-    sta->wheels[FONT_RIGHT].target -= delta;
-  }
-=======
   if (sta->sensor.follow_ms == ROAD_NO)
     return;
 
@@ -153,7 +145,6 @@ void update_4_semicircle_match(struct Status *sta) {
 
   sta->wheels[FONT_LEFT].target += delta;
   sta->wheels[FONT_RIGHT].target -= delta;
->>>>>>> aaaa46f9d7af0849a9b38990fc7bc3241b28149c
 }
 
 bool condition_4_semicircle_match(struct Status *sta) {
