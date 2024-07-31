@@ -14,6 +14,7 @@ short CCD_DATA[128] = {0};
 /* #define CCD_KERNEL_LEN 20 */
 #define CCD_BLACK_THRUST 400
 #define CCD_COUNT_THRUST 5
+#define CCD_BLACK_COUNT_LIMIT 40
 
 short get_adc_val(void) {
   DL_ADC12_startConversion(ADC12_0_INST);
@@ -76,12 +77,13 @@ int ccd_compute() {
 
   if (sum_count.count < CCD_COUNT_THRUST) {
     /* INFO("CCD not found black."); */
-    if (ABS(last) < 35)
+    if (ABS(last) < CCD_BLACK_COUNT_LIMIT)
       return ROAD_NO;
     return last;
   }
 
   int diff = sum_count.sum / sum_count.count - CCD_ARRAY_LEN / 2;
+//   diff = -diff;
   /* INFO("CCD fond black: %d", diff); */
 
   last = diff;

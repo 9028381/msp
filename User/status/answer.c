@@ -68,6 +68,11 @@ void answer3(struct Status *sta) {
 void answer4(struct Status *sta) {
   INFO("ANSWER4");
   step_clear(&sta->step);
+    //   STEP_PUSH(semicircle_enter);  
+        STEP_PUSH(semicircle_match);
+        step_push(&sta->step, action_stop, condition_never);
+
+
 
   for (int i = 0; i < 40; i++) {
     STEP_PUSH(semicircle_enter);
