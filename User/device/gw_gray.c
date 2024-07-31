@@ -6,6 +6,7 @@
 #include "User/utils/log.h"
 #include "stdbool.h"
 #include "ti_msp_dl_config.h"
+#include <stdbool.h>
 #include <stdint.h>
 
 #define GW_GRAY_ADDR 0x4C
@@ -81,7 +82,7 @@ short gw_gray_get_diff() {
 
   uint8_t line = gw_gray_get_line_digital_is_black();
 
-  // gw_gray_show(line);
+  gw_gray_show(line);
 
   return gw_gray_diff(line); // 0b0111_1110
 }
@@ -90,9 +91,17 @@ uint8_t gw_gray_get_line_digital_is_black() {
   uint8_t cmd = Digital_Output_CMD;
   uint8_t buf = 0;
   iic_hardware_write(GW_GRAY_ADDR, 1, &cmd);
-  iic_handware_read(GW_GRAY_ADDR, 1, &buf);
+//   iic_handware_read(GW_GRAY_ADDR, 1, &buf);
+  buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_1_PORT, GRAY8_PIN_1_PIN) << 7;
+  buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_2_PORT, GRAY8_PIN_2_PIN) << 6;
+  buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_3_PORT, GRAY8_PIN_3_PIN) << 5;
+  buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_4_PORT, GRAY8_PIN_4_PIN) << 4;
+  buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_5_PORT, GRAY8_PIN_5_PIN) << 3;
+  buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_6_PORT, GRAY8_PIN_6_PIN) << 2;
+  buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_7_PORT, GRAY8_PIN_7_PIN) << 1;
+  buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_8_PORT, GRAY8_PIN_8_PIN);
 
-  return ~buf;
+  return buf;
 }
 
 void gw_gray_get_line_analog(uint8_t gray[8]) {

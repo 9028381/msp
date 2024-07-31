@@ -299,9 +299,9 @@ void radar_data_process() {
 }
 
 void init_radar(void) {
-  DL_UART_disable(UART_3_INST);
-  delay_cycles(50000);
-  DL_UART_enable(UART_3_INST);
+//   DL_UART_disable(UART_3_INST);
+//   delay_cycles(50000);
+//   DL_UART_enable(UART_3_INST);
 }
 
 float float_abs(float input) {

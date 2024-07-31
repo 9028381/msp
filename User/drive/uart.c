@@ -18,12 +18,12 @@ void uart_dma_send(enum Uart uart, const void *src, unsigned int len) {
   case uart2:
     UART_DMA_SEND(DMA_CH2_CHAN_ID, src, len, &UART_2_INST->TXDATA);
     break;
-  case uart3:
-    UART_DMA_SEND(DMA_CH3_CHAN_ID, src, len, &UART_3_INST->TXDATA);
-    break;
-  case uart4:
-    UART_DMA_SEND(DMA_CH4_CHAN_ID, src, len, &UART_4_INST->TXDATA);
-    break;
+//   case uart3:
+//     UART_DMA_SEND(DMA_CH3_CHAN_ID, src, len, &UART_3_INST->TXDATA);
+//     break;
+//   case uart4:
+//     UART_DMA_SEND(DMA_CH4_CHAN_ID, src, len, &UART_4_INST->TXDATA);
+//     break;
   default:
     break;
   }

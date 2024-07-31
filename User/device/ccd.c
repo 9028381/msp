@@ -59,7 +59,7 @@ void get_ccd_val(void) {
   start_ccd();
   get_ccd();
   /* INFO("CCD_DATA"); */
-    array_display(CCD_ARRAY_LEN, CCD_ARRAY);
+    // array_display(CCD_ARRAY_LEN, CCD_ARRAY);
 
   return;
 }

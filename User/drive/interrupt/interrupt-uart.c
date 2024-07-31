@@ -13,10 +13,10 @@ void interrupt_uarts_init(void) {
   NVIC_EnableIRQ(UART_1_INST_INT_IRQN);
   NVIC_ClearPendingIRQ(UART_2_INST_INT_IRQN);
   NVIC_EnableIRQ(UART_2_INST_INT_IRQN);
-  NVIC_ClearPendingIRQ(UART_3_INST_INT_IRQN);
-  NVIC_EnableIRQ(UART_3_INST_INT_IRQN); // 使能 接收中断
-  NVIC_ClearPendingIRQ(UART_4_INST_INT_IRQN);
-  NVIC_EnableIRQ(UART_4_INST_INT_IRQN); // 使能 接收中断
+//   NVIC_ClearPendingIRQ(UART_3_INST_INT_IRQN);
+//   NVIC_EnableIRQ(UART_3_INST_INT_IRQN); // 使能 接收中断
+//   NVIC_ClearPendingIRQ(UART_4_INST_INT_IRQN);
+//   NVIC_EnableIRQ(UART_4_INST_INT_IRQN); // 使能 接收中断
 }
 
 void uart_rpc_drive(enum Uart which, uint8_t rev);
@@ -43,31 +43,31 @@ void UART_2_INST_IRQHandler(void) {
   }
 }
 
-void UART_3_INST_IRQHandler(void) {
-  switch (DL_UART_Main_getPendingInterrupt(UART_3_INST)) {
-  case DL_UART_MAIN_IIDX_RX:
-    PRINTLN("%d", DL_UART_Main_receiveData(UART_3_INST));
-    //uart_rpc_drive(uart3, DL_UART_Main_receiveData(UART_3_INST));
-    // update_ms_diff(DL_UART_Main_receiveData(UART_3_INST));
+// void UART_3_INST_IRQHandler(void) {
+//   switch (DL_UART_Main_getPendingInterrupt(UART_3_INST)) {
+//   case DL_UART_MAIN_IIDX_RX:
+//     PRINTLN("%d", DL_UART_Main_receiveData(UART_3_INST));
+//     //uart_rpc_drive(uart3, DL_UART_Main_receiveData(UART_3_INST));
+//     // update_ms_diff(DL_UART_Main_receiveData(UART_3_INST));
 
     
-    break;
-  default:
-    break;
-  }
-}
+//     break;
+//   default:
+//     break;
+//   }
+// }
 
-void UART_4_INST_IRQHandler(void) {
-  switch (DL_UART_Main_getPendingInterrupt(UART_4_INST)) {
-  case DL_UART_MAIN_IIDX_RX:
-    uart_rpc_drive(uart4, DL_UART_Main_receiveData(UART_4_INST));
-    //  update_ms_diff(DL_UART_Main_receiveData(UART_4_INST));
+// void UART_4_INST_IRQHandler(void) {
+//   switch (DL_UART_Main_getPendingInterrupt(UART_4_INST)) {
+//   case DL_UART_MAIN_IIDX_RX:
+//     uart_rpc_drive(uart4, DL_UART_Main_receiveData(UART_4_INST));
+//     //  update_ms_diff(DL_UART_Main_receiveData(UART_4_INST));
 
-    break;
-  default:
-    break;
-  }
-}
+//     break;
+//   default:
+//     break;
+//   }
+// }
 
 void uart_rpc_task_queue_call(void *para) {
   uint32_t data = (uint32_t)para;

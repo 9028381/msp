@@ -7,9 +7,9 @@ void gpio_set_on(enum Gpio io) {
   case LED:
     DL_GPIO_setPins(LED_PORT_PORT, LED_PORT_LED_PIN);
     break;
-  case BUZZER:
-    DL_GPIO_clearPins(BUZZER_PORT_PORT, BUZZER_PORT_BUZZER_PIN_PIN);
-    break;
+//   case BUZZER:
+//     DL_GPIO_clearPins(BUZZER_PORT_PORT, BUZZER_PORT_BUZZER_PIN_PIN);
+    // break;
   default:
     break;
   }
@@ -20,9 +20,9 @@ void gpio_set_off(enum Gpio io) {
   case LED:
     DL_GPIO_clearPins(LED_PORT_PORT, LED_PORT_LED_PIN);
     break;
-  case BUZZER:
-    DL_GPIO_setPins(BUZZER_PORT_PORT, BUZZER_PORT_BUZZER_PIN_PIN);
-    break;
+//   case BUZZER:
+//     DL_GPIO_setPins(BUZZER_PORT_PORT, BUZZER_PORT_BUZZER_PIN_PIN);
+//     break;
   default:
     break;
   }
