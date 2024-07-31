@@ -96,7 +96,8 @@ void answer3(struct Status *sta) {
   // C -> B
   step_push_with_update(&sta->step, action_semicircle_enter1,
                         update_semicircle_enter1, condition_semicircle_enter);
-  STEP_PUSH(semicircle_match);
+  step_push_with_update(&sta->step, action_semicircle_match1,
+                        update_semicircle_match1, condition_semicircle_match);
   step_push(&sta->step, action_led_blink, condition_always);
 
   // B -> D
@@ -108,6 +109,8 @@ void answer3(struct Status *sta) {
   // D -> A
   step_push_with_update(&sta->step, action_semicircle_enter2,
                         update_semicircle_enter2, condition_semicircle_enter);
+  step_push_with_update(&sta->step, action_semicircle_match2,
+                        update_semicircle_match2, condition_semicircle_match);
   STEP_PUSH(semicircle_match);
   step_push(&sta->step, action_led_blink, condition_always);
 
