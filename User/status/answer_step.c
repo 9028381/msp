@@ -165,17 +165,20 @@ bool condition_4_arc_continue(struct Status *sta) {
 
 void action_2_semicircle_enter(struct Status *sta) {
   INFO("ACTION_2_SEMICIRCLE_ENTER");
-  sta->wheels[FONT_LEFT].target = 200;
-  sta->wheels[FONT_RIGHT].target = 144;
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedSlow].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedSlow].right;
 }
 void update_2_semicircle_enter(struct Status *sta) {
   if (sta->sensor.follow_gw == ROAD_NO)
     return;
   int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
-  sta->wheels[FONT_LEFT].target = 200 + delta;
-  sta->wheels[FONT_RIGHT].target = 144 - delta;
+  sta->wheels[FONT_LEFT].target =
+      sta->cheat_sheet.turn_speed[SpeedSlow].left + delta;
+  sta->wheels[FONT_RIGHT].target =
+      sta->cheat_sheet.turn_speed[SpeedSlow].right - delta;
 }
 bool condition_2_semicircle_enter(struct Status *sta) {
+  // continue 2 times
   static bool last = false;
   bool have_road = sta->sensor.follow_ms != ROAD_NO;
 
@@ -188,16 +191,18 @@ bool condition_2_semicircle_enter(struct Status *sta) {
 
 void action_2_semicircle_match(struct Status *sta) {
   INFO("ACTION_2_SEMICIRCLE_MATCH");
-  sta->wheels[FONT_LEFT].target = 500;
-  sta->wheels[FONT_RIGHT].target = 360;
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
 }
 void update_2_semicircle_match(struct Status *sta) {
   if (sta->sensor.follow_ms == ROAD_NO)
     return;
 
   int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
-  sta->wheels[FONT_LEFT].target = 500 + delta;
-  sta->wheels[FONT_RIGHT].target = 360 - delta;
+  sta->wheels[FONT_LEFT].target =
+      sta->cheat_sheet.turn_speed[SpeedNorm].left + delta;
+  sta->wheels[FONT_RIGHT].target =
+      sta->cheat_sheet.turn_speed[SpeedNorm].right - delta;
 }
 bool condition_2_semicircle_match(struct Status *sta) {
   return sta->sensor.follow_ms == ROAD_NO;
