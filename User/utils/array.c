@@ -24,7 +24,7 @@ void array_display(unsigned len, const unsigned short array[len]) {
   PRINTF("[");
   for (unsigned int i = 0; i < len - 1; i++)
     PRINTF("%d, ", array[i]);
-  PRINTF("%d\n", array[len - 1]);
+  PRINTLN("%d]", array[len - 1]);
 }
 
 #ifdef __ARRAY_FIND_MIN_INDEX__
