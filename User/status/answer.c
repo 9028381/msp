@@ -94,7 +94,8 @@ void answer3(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // C -> B
-  STEP_PUSH(semicircle_enter);
+  step_push_with_update(&sta->step, action_semicircle_enter1,
+                        update_semicircle_enter1, condition_semicircle_enter);
   STEP_PUSH(semicircle_match);
   step_push(&sta->step, action_led_blink, condition_always);
 
@@ -105,7 +106,8 @@ void answer3(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // D -> A
-  STEP_PUSH(semicircle_enter);
+  step_push_with_update(&sta->step, action_semicircle_enter2,
+                        update_semicircle_enter2, condition_semicircle_enter);
   STEP_PUSH(semicircle_match);
   step_push(&sta->step, action_led_blink, condition_always);
 
@@ -124,7 +126,7 @@ void answer4(struct Status *sta) {
   for (int i = 0; i < 40; i++) {
     STEP_PUSH(semicircle_enter);
     STEP_PUSH(semicircle_match);
-    STEP_PUSH(arc_enter);
+    /* STEP_PUSH(arc_enter); */
   }
   step_push(&sta->step, action_stop, condition_never);
 
@@ -133,7 +135,7 @@ void answer4(struct Status *sta) {
                         update_semicircle_start, condition_semicircle_start);
   step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
   STEP_PUSH(forward);
-  STEP_PUSH(arc_enter);
+  /* STEP_PUSH(arc_enter); */
   step_push(&sta->step, action_led_blink, condition_always);
 
   for (int i = 0; i < 7; i++) {
@@ -143,7 +145,7 @@ void answer4(struct Status *sta) {
     step_push(&sta->step, action_led_blink, condition_always);
     step_push(&sta->step, action_arc_continue2, condition_arc_continue2);
     STEP_PUSH(forward);
-    STEP_PUSH(arc_enter);
+    /* STEP_PUSH(arc_enter); */
     step_push(&sta->step, action_led_blink, condition_always);
     //  D -> A -> C
     STEP_PUSH(semicircle_enter);
@@ -151,7 +153,7 @@ void answer4(struct Status *sta) {
     step_push(&sta->step, action_led_blink, condition_always);
     step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
     STEP_PUSH(forward);
-    STEP_PUSH(arc_enter);
+    /* STEP_PUSH(arc_enter); */
     step_push(&sta->step, action_led_blink, condition_always);
   }
 

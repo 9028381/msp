@@ -22,9 +22,14 @@ bool condition_arc_enter2(struct Status *sta);
 
 void action_arc_continue1(struct Status *sta);
 bool condition_arc_continue1(struct Status *sta);
-
 void action_arc_continue2(struct Status *sta);
 bool condition_arc_continue2(struct Status *sta);
+
+void action_semicircle_enter1(struct Status *sta);
+void update_semicircle_enter1(struct Status *sta);
+void action_semicircle_enter2(struct Status *sta);
+void update_semicircle_enter2(struct Status *sta);
+bool condition_semicircle_enter(struct Status *sta);
 
 void action_2_semicircle_enter(struct Status *sta);
 void update_2_semicircle_enter(struct Status *sta);

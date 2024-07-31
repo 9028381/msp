@@ -251,6 +251,52 @@ bool condition_2_semicircle_enter(struct Status *sta) {
   return false;
 }
 
+void action_semicircle_enter1(struct Status *sta) {
+  INFO("ACTION_2_SEMICIRCLE_ENTER");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+}
+void update_semicircle_enter1(struct Status *sta) {
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+
+  if (sta->sensor.follow_gw == ROAD_NO)
+    return;
+
+  int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
+  sta->wheels[FONT_LEFT].target += delta;
+  sta->wheels[FONT_RIGHT].target -= delta;
+}
+void action_semicircle_enter2(struct Status *sta) {
+  INFO("ACTION_2_SEMICIRCLE_ENTER");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+}
+void update_semicircle_enter2(struct Status *sta) {
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+
+  if (sta->sensor.follow_gw == ROAD_NO)
+    return;
+
+  int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
+  sta->wheels[FONT_LEFT].target += delta;
+  sta->wheels[FONT_RIGHT].target -= delta;
+}
+bool condition_semicircle_enter(struct Status *sta) {
+  // continue 2 times
+  static bool last = false;
+  bool have_road = sta->sensor.follow_ms != ROAD_NO;
+
+  if (have_road && last) {
+    last = false;
+    return true;
+  }
+
+  last = have_road;
+  return false;
+}
+
 void action_2_semicircle_match(struct Status *sta) {
   INFO("ACTION_2_SEMICIRCLE_MATCH");
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
