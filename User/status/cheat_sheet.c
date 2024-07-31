@@ -24,6 +24,12 @@ struct CheatSheet cheat_sheet_default() {
 
   ret.arc_continue1 = 55000;
   ret.arc_continue2 = 55000;
+  ret.forward1 = 80000;
+  ret.forward2 = 80000;
+  ret.arc_enter1.min  = 42000;
+  ret.arc_enter1.max  = 99999;
+  ret.arc_enter2.min  = 42000;
+  ret.arc_enter2.max  = 99999;
 
   return ret;
 }

@@ -25,6 +25,10 @@ struct CheatSheet {
   int forward_speed[SPEED_LEVELS];
   int arc_continue1;
   int arc_continue2;
+  int forward1;
+  int forward2;
+  struct RangeMinMax arc_enter1;
+  struct RangeMinMax arc_enter2;
 };
 
 struct CheatSheet cheat_sheet_default();

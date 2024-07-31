@@ -84,6 +84,24 @@ void action_forward_slow(struct Status *sta) {
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.forward_speed[SpeedSlow];
 }
 
+void action_forward_normal(struct Status *sta) {
+  INFO("ACTION_FORWARD_NORMAL");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.forward_speed[SpeedNorm];
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.forward_speed[SpeedNorm];
+}
+
+bool condition_forward1_limit(struct Status *sta) {
+  struct DurationHistory history = duration_history_get(sta);
+  int sum = history.left + history.right;
+  return sum > sta->cheat_sheet.forward1;
+}
+
+bool condition_forward2_limit(struct Status *sta) {
+  struct DurationHistory history = duration_history_get(sta);
+  int sum = history.left + history.right;
+  return sum > sta->cheat_sheet.forward2;
+}
+
 bool condition_forward_stop_B_100cm(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   int sum = history.left + history.right;
@@ -92,22 +110,46 @@ bool condition_forward_stop_B_100cm(struct Status *sta) {
 }
 
 /// arc_enter
-void action_4_arc_enter(struct Status *sta) {
-  INFO("ACTION_4_ARC_ENTER");
-  speed_cache_recover(sta);
+void action_arc_enter1(struct Status *sta) {
+  INFO("ACTION_ARC_ENTER1");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
 }
 
-void update_4_arc_enter(struct Status *sta) {}
-
-bool condition_4_arc_enter(struct Status *sta) {
+bool condition_arc_enter1(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
-  if (history.left + history.right < 42000)
+  int sum = history.left + history.right;
+
+  if (sum < sta->cheat_sheet.arc_enter1.min)
     return false;
 
   if (sta->sensor.follow_gw != ROAD_NO)
     return true;
 
-  if (history.left + history.right > 99999)
+  if (sum > sta->cheat_sheet.arc_enter1.max)
+    return true;
+
+  // try to recover
+  return false;
+}
+
+void action_arc_enter2(struct Status *sta) {
+  INFO("ACTION_ARC_ENTER2");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+}
+
+bool condition_arc_enter2(struct Status *sta) {
+  struct DurationHistory history = duration_history_get(sta);
+  int sum = history.left + history.right;
+
+  if (sum < sta->cheat_sheet.arc_enter2.min)
+    return false;
+
+  if (sta->sensor.follow_gw != ROAD_NO)
+    return true;
+
+  if (sum > sta->cheat_sheet.arc_enter2.max)
     return true;
 
   // try to recover

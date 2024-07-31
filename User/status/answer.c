@@ -89,8 +89,8 @@ void answer3(struct Status *sta) {
   step_push_with_update(&sta->step, action_semicircle_start,
                         update_semicircle_start, condition_semicircle_start);
   step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
-  STEP_PUSH(forward);
-  STEP_PUSH(arc_enter);
+  step_push(&sta->step, action_forward_normal, condition_forward1_limit);
+  step_push(&sta->step, action_arc_enter1, condition_arc_enter1);
   step_push(&sta->step, action_led_blink, condition_always);
 
   // C -> B
@@ -100,8 +100,8 @@ void answer3(struct Status *sta) {
 
   // B -> D
   step_push(&sta->step, action_arc_continue2, condition_arc_continue2);
-  STEP_PUSH(forward);
-  STEP_PUSH(arc_enter);
+  step_push(&sta->step, action_forward_normal, condition_forward2_limit);
+  step_push(&sta->step, action_arc_enter2, condition_arc_enter2);
   step_push(&sta->step, action_led_blink, condition_always);
 
   // D -> A
