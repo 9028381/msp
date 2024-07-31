@@ -67,6 +67,12 @@ bool condition_4_forward(struct Status *sta) {
   return history.left + history.right > 80000;
 }
 
+bool condition_4_forward_stop_B_100cm(struct Status *sta) {
+  struct DurationHistory history = duration_history_get(sta);
+  int sum = history.left + history.right;
+  return sum > 40000 && (sum > 60000 || sta->sensor.follow_gw != ROAD_NO);
+}
+
 /// arc_enter
 void action_4_arc_enter(struct Status *sta) {
   INFO("ACTION_4_ARC_ENTER");

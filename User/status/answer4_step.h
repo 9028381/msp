@@ -28,6 +28,7 @@ bool condition_4_arc_enter(struct Status *sta);
 bool condition_4_arc_continue(struct Status *sta);
 
 bool condition_4_forward(struct Status *sta);
+bool condition_4_forward_stop_B_100cm(struct Status *sta);
 
 bool condition_4_semicircle_start(struct Status *sta);
 bool condition_4_semicircle_match(struct Status *sta);
