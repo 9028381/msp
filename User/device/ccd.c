@@ -47,7 +47,7 @@ void start_ccd(void) {
 void get_ccd(void) {
   for (int i = 0; i < 128; i++) {
     DL_GPIO_clearPins(CCD_CLK_PORT, CCD_CLK_PIN);
-    delay_us(20); // 曝光时间
+    delay_us(2); // 曝光时间
     CCD_DATA[i] = get_adc_val() >> 3;
     DL_GPIO_writePins(CCD_CLK_PORT, CCD_CLK_PIN);
     delay_us(1);
