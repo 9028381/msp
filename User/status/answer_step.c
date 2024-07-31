@@ -24,7 +24,7 @@ struct SpeedCache {
   int right;
 };
 // struct SpeedCache speed_cache = {.left = 560, .right = 410}; // 520 700
-struct SpeedCache speed_cache = {.left = 200, .right = 148}; // 520 700
+struct SpeedCache speed_cache = {.left = 200, .right = 144}; // 520 700
 
 void speed_cache_recover(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = speed_cache.left;
@@ -138,13 +138,15 @@ void update_4_semicircle_match(struct Status *sta) {
     int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
 
     speed_cache_recover(sta);
-    sta->wheels[FONT_LEFT].target += delta;
+
+    sta->wheels[FONT_LEFT].target += delta; // +
     sta->wheels[FONT_RIGHT].target -= delta;
   }
 }
 
 bool condition_4_semicircle_match(struct Status *sta) {
   // TODO:
+  return false;
   return sta->sensor.follow_ms == ROAD_NO;
 }
 

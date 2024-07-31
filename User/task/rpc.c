@@ -125,6 +125,9 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_SET_VAR(11, status.pid.follow_gw.kp);
   RPC_DECLARE_SET_VAR(12, status.pid.follow_gw.ki);
   RPC_DECLARE_SET_VAR(13, status.pid.follow_gw.kd);
+  RPC_DECLARE_SET_VAR(14, status.pid.follow_ms.kp);
+  RPC_DECLARE_SET_VAR(15, status.pid.follow_ms.ki);
+  RPC_DECLARE_SET_VAR(16, status.pid.follow_ms.kd);
   RPC_DECLARE_SET_VAR(20, status.pid.turn.kp);
   RPC_DECLARE_SET_VAR(21, status.pid.turn.ki);
   RPC_DECLARE_SET_VAR(22, status.pid.turn.kd);
@@ -139,6 +142,10 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(63, status.pid.turn.kp);
   RPC_DECLARE_GET_VAR(64, status.pid.turn.ki);
   RPC_DECLARE_GET_VAR(65, status.pid.turn.kd);
+  RPC_DECLARE_GET_VAR(66, status.pid.follow_ms.kp);
+  RPC_DECLARE_GET_VAR(67, status.pid.follow_ms.ki);
+  RPC_DECLARE_GET_VAR(68, status.pid.follow_ms.kd);
+
 
   RPC_DECLARE_GET_VAR(70, status.dir.origin);
   RPC_DECLARE_GET_VAR(71, status.sensor.gyro);
