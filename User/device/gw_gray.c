@@ -23,6 +23,7 @@
 int16_t gw_bit_weight[8] = {-35, -25, -15, -7, 7, 15, 25, 35};
 #define GW_SINGLE_BIT_WEIGHT 100
 
+#ifdef OLD_GW_GRAY_DIFF
 short gw_gray_diff(uint8_t line) {
   static int maybe = 0;
   static uint8_t last = 0;
@@ -62,6 +63,34 @@ short gw_gray_diff(uint8_t line) {
   last = line;
   return diff / cnt;
 }
+#endif
+
+short gw_point_weight_mul(uint8_t line) {
+  short diff = 0;
+  unsigned char cnt = 0;
+
+  if (line)
+    return 0;
+
+  for (int i = 0; i < 8; i++) {
+    if (((line >> i) & 0x01)) {
+      cnt++;
+      diff += gw_bit_weight[i];
+    }
+  }
+
+  return diff / cnt;
+}
+
+short gw_gray_diff(uint8_t line) {
+  static uint8_t last = 0;
+  uint8_t rshift = (last >> 1) & line;
+  uint8_t lshift = (last << 1) & line;
+
+  last = line;
+  uint8_t ret = rshift | lshift | line;
+  return gw_point_weight_mul(line);
+}
 
 void gw_gray_show(uint8_t line) {
   char str[9];
@@ -82,8 +111,7 @@ short gw_gray_get_diff() {
 
   uint8_t line = gw_gray_get_line_digital_is_black();
 
-  INFO("PRINT ROW");
-  gw_gray_show(line);
+  /* gw_gray_show(line); */
 
   return gw_gray_diff(line); // 0b0111_1110
 }
@@ -95,9 +123,8 @@ short gw_gray_get_raw_integral() {
   uint8_t lshift = (last << 1) & line;
 
   last = line;
-  uint8_t ret = rshift | lshift | line;
-  gw_gray_show(line);
-  return ret;
+  /* gw_gray_show(line); */
+  return rshift | lshift | line;
 }
 
 uint8_t gw_gray_get_line_digital_is_black() {
