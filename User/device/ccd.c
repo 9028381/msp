@@ -12,8 +12,8 @@ short CCD_DATA[128] = {0};
 #define CCD_ARRAY &CCD_DATA[15]
 #define CCD_ARRAY_LEN (128 - 15 * 2)
 #define CCD_KERNEL_LEN 20
-#define CCD_BLACK_THRUST 150
-#define CCD_COUNT_THRUST 15
+#define CCD_BLACK_THRUST 200
+#define CCD_COUNT_THRUST 10
 
 short get_adc_val(void) {
   DL_ADC12_startConversion(ADC12_0_INST);
@@ -69,7 +69,8 @@ int ccd_compute() {
   short dest[128];
   int len = convolve_unit(CCD_ARRAY_LEN, CCD_KERNEL_LEN, CCD_ARRAY, dest);
   /* int len = forward_difference_multiple(128 - 15, 6, &CCD_DATA[15], dest); */
-  if (array_count_less_than(len, dest, CCD_BLACK_THRUST) < CCD_COUNT_THRUST) {
+  if (array_count_continue_less_than(len, dest, CCD_BLACK_THRUST) <
+      CCD_COUNT_THRUST) {
     INFO("CCD not found black.");
     return ROAD_NO;
   }

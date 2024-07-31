@@ -87,6 +87,22 @@ unsigned array_count_less_than(unsigned len, const short array[len],
   return count;
 }
 
+unsigned array_count_continue_less_than(unsigned len, const short array[len],
+                                        short compare) {
+  unsigned max_count = 0;
+  unsigned start = 0;
+  while (start < len) {
+    unsigned continous = 0;
+    while (start < len && array[start] < compare) {
+      start++;
+      continous++;
+    }
+    if (continous > max_count)
+      max_count = continous;
+  }
+  return max_count;
+}
+
 #ifdef __ARRAY_FIND_MIN_INDEX__
 
 #include <stdio.h>

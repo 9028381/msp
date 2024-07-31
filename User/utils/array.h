@@ -9,6 +9,8 @@ unsigned array_find_min_index(unsigned len, const short array[len]);
 unsigned array_find_max_index(unsigned len, const short array[len]);
 unsigned array_count_less_than(unsigned len, const short array[len],
                                short compare);
+unsigned array_count_continue_less_than(unsigned len, const short array[len],
+                                        short compare);
 
 /// Return the length of the convolution array
 unsigned convolve_unit(unsigned len, unsigned kernel_len, const short src[len],
