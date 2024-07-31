@@ -8,6 +8,14 @@ struct Status;
 void action_1_forward(struct Status *sta);
 bool condition_1_forward_stop_B_100cm(struct Status *sta);
 
+void action_2_semicircle_enter(struct Status *sta);
+void update_2_semicircle_enter(struct Status *sta);
+bool condition_2_semicircle_enter(struct Status *sta);
+
+void action_2_semicircle_match(struct Status *sta);
+void update_2_semicircle_match(struct Status *sta);
+bool condition_2_semicircle_match(struct Status *sta);
+
 // action
 void action_4_arc_enter(struct Status *sta);
 void action_4_arc_continue(struct Status *sta);

@@ -33,31 +33,46 @@ void answer_select_rpc(unsigned short var, void *para) {
 void answer1(struct Status *sta) {
   INFO("ANSWER1");
   step_clear(&sta->step);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // A -> B
   step_push(&sta->step, action_1_forward, condition_1_forward_stop_B_100cm);
+  step_push(&sta->step, action_led_blink, condition_always);
+
   step_push(&sta->step, action_stop, condition_never);
 }
 
 void answer2(struct Status *sta) {
   INFO("ANSWER2");
   step_clear(&sta->step);
-  step_push(&sta->step, action_keep_0,
-            condition_findline_with_60000_75000_history_limit);
-  step_push(&sta->step, action_follow, condition_roadless);
-  step_push(&sta->step, action_keep_180,
-            condition_findline_with_60000_75000_history_limit);
-  step_push(&sta->step, action_follow, condition_roadless);
-  step_push(&sta->step, action_stop, condition_never);
-}
+  step_push(&sta->step, action_led_blink, condition_always);
 
-void answer3(struct Status *sta) {
-  INFO("ANSWER3");
-  step_clear(&sta->step);
-  step_push(&sta->step, action_keep_0,
-            condition_findline_with_80000_90000_history_limit_turn_left);
-  step_push(&sta->step, action_follow, condition_roadless);
-  step_push(&sta->step, action_keep_256,
-            condition_findline_with_80000_90000_history_limit_turn_right);
-  step_push(&sta->step, action_follow, condition_roadless);
+  // A -> B
+  step_push(&sta->step, action_1_forward, condition_1_forward_stop_B_100cm);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // B -> C
+  step_push_with_update(&sta->step, action_2_semicircle_enter,
+                        update_2_semicircle_enter,
+                        condition_2_semicircle_enter);
+  step_push_with_update(&sta->step, action_2_semicircle_match,
+                        update_2_semicircle_match,
+                        condition_2_semicircle_match);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // C -> D
+  step_push(&sta->step, action_1_forward, condition_1_forward_stop_B_100cm);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // D -> A
+  step_push_with_update(&sta->step, action_2_semicircle_enter,
+                        update_2_semicircle_enter,
+                        condition_2_semicircle_enter);
+  step_push_with_update(&sta->step, action_2_semicircle_match,
+                        update_2_semicircle_match,
+                        condition_2_semicircle_match);
+  step_push(&sta->step, action_led_blink, condition_always);
+
   step_push(&sta->step, action_stop, condition_never);
 }
 
@@ -65,15 +80,46 @@ void answer3(struct Status *sta) {
   step_push_with_update(&sta->step, action_4_##name, update_4_##name,          \
                         condition_4_##name)
 
+void answer3(struct Status *sta) {
+  INFO("ANSWER3");
+  step_clear(&sta->step);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // A -> C
+  STEP_PUSH(semicircle_start);
+  STEP_PUSH(arc_continue);
+  STEP_PUSH(forward);
+  STEP_PUSH(arc_enter);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // C -> B
+  STEP_PUSH(semicircle_enter);
+  STEP_PUSH(semicircle_match);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // B -> D
+  STEP_PUSH(arc_continue);
+  STEP_PUSH(forward);
+  STEP_PUSH(arc_enter);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // D -> A
+  STEP_PUSH(semicircle_enter);
+  STEP_PUSH(semicircle_match);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  step_push(&sta->step, action_stop, condition_never);
+}
+
 void answer4(struct Status *sta) {
   INFO("ANSWER4");
   step_clear(&sta->step);
-    //   STEP_PUSH(semicircle_enter);  
-        STEP_PUSH(semicircle_match);
-        step_push(&sta->step, action_stop, condition_never);
+  step_push(&sta->step, action_led_blink, condition_always);
 
-
-
+  // test circle
+  // STEP_PUSH(semicircle_enter);
+  STEP_PUSH(semicircle_match);
+  step_push(&sta->step, action_stop, condition_never);
   for (int i = 0; i < 40; i++) {
     STEP_PUSH(semicircle_enter);
     STEP_PUSH(semicircle_match);
@@ -81,22 +127,28 @@ void answer4(struct Status *sta) {
   }
   step_push(&sta->step, action_stop, condition_never);
 
+  // A -> C
   STEP_PUSH(semicircle_start);
   STEP_PUSH(arc_continue);
-
-  for (int i = 0; i < 7; i++) {
-    STEP_PUSH(forward);
-    STEP_PUSH(arc_enter);
-    STEP_PUSH(semicircle_match);
-    /* STEP_PUSH(semicircle_match); */
-    STEP_PUSH(arc_continue);
-    /* STEP_PUSH(forward); */
-  }
-
   STEP_PUSH(forward);
   STEP_PUSH(arc_enter);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  for (int i = 0; i < 7; i++) {
+    // C -> B -> D or D -> A -> C
+    STEP_PUSH(semicircle_enter);
+    STEP_PUSH(semicircle_match);
+    step_push(&sta->step, action_led_blink, condition_always);
+    STEP_PUSH(arc_continue);
+    STEP_PUSH(forward);
+    STEP_PUSH(arc_enter);
+    step_push(&sta->step, action_led_blink, condition_always);
+  }
+
+  // D -> A
+  STEP_PUSH(semicircle_enter);
   STEP_PUSH(semicircle_match);
-  /* STEP_PUSH(semicircle_match); */
+  step_push(&sta->step, action_led_blink, condition_always);
   step_push(&sta->step, action_stop, condition_never);
 }
 

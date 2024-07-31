@@ -78,8 +78,11 @@ void action_1_forward(struct Status *sta) {
 bool condition_1_forward_stop_B_100cm(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   int sum = history.left + history.right;
+  // TODO:
   return sta->sensor.follow_gw != ROAD_NO;
   return sum > 120000 && (sum > 160000 || sta->sensor.follow_gw != ROAD_NO);
+  return sum > sta->cheat_sheet.AtoB.min &&
+         (sum > sta->cheat_sheet.AtoB.max || sta->sensor.follow_gw != ROAD_NO);
 }
 
 /// arc_enter
@@ -108,7 +111,6 @@ bool condition_4_arc_enter(struct Status *sta) {
 /// semicircle_enter
 void action_4_semicircle_enter(struct Status *sta) {
   INFO("ACTION_4_SEMICIRCLE_ENTER");
-  led_indicate_step_complete();
   speed_cache_recover(sta);
 }
 
@@ -134,24 +136,34 @@ void action_4_semicircle_match(struct Status *sta) {
 }
 
 void update_4_semicircle_match(struct Status *sta) {
+<<<<<<< HEAD
   if (sta->sensor.follow_ms != ROAD_NO) {
     int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
     speed_cache_recover(sta);
     sta->wheels[FONT_LEFT].target += delta; // +
     sta->wheels[FONT_RIGHT].target -= delta;
   }
+=======
+  if (sta->sensor.follow_ms == ROAD_NO)
+    return;
+
+  int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
+
+  speed_cache_recover(sta);
+
+  sta->wheels[FONT_LEFT].target += delta;
+  sta->wheels[FONT_RIGHT].target -= delta;
+>>>>>>> aaaa46f9d7af0849a9b38990fc7bc3241b28149c
 }
 
 bool condition_4_semicircle_match(struct Status *sta) {
   // TODO:
-  return false;
   return sta->sensor.follow_ms == ROAD_NO;
 }
 
 /// arc_continue
 void action_4_arc_continue(struct Status *sta) {
   INFO("ACTION_4_ARC_CONTINUE");
-  led_indicate_step_complete();
   speed_cache_recover(sta);
 }
 
@@ -160,4 +172,32 @@ void update_4_arc_continue(struct Status *sta) {}
 bool condition_4_arc_continue(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   return history.left + history.right > 55000;
+}
+
+void action_2_semicircle_enter(struct Status *sta) {
+  INFO("ACTION_2_SEMICIRCLE_ENTER");
+  sta->wheels[FONT_LEFT].target = 200;
+  sta->wheels[FONT_RIGHT].target = 144;
+}
+void update_2_semicircle_enter(struct Status *sta) {
+  int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
+  sta->wheels[FONT_LEFT].target = 200 + delta;
+  sta->wheels[FONT_RIGHT].target = 144 - delta;
+}
+bool condition_2_semicircle_enter(struct Status *sta) {
+  return sta->sensor.follow_ms != ROAD_NO;
+}
+
+void action_2_semicircle_match(struct Status *sta) {
+  INFO("ACTION_2_SEMICIRCLE_MATCH");
+  sta->wheels[FONT_LEFT].target = 200;
+  sta->wheels[FONT_RIGHT].target = 144;
+}
+void update_2_semicircle_match(struct Status *sta) {
+  int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
+  sta->wheels[FONT_LEFT].target = 200 + delta;
+  sta->wheels[FONT_RIGHT].target = 144 - delta;
+}
+bool condition_2_semicircle_match(struct Status *sta) {
+  return sta->sensor.follow_ms == ROAD_NO;
 }

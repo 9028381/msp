@@ -28,7 +28,11 @@ void status_init(struct Status *sta) {
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
   //   pid_init(&sta->pid.follow_gw, 0.7, 0, 3, 3, 10); // gw
   pid_init(&sta->pid.follow_gw, 1, 0, 30.0, 3, 10); // gw
+<<<<<<< HEAD
   pid_init(&sta->pid.follow_ms, 2, 0, 10, 5, 100); // ms
+=======
+  pid_init(&sta->pid.follow_ms, 2, 0, 30, 3, 10);   // ms
+>>>>>>> aaaa46f9d7af0849a9b38990fc7bc3241b28149c
   // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // repeat history pid
@@ -63,6 +67,9 @@ void status_init(struct Status *sta) {
   /* step init */
   step_init(&sta->step);
   answer_do_nothing(sta);
+
+  /// cheat sheet
+  sta->cheat_sheet = cheat_sheet_default();
 
   // read flash duration
   unsigned duration = *(const unsigned *)flash_use(PAGE_NUM - 1);

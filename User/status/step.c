@@ -79,15 +79,18 @@ void step_next(struct Step *step, struct Status *sta) {
 }
 
 bool step_try_next(struct Step *step, struct Status *sta) {
-  if (step->conditions[step->no](sta)) {
+  bool complete = false;
+  while (step->conditions[step->no](sta)) {
     step_next(step, sta);
-    return true;
+    complete = true;
   }
 
   if (step->updates[step->no] != NULL)
     step->updates[step->no](sta);
-  return false;
+  return complete;
 }
+
+void action_led_blink(struct Status *sta) { led_indicate_step_complete(); }
 
 #define ACTION_TURN_TO(angle)                                                  \
   void action_turn_to_##angle(struct Status *sta) {                            \
@@ -142,7 +145,6 @@ void action_turn_right(struct Status *sta) {
 
 void action_stop(struct Status *sta) {
   INFO("STEP_STOP");
-  led_indicate_step_complete();
   sta->base_speed = 0;
   sta->wheels[FONT_LEFT].target = 0;
   sta->wheels[FONT_RIGHT].target = 0;

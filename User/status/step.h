@@ -35,6 +35,8 @@ void step_push_with_update(struct Step *step, step_action action,
                            step_next_condition next_condition);
 bool step_try_next(struct Step *step, struct Status *sta);
 
+void action_led_blink(struct Status *sta);
+
 /// <-
 void action_turn_left(struct Status *sta);
 /// ->
