@@ -23,6 +23,8 @@ struct CheatSheet {
   struct RangeMinMax AtoB;
   struct LeftRight turn_speed[SPEED_LEVELS];
   int forward_speed[SPEED_LEVELS];
+  int arc_continue1;
+  int arc_continue2;
 };
 
 struct CheatSheet cheat_sheet_default();

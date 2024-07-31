@@ -22,5 +22,8 @@ struct CheatSheet cheat_sheet_default() {
   ret.turn_speed[SpeedFast].left = 0;
   ret.turn_speed[SpeedFast].right = 0;
 
+  ret.arc_continue1 = 55000;
+  ret.arc_continue2 = 55000;
+
   return ret;
 }

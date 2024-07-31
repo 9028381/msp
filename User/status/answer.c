@@ -36,7 +36,7 @@ void answer1(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // A -> B
-  step_push(&sta->step, action_1_forward, condition_forward_stop_B_100cm);
+  step_push(&sta->step, action_forward_slow, condition_forward_stop_B_100cm);
   step_push(&sta->step, action_led_blink, condition_always);
 
   step_push(&sta->step, action_stop, condition_never);
@@ -48,7 +48,7 @@ void answer2(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // A -> B
-  step_push(&sta->step, action_1_forward, condition_forward_stop_B_100cm);
+  step_push(&sta->step, action_forward_slow, condition_forward_stop_B_100cm);
   step_push(&sta->step, action_led_blink, condition_always);
 
   // B -> C
@@ -61,7 +61,7 @@ void answer2(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // C -> D
-  step_push(&sta->step, action_1_forward, condition_forward_stop_B_100cm);
+  step_push(&sta->step, action_forward_slow, condition_forward_stop_B_100cm);
   step_push(&sta->step, action_led_blink, condition_always);
 
   // D -> A
@@ -86,8 +86,9 @@ void answer3(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // A -> C
-  STEP_PUSH(semicircle_start);
-  STEP_PUSH(arc_continue);
+  step_push_with_update(&sta->step, action_semicircle_start,
+                        update_semicircle_start, condition_semicircle_start);
+  step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
   STEP_PUSH(forward);
   STEP_PUSH(arc_enter);
   step_push(&sta->step, action_led_blink, condition_always);
@@ -98,7 +99,7 @@ void answer3(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // B -> D
-  STEP_PUSH(arc_continue);
+  step_push(&sta->step, action_arc_continue2, condition_arc_continue2);
   STEP_PUSH(forward);
   STEP_PUSH(arc_enter);
   step_push(&sta->step, action_led_blink, condition_always);
@@ -128,18 +129,27 @@ void answer4(struct Status *sta) {
   step_push(&sta->step, action_stop, condition_never);
 
   // A -> C
-  STEP_PUSH(semicircle_start);
-  STEP_PUSH(arc_continue);
+  step_push_with_update(&sta->step, action_semicircle_start,
+                        update_semicircle_start, condition_semicircle_start);
+  step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
   STEP_PUSH(forward);
   STEP_PUSH(arc_enter);
   step_push(&sta->step, action_led_blink, condition_always);
 
   for (int i = 0; i < 7; i++) {
-    // C -> B -> D or D -> A -> C
+    // C -> B -> D
     STEP_PUSH(semicircle_enter);
     STEP_PUSH(semicircle_match);
     step_push(&sta->step, action_led_blink, condition_always);
-    STEP_PUSH(arc_continue);
+    step_push(&sta->step, action_arc_continue2, condition_arc_continue2);
+    STEP_PUSH(forward);
+    STEP_PUSH(arc_enter);
+    step_push(&sta->step, action_led_blink, condition_always);
+    //  D -> A -> C
+    STEP_PUSH(semicircle_enter);
+    STEP_PUSH(semicircle_match);
+    step_push(&sta->step, action_led_blink, condition_always);
+    step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
     STEP_PUSH(forward);
     STEP_PUSH(arc_enter);
     step_push(&sta->step, action_led_blink, condition_always);
