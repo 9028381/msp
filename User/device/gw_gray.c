@@ -30,56 +30,19 @@ short gw_gray_diff(uint8_t line) {
   short diff = 0;
   unsigned char cnt = 0;
 
-
-  if (maybe == 0) {
-    {
-        if (gw_single_1){
-      maybe = 1;
-      last = line;
-      return maybe * GW_SINGLE_BIT_WEIGHT;
-        }else {
-            gw_single_1 = true;
-        }
-    }
-    if (1) {
-        if (gw_single_2){
-      maybe = -1;
-      last = line;
-      return maybe * GW_SINGLE_BIT_WEIGHT;
-        } else {
-        gw_single_2 = true;
-        }
-    } else {
-        gw_single_2 = false;        
-    }
-  } else {
+  if (maybe) {
     if (line & 0b01111110)
       maybe = 0;
-    else{
+    else {
       last = line;
       return maybe * GW_SINGLE_BIT_WEIGHT;
     }
   }
 
-  //   if (line == 0) {
-  //     if ((status.times - last) < 3)
-  //       times = times >= 5 ? 5 : times + 1;
-  //     else
-  //       times = 0;
-
-  //     last = status.times;
-
-  //     if (times >= 5) {
-  //       return ROAD_NO;
-  //     }
-
-  //     return 0;
-  //   }
-  
-  if (line == 0){
-    if (last & 0b00111100 || last == 0){
-        last = line;
-        return ROAD_NO;
+  if (line == 0) {
+    if (last & 0b00111100 || last == 0) {
+      last = line;
+      return ROAD_NO;
     }
     int left = last & 0b11000000 ? 1 : 0;
     int right = last & 0b00000011 ? 1 : 0;

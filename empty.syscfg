@@ -286,7 +286,7 @@ TIMER1.timerClkPrescale   = 256;
 TIMER1.timerMode          = "PERIODIC";
 TIMER1.interrupts         = ["ZERO"];
 TIMER1.interruptPriority  = "2";
-TIMER1.timerPeriod        = "20ms";
+TIMER1.timerPeriod        = "10ms";
 TIMER1.peripheral.$assign = "TIMG0";
 
 UART1.$name                            = "UART_2";
