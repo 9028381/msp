@@ -117,24 +117,14 @@ void rpc_declare(RPC rpc) {
   /* RPC_DECLARE_SET_VAR(1, status.wheels[FONT_RIGHT].target); */  
   RPC_DECLARE_SET_VAR(0, status.remote_position.forward);
   RPC_DECLARE_SET_VAR(1, status.remote_position.theta);
-
   RPC_DECLARE_SET_VAR(2, status.dir.target);
   RPC_DECLARE_SET_VAR(3, status.base_speed);
-
   RPC_DECLARE_SET_VAR(5, status.mode.remote);
   RPC_DECLARE_SET_VAR(6, status.mode.follow);
   RPC_DECLARE_SET_VAR(7, status.mode.turn);
-
   RPC_DECLARE_SET_VAR(11, status.pid.follow_gw.kp);
   RPC_DECLARE_SET_VAR(12, status.pid.follow_gw.ki);
   RPC_DECLARE_SET_VAR(13, status.pid.follow_gw.kd);
-  extern int16_t gw_bit_weight[8];
-  RPC_DECLARE_SET_VAR(14, gw_bit_weight[1]);
-  RPC_DECLARE_SET_VAR(15, gw_bit_weight[2]);
-  RPC_DECLARE_SET_VAR(16, gw_bit_weight[3]);
-  RPC_DECLARE_SET_VAR(17, gw_bit_weight[4]);
-  RPC_DECLARE_SET_VAR(18, gw_bit_weight[5]);
-  RPC_DECLARE_SET_VAR(19, gw_bit_weight[6]);
   RPC_DECLARE_SET_VAR(20, status.pid.turn.kp);
   RPC_DECLARE_SET_VAR(21, status.pid.turn.ki);
   RPC_DECLARE_SET_VAR(22, status.pid.turn.kd);
@@ -143,12 +133,6 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(51, status.wheels[FONT_RIGHT].history);
   RPC_DECLARE_GET_VAR(52, status.dir.target);
   RPC_DECLARE_GET_VAR(53, status.base_speed);
-  RPC_DECLARE_GET_VAR(54, gw_bit_weight[1]);
-  RPC_DECLARE_GET_VAR(55, gw_bit_weight[2]);
-  RPC_DECLARE_GET_VAR(56, gw_bit_weight[3]);
-  RPC_DECLARE_GET_VAR(57, gw_bit_weight[4]);
-  RPC_DECLARE_GET_VAR(58, gw_bit_weight[5]);
-  RPC_DECLARE_GET_VAR(59, gw_bit_weight[6]);
   RPC_DECLARE_GET_VAR(60, status.pid.follow_gw.kp);
   RPC_DECLARE_GET_VAR(61, status.pid.follow_gw.ki);
   RPC_DECLARE_GET_VAR(62, status.pid.follow_gw.kd);

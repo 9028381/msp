@@ -59,7 +59,7 @@ void get_ccd_val(void) {
   start_ccd();
   get_ccd();
   /* INFO("CCD_DATA"); */
-  //   array_display(CCD_ARRAY_LEN, CCD_ARRAY);
+    array_display(CCD_ARRAY_LEN, CCD_ARRAY);
 
   return;
 }
@@ -70,7 +70,8 @@ int ccd_compute() {
   int len = convolve_unit(CCD_ARRAY_LEN, CCD_KERNEL_LEN, CCD_ARRAY, dest);
   /* int len = forward_difference_multiple(128 - 15, 6, &CCD_DATA[15], dest); */
   /* array_display(len, dest); */
-  if (array_count_continue_less_than(len, dest, CCD_BLACK_THRUST) <
+
+  if (array_count_continue_less_than(CCD_ARRAY_LEN, CCD_ARRAY, CCD_BLACK_THRUST) <
       CCD_COUNT_THRUST) {
     INFO("CCD not found black.");
     return ROAD_NO;

@@ -101,6 +101,8 @@ unsigned array_count_continue_less_than(unsigned len, const short array[len],
       count = 0;
     }
   }
+  return max_count;
+}
 
 #ifdef __ARRAY_FIND_MIN_INDEX__
 
