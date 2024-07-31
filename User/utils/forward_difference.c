@@ -1,9 +1,11 @@
-unsigned forward_difference(unsigned char len, const unsigned short src[len],
-                            unsigned short dest[len - 1]) {
+#include "array.h"
+
+unsigned forward_difference(unsigned len, const short src[len],
+                            short dest[len - 1]) {
   if (len == 0)
     return 0;
 
-  for (unsigned char i = 0; i < len - 1; i++)
+  for (unsigned i = 0; i < len - 1; i++)
     dest[i] = src[i + 1] - src[i];
 
   return len - 1;

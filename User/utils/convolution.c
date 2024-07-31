@@ -1,8 +1,7 @@
 #include "array.h"
 
-unsigned convolve_unit(unsigned char len, unsigned char kernel_len,
-                       const unsigned short src[len],
-                       unsigned short dest[len - kernel_len + 1]) {
+unsigned convolve_unit(unsigned len, unsigned kernel_len, const short src[len],
+                       short dest[len - kernel_len + 1]) {
   if (len == 0)
     return 0;
 
@@ -17,7 +16,7 @@ unsigned convolve_unit(unsigned char len, unsigned char kernel_len,
     return 1;
   }
 
-  unsigned part = array_sum(kernel_len, src);
+  short part = array_sum(kernel_len, src);
   unsigned remain = len - kernel_len;
   dest[0] = part;
   for (unsigned i = 0; i < remain; i++) {
