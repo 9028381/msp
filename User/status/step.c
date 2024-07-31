@@ -1,4 +1,5 @@
 #include "step.h"
+#include "../device/led.h"
 #include "../utils/utils.h"
 #include "User/device/wheel.h"
 #include "status.h"
@@ -141,6 +142,7 @@ void action_turn_right(struct Status *sta) {
 
 void action_stop(struct Status *sta) {
   INFO("STEP_STOP");
+  led_indicate_step_complete();
   sta->base_speed = 0;
   sta->wheels[FONT_LEFT].target = 0;
   sta->wheels[FONT_RIGHT].target = 0;

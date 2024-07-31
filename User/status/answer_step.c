@@ -1,4 +1,4 @@
-#include "answer4_step.h"
+#include "answer_step.h"
 #include "../device/led.h"
 #include "../utils/log.h"
 #include "User/device/wheel.h"
@@ -67,10 +67,16 @@ bool condition_4_forward(struct Status *sta) {
   return history.left + history.right > 80000;
 }
 
-bool condition_4_forward_stop_B_100cm(struct Status *sta) {
+void action_1_forward(struct Status *sta) {
+  INFO("ACTION_1_FORWARD");
+  sta->wheels[FONT_LEFT].target = 200;
+  sta->wheels[FONT_RIGHT].target = 200;
+}
+
+bool condition_1_forward_stop_B_100cm(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   int sum = history.left + history.right;
-  return sum > 40000 && (sum > 60000 || sta->sensor.follow_gw != ROAD_NO);
+  return sum > 80000 && (sum > 120000 || sta->sensor.follow_gw != ROAD_NO);
 }
 
 /// arc_enter
