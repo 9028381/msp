@@ -7,10 +7,10 @@
 #include "ti/driverlib/dl_gpio.h"
 #include "ti/driverlib/m0p/dl_core.h"
 
-uint16_t CCD_DATA[128] = {0};
-uint16_t gADCResult = 0;
+short CCD_DATA[128] = {0};
+short gADCResult = 0;
 
-uint16_t get_adc_val(void) {
+short get_adc_val(void) {
   DL_ADC12_startConversion(ADC12_0_INST);
 
   delay_us(2);
@@ -65,7 +65,7 @@ void get_ccd_val(void) {
 
 int ccd_compute() {
   get_ccd_val();
-  unsigned short dest[128];
+  short dest[128];
   int len = convolve_unit(128, 10, CCD_DATA, dest);
   int index = array_find_min_index(len, dest);
   INFO("min pint index: %d", index);
