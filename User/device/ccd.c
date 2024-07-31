@@ -46,7 +46,7 @@ void get_ccd(void)
     {
         DL_GPIO_clearPins(CCD_CLK_PORT, CCD_CLK_PIN);
         delay_us(20); // 曝光时间
-        CCD_DATA[i] = get_adc_val();
+        CCD_DATA[i] = get_adc_val() >> 3;
         DL_GPIO_writePins(CCD_CLK_PORT, CCD_CLK_PIN);
         delay_us(1);
     }
@@ -66,8 +66,10 @@ void get_ccd_val(void)
 int ccd_compute() {
   get_ccd_val();
   short dest[128];
-  int len = convolve_unit(128, 10, CCD_DATA, dest);
+//   int len = convolve_unit(128-15, 25,&CCD_DATA[15], dest);
+  int len = forward_difference_multiple(128-15, 6, &CCD_DATA[15], dest);
   int index = array_find_min_index(len, dest);
   INFO("min pint index: %d", index);
+  array_display(len, dest);
   return index;
 }
