@@ -7,7 +7,7 @@ struct CheatSheet cheat_sheet_default() {
   // answer 2 A -> B and C -> D
   // 125, 129, 128, 126
   ret.AtoB.min = 125000;
-  ret.AtoB.max = 130000;
+  ret.AtoB.max = 140000;
 
   // forward speed
   ret.forward_speed[SpeedSlow] = 200;
