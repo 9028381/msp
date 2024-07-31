@@ -71,16 +71,14 @@ bool condition_4_forward(struct Status *sta) {
 
 void action_1_forward(struct Status *sta) {
   INFO("ACTION_1_FORWARD");
-  sta->wheels[FONT_LEFT].target = 200;
-  sta->wheels[FONT_RIGHT].target = 200;
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.forward_speed[SpeedSlow];
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.forward_speed[SpeedSlow];
 }
 
 bool condition_1_forward_stop_B_100cm(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   int sum = history.left + history.right;
   // TODO:
-  return sta->sensor.follow_gw != ROAD_NO;
-  return sum > 120000 && (sum > 160000 || sta->sensor.follow_gw != ROAD_NO);
   return sum > sta->cheat_sheet.AtoB.min &&
          (sum > sta->cheat_sheet.AtoB.max || sta->sensor.follow_gw != ROAD_NO);
 }
