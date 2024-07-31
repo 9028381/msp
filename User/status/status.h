@@ -3,6 +3,7 @@
 
 #include "../config.h"
 #include "../device/wheel.h"
+#include "cheat_sheet.h"
 #include "stdbool.h"
 #include "step.h"
 
@@ -59,6 +60,7 @@ struct Status {
   struct RemotePosition remote_position;
   struct SnapShot rec;
   struct Step step;
+  struct CheatSheet cheat_sheet;
 };
 
 extern struct Status status;

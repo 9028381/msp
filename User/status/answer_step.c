@@ -81,6 +81,8 @@ bool condition_1_forward_stop_B_100cm(struct Status *sta) {
   // TODO:
   return sta->sensor.follow_gw != ROAD_NO;
   return sum > 120000 && (sum > 160000 || sta->sensor.follow_gw != ROAD_NO);
+  return sum > sta->cheat_sheet.AtoB.min &&
+         (sum > sta->cheat_sheet.AtoB.max || sta->sensor.follow_gw != ROAD_NO);
 }
 
 /// arc_enter
