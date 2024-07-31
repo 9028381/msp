@@ -143,6 +143,9 @@ void update_4_semicircle_match(struct Status *sta) {
 
 bool condition_4_semicircle_match(struct Status *sta) {
   // TODO:
+  if (sta->times - sta->step.ctx.start_time < 3)
+    return false;
+
   return sta->sensor.follow_gw == ROAD_NO;
 }
 

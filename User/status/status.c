@@ -119,6 +119,8 @@ void status_next(struct Status *sta) {
   sta->sensor.follow_gw = gw_gray_get_diff();
   sta->sensor.follow_ms = ccd_compute();
 
+  TRACE(sta->sensor.follow_ms, "%d");
+
   // motor base speed
   /* for (int i = 0; i < WHEEL_NUMS; i++) */
   /*   sta->wheels[i].target = sta->base_speed; */
