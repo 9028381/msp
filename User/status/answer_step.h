@@ -31,6 +31,12 @@ void action_semicircle_enter2(struct Status *sta);
 void update_semicircle_enter2(struct Status *sta);
 bool condition_semicircle_enter(struct Status *sta);
 
+void action_semicircle_match1(struct Status *sta);
+void update_semicircle_match1(struct Status *sta);
+void action_semicircle_match2(struct Status *sta);
+void update_semicircle_match2(struct Status *sta);
+bool condition_semicircle_match(struct Status *sta);
+
 void action_2_semicircle_enter(struct Status *sta);
 void update_2_semicircle_enter(struct Status *sta);
 bool condition_2_semicircle_enter(struct Status *sta);

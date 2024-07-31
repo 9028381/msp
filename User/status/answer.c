@@ -111,7 +111,6 @@ void answer3(struct Status *sta) {
                         update_semicircle_enter2, condition_semicircle_enter);
   step_push_with_update(&sta->step, action_semicircle_match2,
                         update_semicircle_match2, condition_semicircle_match);
-  STEP_PUSH(semicircle_match);
   step_push(&sta->step, action_led_blink, condition_always);
 
   step_push(&sta->step, action_stop, condition_never);
