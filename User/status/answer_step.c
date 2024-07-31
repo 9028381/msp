@@ -105,7 +105,7 @@ bool condition_4_arc_enter(struct Status *sta) {
 
 /// semicircle_enter
 void action_4_semicircle_enter(struct Status *sta) {
-  INFO("ACTION_4_SEMICIRcle_enter");
+  INFO("ACTION_4_SEMICIRCLE_ENTER");
   led_indicate_step_complete();
   speed_cache_recover(sta);
 }
@@ -127,7 +127,7 @@ bool condition_4_semicircle_enter(struct Status *sta) {
 
 /// semicircle_match
 void action_4_semicircle_match(struct Status *sta) {
-  INFO("ACTION_4_SEMICIRcle_match");
+  INFO("ACTION_4_SEMICIRCLE_MATCH");
   speed_cache_recover(sta);
 }
 
