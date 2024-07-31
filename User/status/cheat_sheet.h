@@ -1,7 +1,7 @@
 #ifndef __CHEAT_SHEET_H__
 #define __CHEAT_SHEET_H__
 
-struct MinMax {
+struct RangeMinMax {
   int min;
   int max;
 };
@@ -20,7 +20,7 @@ enum SpeedLevel {
 };
 
 struct CheatSheet {
-  struct MinMax AtoB;
+  struct RangeMinMax AtoB;
   struct LeftRight turn_speed[SPEED_LEVELS];
   int forward_speed[SPEED_LEVELS];
 };
