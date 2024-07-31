@@ -191,5 +191,9 @@ void update_2_semicircle_match(struct Status *sta) {
   sta->wheels[FONT_RIGHT].target = 144 - delta;
 }
 bool condition_2_semicircle_match(struct Status *sta) {
-  return sta->sensor.follow_ms == ROAD_NO;
+  static bool last = false;
+  bool no_road = sta->sensor.follow_ms == ROAD_NO;
+  bool ret = no_road & last;
+  last = no_road;
+  return ret;
 }
