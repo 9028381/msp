@@ -32,7 +32,7 @@ short gw_gray_diff(uint8_t line) {
 
 
   if (maybe == 0) {
-    if (!DL_GPIO_readPins(GRAY_PIN1_PORT, GRAY_PIN1_PIN)) {
+    {
         if (gw_single_1){
       maybe = 1;
       last = line;
@@ -40,10 +40,8 @@ short gw_gray_diff(uint8_t line) {
         }else {
             gw_single_1 = true;
         }
-    } else {
-        gw_single_1 = false;
     }
-    if (!DL_GPIO_readPins(GRAY_PIN2_PORT, GRAY_PIN2_PIN)) {
+    if (1) {
         if (gw_single_2){
       maybe = -1;
       last = line;

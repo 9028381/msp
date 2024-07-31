@@ -195,28 +195,40 @@ extern "C" {
 #define GPIO_M_PWM_C3_IDX                                    DL_TIMER_CC_3_INDEX
 
 /* Defines for SERVO */
-#define SERVO_INST                                                         TIMG8
-#define SERVO_INST_IRQHandler                                   TIMG8_IRQHandler
-#define SERVO_INST_INT_IRQN                                     (TIMG8_INT_IRQn)
-#define SERVO_INST_CLK_FREQ                                               160000
+#define SERVO_INST                                                         TIMG6
+#define SERVO_INST_IRQHandler                                   TIMG6_IRQHandler
+#define SERVO_INST_INT_IRQN                                     (TIMG6_INT_IRQn)
+#define SERVO_INST_CLK_FREQ                                              2000000
 /* GPIO defines for channel 0 */
 #define GPIO_SERVO_C0_PORT                                                 GPIOA
-#define GPIO_SERVO_C0_PIN                                         DL_GPIO_PIN_23
-#define GPIO_SERVO_C0_IOMUX                                      (IOMUX_PINCM53)
-#define GPIO_SERVO_C0_IOMUX_FUNC                     IOMUX_PINCM53_PF_TIMG8_CCP0
+#define GPIO_SERVO_C0_PIN                                         DL_GPIO_PIN_29
+#define GPIO_SERVO_C0_IOMUX                                       (IOMUX_PINCM4)
+#define GPIO_SERVO_C0_IOMUX_FUNC                      IOMUX_PINCM4_PF_TIMG6_CCP0
 #define GPIO_SERVO_C0_IDX                                    DL_TIMER_CC_0_INDEX
 /* GPIO defines for channel 1 */
 #define GPIO_SERVO_C1_PORT                                                 GPIOA
 #define GPIO_SERVO_C1_PIN                                         DL_GPIO_PIN_22
 #define GPIO_SERVO_C1_IOMUX                                      (IOMUX_PINCM47)
-#define GPIO_SERVO_C1_IOMUX_FUNC                     IOMUX_PINCM47_PF_TIMG8_CCP1
+#define GPIO_SERVO_C1_IOMUX_FUNC                     IOMUX_PINCM47_PF_TIMG6_CCP1
 #define GPIO_SERVO_C1_IDX                                    DL_TIMER_CC_1_INDEX
 
 
 
 
+/* Defines for ADC12_0 */
+#define ADC12_0_INST                                                        ADC0
+#define ADC12_0_INST_IRQHandler                                  ADC0_IRQHandler
+#define ADC12_0_INST_INT_IRQN                                    (ADC0_INT_IRQn)
+#define ADC12_0_ADCMEM_0                                      DL_ADC12_MEM_IDX_0
+#define ADC12_0_ADCMEM_0_REF                     DL_ADC12_REFERENCE_VOLTAGE_VDDA
+#define ADC12_0_ADCMEM_0_REF_VOLTAGE_V                                       3.3
+#define GPIO_ADC12_0_C3_PORT                                               GPIOA
+#define GPIO_ADC12_0_C3_PIN                                       DL_GPIO_PIN_24
+
+
+
 /* Defines for DMA_CH2 */
-#define DMA_CH2_CHAN_ID                                                      (5)
+#define DMA_CH2_CHAN_ID                                                      (3)
 #define UART_2_INST_DMA_TRIGGER                              (DMA_UART2_TX_TRIG)
 
 /* Defines for DMA_CH1 */
@@ -331,12 +343,12 @@ extern "C" {
 /* Port definition for Pin Group IIC */
 #define IIC_PORT                                                         (GPIOB)
 
-/* Defines for IIC_SCL: GPIOB.21 with pinCMx 49 on package pin 20 */
-#define IIC_IIC_SCL_PIN                                         (DL_GPIO_PIN_21)
-#define IIC_IIC_SCL_IOMUX                                        (IOMUX_PINCM49)
-/* Defines for IIC_SDA: GPIOB.22 with pinCMx 50 on package pin 21 */
-#define IIC_IIC_SDA_PIN                                         (DL_GPIO_PIN_22)
-#define IIC_IIC_SDA_IOMUX                                        (IOMUX_PINCM50)
+/* Defines for IIC_SCL: GPIOB.22 with pinCMx 50 on package pin 21 */
+#define IIC_IIC_SCL_PIN                                         (DL_GPIO_PIN_22)
+#define IIC_IIC_SCL_IOMUX                                        (IOMUX_PINCM50)
+/* Defines for IIC_SDA: GPIOB.24 with pinCMx 52 on package pin 23 */
+#define IIC_IIC_SDA_PIN                                         (DL_GPIO_PIN_24)
+#define IIC_IIC_SDA_IOMUX                                        (IOMUX_PINCM52)
 /* Port definition for Pin Group KEY */
 #define KEY_PORT                                                         (GPIOB)
 
@@ -346,14 +358,23 @@ extern "C" {
 /* Defines for KEY2: GPIOB.19 with pinCMx 45 on package pin 16 */
 #define KEY_KEY2_PIN                                            (DL_GPIO_PIN_19)
 #define KEY_KEY2_IOMUX                                           (IOMUX_PINCM45)
-/* Defines for PIN1: GPIOA.25 with pinCMx 55 on package pin 26 */
-#define GRAY_PIN1_PORT                                                   (GPIOA)
+/* Port definition for Pin Group GRAY */
+#define GRAY_PORT                                                        (GPIOB)
+
+/* Defines for PIN1: GPIOB.25 with pinCMx 56 on package pin 27 */
 #define GRAY_PIN1_PIN                                           (DL_GPIO_PIN_25)
-#define GRAY_PIN1_IOMUX                                          (IOMUX_PINCM55)
+#define GRAY_PIN1_IOMUX                                          (IOMUX_PINCM56)
 /* Defines for PIN2: GPIOB.23 with pinCMx 51 on package pin 22 */
-#define GRAY_PIN2_PORT                                                   (GPIOB)
 #define GRAY_PIN2_PIN                                           (DL_GPIO_PIN_23)
 #define GRAY_PIN2_IOMUX                                          (IOMUX_PINCM51)
+/* Defines for SI: GPIOB.21 with pinCMx 49 on package pin 20 */
+#define CCD_SI_PORT                                                      (GPIOB)
+#define CCD_SI_PIN                                              (DL_GPIO_PIN_21)
+#define CCD_SI_IOMUX                                             (IOMUX_PINCM49)
+/* Defines for CLK: GPIOA.23 with pinCMx 53 on package pin 24 */
+#define CCD_CLK_PORT                                                     (GPIOA)
+#define CCD_CLK_PIN                                             (DL_GPIO_PIN_23)
+#define CCD_CLK_IOMUX                                            (IOMUX_PINCM53)
 
 /* clang-format on */
 
@@ -369,6 +390,7 @@ void SYSCFG_DL_TIMER_INT_init(void);
 void SYSCFG_DL_I2C_init(void);
 void SYSCFG_DL_M_PWM_init(void);
 void SYSCFG_DL_SERVO_init(void);
+void SYSCFG_DL_ADC12_0_init(void);
 void SYSCFG_DL_DMA_init(void);
 
 

@@ -94,6 +94,11 @@
                             <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.1811237063" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.2" valueType="enumerated"/>
                         </tool>
                     </fileInfo>
+                    <fileInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1179157250.User/drive/delay.c" name="delay.c" rcbsApplicability="disable" resourcePath="User/drive/delay.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.1026848173">
+                        <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.1026848173" name="Arm Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637">
+                            <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.1265196512" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.0" valueType="enumerated"/>
+                        </tool>
+                    </fileInfo>
                     <fileInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1179157250.User/drive/interrupt/interrupt-uart.c" name="interrupt-uart.c" rcbsApplicability="disable" resourcePath="User/drive/interrupt/interrupt-uart.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.1674124460">
                         <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.1674124460" name="Arm Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637">
                             <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.932966913" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.2" valueType="enumerated"/>
@@ -102,6 +107,11 @@
                     <fileInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1179157250.User/device/key.c" name="key.c" rcbsApplicability="disable" resourcePath="User/device/key.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.1348204194">
                         <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.1348204194" name="Arm Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637">
                             <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.436619831" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.0" valueType="enumerated"/>
+                        </tool>
+                    </fileInfo>
+                    <fileInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1179157250.User/device/ccd.c" name="ccd.c" rcbsApplicability="disable" resourcePath="User/device/ccd.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.1179855059">
+                        <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.1179855059" name="Arm Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637">
+                            <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.2013531828" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.0" valueType="enumerated"/>
                         </tool>
                     </fileInfo>
                     <fileInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1179157250.User/device/gw_gray.c" name="gw_gray.c" rcbsApplicability="disable" resourcePath="User/device/gw_gray.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1780233637.1142538208">
