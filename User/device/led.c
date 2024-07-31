@@ -15,5 +15,5 @@ void led_indicate_key_press() {
 }
 
 void led_indicate_step_complete() {
-  led_blame(0, 3, STATUS_FREQ * 3 / 10, STATUS_FREQ * 3 / 10);
+  led_blame(0, 3, STATUS_FREQ / 10, STATUS_FREQ / 10);
 }
