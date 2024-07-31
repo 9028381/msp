@@ -1,4 +1,3 @@
-#include "convolution.h"
 #include "array.h"
 
 unsigned convolve_unit(unsigned char len, unsigned char kernel_len,
