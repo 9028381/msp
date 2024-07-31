@@ -1,17 +1,17 @@
 #include "array.h"
 #include "log.h"
 
-unsigned array_sum(unsigned len, const unsigned short array[len]) {
-  unsigned sum = 0;
+int array_sum(unsigned len, const short array[len]) {
+  int sum = 0;
   for (unsigned int i = 0; i < len; i++)
     sum += array[i];
   return sum;
 }
 
-unsigned array_find_min_index(unsigned len, const unsigned short array[len]) {
+unsigned array_find_min_index(unsigned len, const short array[len]) {
   unsigned min_index = 0;
-  unsigned short min = array[min_index];
-  for (unsigned int i = 1; i < len; i++)
+  short min = array[min_index];
+  for (unsigned i = 1; i < len; i++)
     if (array[i] < min) {
       min = array[i];
       min_index = i;
@@ -20,11 +20,23 @@ unsigned array_find_min_index(unsigned len, const unsigned short array[len]) {
   return min_index;
 }
 
-void array_display(unsigned len, const unsigned short array[len]) {
+unsigned array_find_max_index(unsigned len, const short array[len]) {
+  unsigned max_index = 0;
+  short max = array[max_index];
+  for (unsigned i = 1; i < len; i++)
+    if (array[i] > max) {
+      max = array[i];
+      max_index = i;
+    }
+
+  return max_index;
+}
+
+void array_display(unsigned len, const short array[len]) {
   PRINTF("[");
   for (unsigned int i = 0; i < len - 1; i++)
-    PRINTF("%d, ", array[i]);
-  PRINTLN("%d]", array[len - 1]);
+    PRINTF("%hd, ", array[i]);
+  PRINTLN("%hd]", array[len - 1]);
 }
 
 #ifdef __ARRAY_FIND_MIN_INDEX__

@@ -1,44 +1,43 @@
-#include "ti/driverlib/dl_adc12.h"
-#include "User/utils/log.h"
 #include "Debug/ti_msp_dl_config.h"
 #include "User/drive/delay.h"
-#include "ti/driverlib/dl_gpio.h"
 #include "User/utils/array.h"
+#include "User/utils/log.h"
+#include "User/utils/utils.h"
+#include "ti/driverlib/dl_adc12.h"
+#include "ti/driverlib/dl_gpio.h"
 #include "ti/driverlib/m0p/dl_core.h"
 
-uint16_t CCD_DATA[128] = {0};
-uint16_t gADCResult = 0;
+short CCD_DATA[128] = {0};
+short gADCResult = 0;
 
-uint16_t get_adc_val(void)
-{
-    DL_ADC12_startConversion(ADC12_0_INST);
+short get_adc_val(void) {
+  DL_ADC12_startConversion(ADC12_0_INST);
 
-    delay_us(2);
+  delay_us(2);
 
-    gADCResult = DL_ADC12_getMemResult(ADC12_0_INST, DL_ADC12_MEM_IDX_0);
+  gADCResult = DL_ADC12_getMemResult(ADC12_0_INST, DL_ADC12_MEM_IDX_0);
 
-    DL_ADC12_enableConversions(ADC12_0_INST);
+  DL_ADC12_enableConversions(ADC12_0_INST);
 
-    return gADCResult;
+  return gADCResult;
 }
 
-void start_ccd(void)
-{
-    DL_GPIO_clearPins(CCD_CLK_PORT ,CCD_CLK_PIN);
-    DL_GPIO_clearPins(CCD_SI_PORT, CCD_SI_PIN);
-    delay_us(20);
+void start_ccd(void) {
+  DL_GPIO_clearPins(CCD_CLK_PORT, CCD_CLK_PIN);
+  DL_GPIO_clearPins(CCD_SI_PORT, CCD_SI_PIN);
+  delay_us(20);
 
-    DL_GPIO_clearPins(CCD_CLK_PORT, CCD_CLK_PIN);
-    DL_GPIO_writePins(CCD_SI_PORT, CCD_SI_PIN);
-    delay_us(20);
+  DL_GPIO_clearPins(CCD_CLK_PORT, CCD_CLK_PIN);
+  DL_GPIO_writePins(CCD_SI_PORT, CCD_SI_PIN);
+  delay_us(20);
 
     DL_GPIO_writePins(CCD_CLK_PORT, CCD_CLK_PIN);
     delay_us(20);
     DL_GPIO_clearPins(CCD_SI_PORT, CCD_SI_PIN);
 
-    delay_us(20);
+  delay_us(20);
 
-    return;
+  return;
 }
 
 void get_ccd(void)
@@ -61,5 +60,14 @@ void get_ccd_val(void)
     array_display(128, CCD_DATA);
 
 
-    return;
+  return;
+}
+
+int ccd_compute() {
+  get_ccd_val();
+  short dest[128];
+  int len = convolve_unit(128, 10, CCD_DATA, dest);
+  int index = array_find_min_index(len, dest);
+  INFO("min pint index: %d", index);
+  return index;
 }
