@@ -75,10 +75,9 @@ void action_1_forward(struct Status *sta) {
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.forward_speed[SpeedSlow];
 }
 
-bool condition_1_forward_stop_B_100cm(struct Status *sta) {
+bool condition_forward_stop_B_100cm(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   int sum = history.left + history.right;
-  // TODO:
   return sum > sta->cheat_sheet.AtoB.min &&
          (sum > sta->cheat_sheet.AtoB.max || sta->sensor.follow_gw != ROAD_NO);
 }

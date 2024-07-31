@@ -36,7 +36,7 @@ void answer1(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // A -> B
-  step_push(&sta->step, action_1_forward, condition_1_forward_stop_B_100cm);
+  step_push(&sta->step, action_1_forward, condition_forward_stop_B_100cm);
   step_push(&sta->step, action_led_blink, condition_always);
 
   step_push(&sta->step, action_stop, condition_never);
@@ -48,7 +48,7 @@ void answer2(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // A -> B
-  step_push(&sta->step, action_1_forward, condition_1_forward_stop_B_100cm);
+  step_push(&sta->step, action_1_forward, condition_forward_stop_B_100cm);
   step_push(&sta->step, action_led_blink, condition_always);
 
   // B -> C
@@ -61,7 +61,7 @@ void answer2(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // C -> D
-  step_push(&sta->step, action_1_forward, condition_1_forward_stop_B_100cm);
+  step_push(&sta->step, action_1_forward, condition_forward_stop_B_100cm);
   step_push(&sta->step, action_led_blink, condition_always);
 
   // D -> A
