@@ -8,19 +8,15 @@
 void answer_select(unsigned short which) {
   switch (which) {
   case 1:
-    led_blame(0, 3, 10, 10);
     answer1(&status);
     break;
   case 2:
-    led_blame(0, 3, 10, 10);
     answer2(&status);
     break;
   case 3:
-    led_blame(0, 3, 10, 10);
     answer3(&status);
     break;
   case 4:
-    led_blame(0, 3, 10, 10);
     answer4(&status);
     break;
   default:
@@ -43,6 +39,7 @@ void answer1(struct Status *sta) {
 }
 
 void answer2(struct Status *sta) {
+  INFO("ANSWER2");
   step_clear(&sta->step);
   step_push(&sta->step, action_keep_0,
             condition_findline_with_60000_75000_history_limit);
@@ -54,6 +51,7 @@ void answer2(struct Status *sta) {
 }
 
 void answer3(struct Status *sta) {
+  INFO("ANSWER3");
   step_clear(&sta->step);
   step_push(&sta->step, action_keep_0,
             condition_findline_with_80000_90000_history_limit_turn_left);
@@ -69,13 +67,14 @@ void answer3(struct Status *sta) {
                         condition_4_##name)
 
 void answer4(struct Status *sta) {
+  INFO("ANSWER4");
   step_clear(&sta->step);
 
-//   for (int i = 0 ; i < 40; i++){
-//     STEP_PUSH(semicircle_enter);
-//   STEP_PUSH(arc_enter);
-//   }
-//     step_push(&sta->step, action_stop, condition_never);
+  //   for (int i = 0 ; i < 40; i++){
+  //     STEP_PUSH(semicircle_enter);
+  //   STEP_PUSH(arc_enter);
+  //   }
+  //     step_push(&sta->step, action_stop, condition_never);
 
   STEP_PUSH(semicircle_enter);
   STEP_PUSH(arc_continue);
@@ -97,6 +96,7 @@ void answer4(struct Status *sta) {
 }
 
 void answer4_bak(struct Status *sta) {
+  INFO("ANSWER4");
   step_clear(&sta->step);
   //   step_push(&sta->step, action_turn_circle_right,
   //   condition_turn_circle_right_little);
@@ -121,6 +121,7 @@ void answer4_bak(struct Status *sta) {
 }
 
 void answer_do_nothing(struct Status *sta) {
+  INFO("ANSWER_DO_NOTHING");
   step_clear(&sta->step);
   step_push(&sta->step, action_stop, condition_never);
 }
