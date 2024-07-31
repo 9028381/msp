@@ -11,9 +11,9 @@ short CCD_DATA[128] = {0};
 
 #define CCD_ARRAY &CCD_DATA[15]
 #define CCD_ARRAY_LEN (128 - 15 * 2)
-#define CCD_KERNEL_LEN 20
-#define CCD_BLACK_THRUST 200
-#define CCD_COUNT_THRUST 10
+/* #define CCD_KERNEL_LEN 20 */
+#define CCD_BLACK_THRUST 400
+#define CCD_COUNT_THRUST 5
 
 short get_adc_val(void) {
   DL_ADC12_startConversion(ADC12_0_INST);
@@ -59,7 +59,7 @@ void get_ccd_val(void) {
   start_ccd();
   get_ccd();
   /* INFO("CCD_DATA"); */
-    // array_display(CCD_ARRAY_LEN, CCD_ARRAY);
+  // array_display(CCD_ARRAY_LEN, CCD_ARRAY);
 
   return;
 }
@@ -67,18 +67,19 @@ void get_ccd_val(void) {
 int ccd_compute() {
   get_ccd_val();
   short dest[128];
-  int len = convolve_unit(CCD_ARRAY_LEN, CCD_KERNEL_LEN, CCD_ARRAY, dest);
+  /* int len = convolve_unit(CCD_ARRAY_LEN, CCD_KERNEL_LEN, CCD_ARRAY, dest); */
   /* int len = forward_difference_multiple(128 - 15, 6, &CCD_DATA[15], dest); */
+  struct SumAndCount sum_count =
+      array_mean_index_less_than(CCD_ARRAY_LEN, CCD_ARRAY, CCD_BLACK_THRUST);
   /* array_display(len, dest); */
 
-  if (array_count_continue_less_than(CCD_ARRAY_LEN, CCD_ARRAY, CCD_BLACK_THRUST) <
-      CCD_COUNT_THRUST) {
+  if (sum_count.count < CCD_COUNT_THRUST) {
     INFO("CCD not found black.");
     return ROAD_NO;
   }
 
-  int index = array_find_min_index(len, dest);
-  INFO("CCD fond black: %d", index - len / 2);
+  int diff = sum_count.sum / sum_count.count - CCD_ARRAY_LEN / 2;
+  INFO("CCD fond black: %d", diff);
 
-  return index;
+  return diff;
 }
