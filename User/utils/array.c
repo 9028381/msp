@@ -78,6 +78,15 @@ unsigned forward_difference_multiple(unsigned len, unsigned forward,
   return dest_len;
 }
 
+unsigned array_count_less_than(unsigned len, const short array[len],
+                               short compare) {
+  unsigned count = 0;
+  for (unsigned i = 0; i < len; i++)
+    if (array[i] < compare)
+      count++;
+  return count;
+}
+
 #ifdef __ARRAY_FIND_MIN_INDEX__
 
 #include <stdio.h>
