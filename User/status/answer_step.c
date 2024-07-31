@@ -136,9 +136,7 @@ void action_4_semicircle_match(struct Status *sta) {
 void update_4_semicircle_match(struct Status *sta) {
   if (sta->sensor.follow_ms != ROAD_NO) {
     int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
-
     speed_cache_recover(sta);
-
     sta->wheels[FONT_LEFT].target += delta; // +
     sta->wheels[FONT_RIGHT].target -= delta;
   }

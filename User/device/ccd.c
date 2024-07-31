@@ -12,7 +12,7 @@ short CCD_DATA[128] = {0};
 #define CCD_ARRAY &CCD_DATA[15]
 #define CCD_ARRAY_LEN (128 - 15 * 2)
 /* #define CCD_KERNEL_LEN 20 */
-#define CCD_BLACK_THRUST 400
+#define CCD_BLACK_THRUST 300
 #define CCD_COUNT_THRUST 5
 #define CCD_BLACK_COUNT_LIMIT 40
 
@@ -60,7 +60,7 @@ void get_ccd_val(void) {
   start_ccd();
   get_ccd();
   /* INFO("CCD_DATA"); */
-  // array_display(CCD_ARRAY_LEN, CCD_ARRAY);
+//   array_display(CCD_ARRAY_LEN, CCD_ARRAY);
 
   return;
 }
@@ -83,7 +83,7 @@ int ccd_compute() {
   }
 
   int diff = sum_count.sum / sum_count.count - CCD_ARRAY_LEN / 2;
-//   diff = -diff;
+  diff = -diff;
   /* INFO("CCD fond black: %d", diff); */
 
   last = diff;
