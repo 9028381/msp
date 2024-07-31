@@ -82,16 +82,29 @@ short gw_gray_get_diff() {
 
   uint8_t line = gw_gray_get_line_digital_is_black();
 
+  INFO("PRINT ROW");
   gw_gray_show(line);
 
   return gw_gray_diff(line); // 0b0111_1110
+}
+
+short gw_gray_get_raw_integral() {
+  static uint8_t last = 0;
+  uint8_t line = gw_gray_get_line_digital_is_black();
+  uint8_t rshift = (last >> 1) & line;
+  uint8_t lshift = (last << 1) & line;
+
+  last = line;
+  uint8_t ret = rshift | lshift | line;
+  gw_gray_show(line);
+  return ret;
 }
 
 uint8_t gw_gray_get_line_digital_is_black() {
   uint8_t cmd = Digital_Output_CMD;
   uint8_t buf = 0;
   iic_hardware_write(GW_GRAY_ADDR, 1, &cmd);
-//   iic_handware_read(GW_GRAY_ADDR, 1, &buf);
+  //   iic_handware_read(GW_GRAY_ADDR, 1, &buf);
   buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_1_PORT, GRAY8_PIN_1_PIN) << 7;
   buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_2_PORT, GRAY8_PIN_2_PIN) << 6;
   buf = buf | (bool)DL_GPIO_readPins(GRAY8_PIN_3_PORT, GRAY8_PIN_3_PIN) << 5;
