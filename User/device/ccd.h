@@ -3,5 +3,6 @@
 
 void get_adc_val(void);
 void get_ccd_val(void);
+int ccd_compute();
 
 #endif

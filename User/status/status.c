@@ -6,6 +6,7 @@
 #include "../device/led.h"
 #include "../device/ms_gray.h"
 #include "../utils/utils.h"
+#include "User/device/ccd.h"
 #include "User/device/wheel.h"
 #include "answer.h"
 #include "record.h"
@@ -113,8 +114,9 @@ void status_next(struct Status *sta) {
   // sta->sensor.follow = get_cam_diff();
   /* if (sta->mode.follow) */
   // always open follow
-  sta->sensor.follow_gw = gw_gray_get_diff();
-  sta->sensor.follow_ms = get_ms_diff();
+  /* sta->sensor.follow_gw = gw_gray_get_diff(); */
+  /* sta->sensor.follow_ms = get_ms_diff(); */
+  sta->sensor.follow_gw = ccd_compute();
 
   // motor base speed
   /* for (int i = 0; i < WHEEL_NUMS; i++) */
