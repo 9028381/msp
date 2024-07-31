@@ -15,8 +15,8 @@ struct CheatSheet cheat_sheet_default() {
   ret.forward_speed[SpeedFast] = 600;
 
   // turn speed
-  ret.turn_speed[SpeedSlow].left = 0;
-  ret.turn_speed[SpeedSlow].right = 0;
+  ret.turn_speed[SpeedSlow].left = 200;
+  ret.turn_speed[SpeedSlow].right = 144;
   ret.turn_speed[SpeedNorm].left = 0;
   ret.turn_speed[SpeedNorm].right = 0;
   ret.turn_speed[SpeedFast].left = 0;
