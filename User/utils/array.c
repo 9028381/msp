@@ -32,11 +32,50 @@ unsigned array_find_max_index(unsigned len, const short array[len]) {
   return max_index;
 }
 
+void array_copy(unsigned len, const short src[len], short dest[len]) {
+  for (unsigned i = 0; i < len; i++)
+    dest[i] = src[i];
+}
+
 void array_display(unsigned len, const short array[len]) {
   PRINTF("[");
   for (unsigned int i = 0; i < len - 1; i++)
     PRINTF("%hd, ", array[i]);
   PRINTLN("%hd]", array[len - 1]);
+}
+
+unsigned forward_difference(unsigned len, const short src[len],
+                            short dest[len - 1]) {
+  if (len == 0)
+    return 0;
+
+  for (unsigned i = 0; i < len - 1; i++)
+    dest[i] = src[i + 1] - src[i];
+
+  return len - 1;
+}
+
+unsigned forward_difference_multiple(unsigned len, unsigned forward,
+                                     const short src[len],
+                                     short dest[len - forward]) {
+  if (len == 0)
+    return 0;
+
+  if (forward == 0) {
+    array_copy(len, src, dest);
+    return len;
+  }
+
+  if (forward >= len)
+    return 0;
+
+  if (forward == 1)
+    return forward_difference(len, src, dest);
+
+  unsigned dest_len = len - forward;
+  for (unsigned i = 0; i < dest_len; i++)
+    dest[i] = src[i + forward] - src[i];
+  return dest_len;
 }
 
 #ifdef __ARRAY_FIND_MIN_INDEX__
