@@ -69,8 +69,8 @@ short gw_point_weight_mul(uint8_t line) {
   short diff = 0;
   unsigned char cnt = 0;
 
-  if (line)
-    return 0;
+  if (line == 0)
+    return ROAD_NO;
 
   for (int i = 0; i < 8; i++) {
     if (((line >> i) & 0x01)) {
@@ -89,7 +89,11 @@ short gw_gray_diff(uint8_t line) {
 
   last = line;
   uint8_t ret = rshift | lshift | line;
-  return gw_point_weight_mul(line);
+
+  if (ret == 0)
+    return ROAD_NO;
+
+  return gw_point_weight_mul(ret);
 }
 
 void gw_gray_show(uint8_t line) {
