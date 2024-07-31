@@ -8,6 +8,7 @@
 #include "../utils/utils.h"
 #include "User/device/ccd.h"
 #include "User/device/wheel.h"
+#include "User/utils/log.h"
 #include "answer.h"
 #include "record.h"
 #include "step.h"
@@ -116,7 +117,10 @@ void status_next(struct Status *sta) {
   // always open follow
   /* sta->sensor.follow_ms = get_ms_diff(); */
   sta->sensor.follow_gw = gw_gray_get_diff();
-//   sta->sensor.follow_ms = ccd_compute();
+  sta->sensor.follow_ms = ccd_compute();
+
+  TRACE(sta->sensor.follow_gw, "%d");
+  TRACE(sta->sensor.follow_ms, "%d");
 
   // motor base speed
   /* for (int i = 0; i < WHEEL_NUMS; i++) */
