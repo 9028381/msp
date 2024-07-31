@@ -49,9 +49,6 @@ scripting.suppress("MDIV will be disabled \\(/1\\) when sourced from anything ot
 const divider4       = system.clockTree["PLL_CLK0_DIV"];
 divider4.divideValue = 4;
 
-const divider6       = system.clockTree["PLL_CLK2X_DIV"];
-divider6.divideValue = 10;
-
 const divider7       = system.clockTree["PLL_PDIV"];
 divider7.divideValue = 2;
 
@@ -59,7 +56,7 @@ const divider9       = system.clockTree["UDIV"];
 divider9.divideValue = 2;
 
 const multiplier2         = system.clockTree["PLL_QDIV"];
-multiplier2.multiplyValue = 20;
+multiplier2.multiplyValue = 5;
 
 const mux8       = system.clockTree["HSCLKMUX"];
 mux8.inputSelect = "HSCLKMUX_SYSPLL2X";
@@ -267,14 +264,14 @@ PWM2.ccp1PinConfig.passedPeripheralType = scripting.forceWrite("Digital");
 PWM2.ccp1PinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric17";
 
 SYSCTL.forceDefaultClkConfig = true;
-SYSCTL.peripheral.$assign    = "SYSCTL";
+SYSCTL.clockTreeEn           = true;
 
 TIMER1.$name              = "TIMER_INT";
 TIMER1.timerClkPrescale   = 256;
 TIMER1.timerMode          = "PERIODIC";
 TIMER1.interrupts         = ["ZERO"];
 TIMER1.interruptPriority  = "2";
-TIMER1.timerPeriod        = "10ms";
+TIMER1.timerPeriod        = "20ms";
 TIMER1.peripheral.$assign = "TIMG0";
 
 UART1.$name                            = "UART_2";
