@@ -140,7 +140,7 @@ void answer4(struct Status *sta) {
   step_push(&sta->step, action_arc_enter1, condition_arc_enter1);
   step_push(&sta->step, action_led_blink, condition_always);
 
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < 3; i++) {
     // C -> B
     step_push_with_update(&sta->step, action_semicircle_enter1,
                           update_semicircle_enter1, condition_semicircle_enter);

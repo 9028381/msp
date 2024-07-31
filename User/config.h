@@ -28,7 +28,7 @@
  */
 #define STATUS_FREQ TIMER1_FREQ
 
-#define STATUS_STEP_LIMIT 100
+#define STATUS_STEP_LIMIT 128
 
 /******* WHEEL *******/
 #define WHEEL_THRUST_MAX 8000
