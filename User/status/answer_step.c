@@ -78,6 +78,7 @@ void action_1_forward(struct Status *sta) {
 bool condition_1_forward_stop_B_100cm(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   int sum = history.left + history.right;
+  // TODO:
   return sta->sensor.follow_gw != ROAD_NO;
   return sum > 120000 && (sum > 160000 || sta->sensor.follow_gw != ROAD_NO);
 }

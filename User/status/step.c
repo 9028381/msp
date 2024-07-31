@@ -79,14 +79,15 @@ void step_next(struct Step *step, struct Status *sta) {
 }
 
 bool step_try_next(struct Step *step, struct Status *sta) {
-  if (step->conditions[step->no](sta)) {
+  bool complete = false;
+  while (step->conditions[step->no](sta)) {
     step_next(step, sta);
-    return true;
+    complete = true;
   }
 
   if (step->updates[step->no] != NULL)
     step->updates[step->no](sta);
-  return false;
+  return complete;
 }
 
 #define ACTION_TURN_TO(angle)                                                  \
