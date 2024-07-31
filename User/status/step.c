@@ -90,6 +90,8 @@ bool step_try_next(struct Step *step, struct Status *sta) {
   return complete;
 }
 
+void action_led_blink(struct Status *sta) { led_indicate_step_complete(); }
+
 #define ACTION_TURN_TO(angle)                                                  \
   void action_turn_to_##angle(struct Status *sta) {                            \
     INFO("STEP_TURN_TO_" #angle);                                              \
@@ -143,7 +145,6 @@ void action_turn_right(struct Status *sta) {
 
 void action_stop(struct Status *sta) {
   INFO("STEP_STOP");
-  led_indicate_step_complete();
   sta->base_speed = 0;
   sta->wheels[FONT_LEFT].target = 0;
   sta->wheels[FONT_RIGHT].target = 0;

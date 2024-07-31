@@ -33,20 +33,46 @@ void answer_select_rpc(unsigned short var, void *para) {
 void answer1(struct Status *sta) {
   INFO("ANSWER1");
   step_clear(&sta->step);
+  step_push(&sta->step, action_led_blink, condition_always);
+
   // A -> B
   step_push(&sta->step, action_1_forward, condition_1_forward_stop_B_100cm);
+  step_push(&sta->step, action_led_blink, condition_always);
+
   step_push(&sta->step, action_stop, condition_never);
 }
 
 void answer2(struct Status *sta) {
   INFO("ANSWER2");
   step_clear(&sta->step);
+  step_push(&sta->step, action_led_blink, condition_always);
+
   // A -> B
   step_push(&sta->step, action_1_forward, condition_1_forward_stop_B_100cm);
-  step_push(&sta->step, action_follow, condition_roadless);
-  step_push(&sta->step, action_keep_180,
-            condition_findline_with_60000_75000_history_limit);
-  step_push(&sta->step, action_follow, condition_roadless);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // B -> C
+  step_push_with_update(&sta->step, action_2_semicircle_enter,
+                        update_2_semicircle_enter,
+                        condition_2_semicircle_enter);
+  step_push_with_update(&sta->step, action_2_semicircle_match,
+                        update_2_semicircle_match,
+                        condition_2_semicircle_match);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // C -> D
+  step_push(&sta->step, action_1_forward, condition_1_forward_stop_B_100cm);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // D -> A
+  step_push_with_update(&sta->step, action_2_semicircle_enter,
+                        update_2_semicircle_enter,
+                        condition_2_semicircle_enter);
+  step_push_with_update(&sta->step, action_2_semicircle_match,
+                        update_2_semicircle_match,
+                        condition_2_semicircle_match);
+  step_push(&sta->step, action_led_blink, condition_always);
+
   step_push(&sta->step, action_stop, condition_never);
 }
 
