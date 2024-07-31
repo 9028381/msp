@@ -169,6 +169,8 @@ void action_2_semicircle_enter(struct Status *sta) {
   sta->wheels[FONT_RIGHT].target = 144;
 }
 void update_2_semicircle_enter(struct Status *sta) {
+  if (sta->sensor.follow_gw == ROAD_NO)
+    return;
   int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
   sta->wheels[FONT_LEFT].target = 200 + delta;
   sta->wheels[FONT_RIGHT].target = 144 - delta;
@@ -191,5 +193,6 @@ void update_2_semicircle_match(struct Status *sta) {
   sta->wheels[FONT_RIGHT].target = 144 - delta;
 }
 bool condition_2_semicircle_match(struct Status *sta) {
+  return false;
   return sta->sensor.follow_ms == ROAD_NO;
 }
