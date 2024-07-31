@@ -28,7 +28,7 @@ void status_init(struct Status *sta) {
   pid_init(&sta->pid.turn, 1, 0, 0.8, 5, 10);
   //   pid_init(&sta->pid.follow_gw, 0.7, 0, 3, 3, 10); // gw
   pid_init(&sta->pid.follow_gw, 1, 0, 30.0, 3, 10); // gw
-  pid_init(&sta->pid.follow_ms, 2, 0, 30, 5, 100);  // ms
+  pid_init(&sta->pid.follow_ms, 1, 0, 20, 5, 100);  // ms
   // pid_init(&sta->pid.follow, 0.8, 0, 1.8, 3, 10); // cam
 
   // repeat history pid

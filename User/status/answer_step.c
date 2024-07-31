@@ -176,34 +176,29 @@ void update_2_semicircle_enter(struct Status *sta) {
   sta->wheels[FONT_RIGHT].target = 144 - delta;
 }
 bool condition_2_semicircle_enter(struct Status *sta) {
-  return sta->sensor.follow_ms != ROAD_NO;
+  static bool last = false;
+  bool have_road = sta->sensor.follow_ms != ROAD_NO;
+
+  if (have_road && last)
+    return true;
+
+  last = have_road;
+  return false;
 }
 
 void action_2_semicircle_match(struct Status *sta) {
   INFO("ACTION_2_SEMICIRCLE_MATCH");
-  sta->wheels[FONT_LEFT].target = 200;
-  sta->wheels[FONT_RIGHT].target = 144;
+  sta->wheels[FONT_LEFT].target = 500;
+  sta->wheels[FONT_RIGHT].target = 360;
 }
 void update_2_semicircle_match(struct Status *sta) {
   if (sta->sensor.follow_ms == ROAD_NO)
     return;
 
   int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
-  sta->wheels[FONT_LEFT].target = 200 + delta;
-  sta->wheels[FONT_RIGHT].target = 144 - delta;
+  sta->wheels[FONT_LEFT].target = 500 + delta;
+  sta->wheels[FONT_RIGHT].target = 360 - delta;
 }
 bool condition_2_semicircle_match(struct Status *sta) {
-<<<<<<< HEAD
-  return false;
   return sta->sensor.follow_ms == ROAD_NO;
-=======
-  static bool last = false;
-  bool no_road = sta->sensor.follow_ms == ROAD_NO;
-
-  if (no_road && last)
-    return true;
-
-  last = no_road;
-  return false;
->>>>>>> 17302315af49b3ebd4002b2f245be9fdcd041770
 }
