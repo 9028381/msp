@@ -1,6 +1,8 @@
 #ifndef __CHEAT_SHEET_H__
 #define __CHEAT_SHEET_H__
 
+#include "stdint.h"
+
 struct RangeMinMax {
   int min;
   int max;
@@ -32,5 +34,6 @@ struct CheatSheet {
 };
 
 struct CheatSheet cheat_sheet_default();
+void cheat_sheet_rpc_recover(uint16_t var, void *p);
 
 #endif // !__CHEAT_SHEET_H__
