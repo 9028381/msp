@@ -90,6 +90,12 @@ void action_forward_normal(struct Status *sta) {
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.forward_speed[SpeedNorm];
 }
 
+void action_forward_fast(struct Status *sta) {
+  INFO("ACTION_FORWARD_FAST");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.forward_speed[SpeedFast];
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.forward_speed[SpeedFast];
+}
+
 bool condition_forward1_limit(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   int sum = history.left + history.right;
@@ -116,6 +122,12 @@ void action_arc_enter1(struct Status *sta) {
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
 }
 
+void action_arc_enter1_fast(struct Status *sta) {
+  INFO("ACTION_ARC_ENTER1");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
+}
+
 bool condition_arc_enter1(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   int sum = history.left + history.right;
@@ -137,6 +149,11 @@ void action_arc_enter2(struct Status *sta) {
   INFO("ACTION_ARC_ENTER2");
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+}
+void action_arc_enter2_fast(struct Status *sta) {
+  INFO("ACTION_ARC_ENTER2_FAST");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
 }
 
 bool condition_arc_enter2(struct Status *sta) {
@@ -207,6 +224,12 @@ void action_arc_continue1(struct Status *sta) {
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
 }
 
+void action_arc_continue1_fast(struct Status *sta) {
+  INFO("ACTION_4_ARC_CONTINUE1");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
+}
+
 bool condition_arc_continue1(struct Status *sta) {
   struct DurationHistory history = duration_history_get(sta);
   int sum = history.left + history.right;
@@ -214,6 +237,12 @@ bool condition_arc_continue1(struct Status *sta) {
 }
 
 void action_arc_continue2(struct Status *sta) {
+  INFO("ACTION_4_ARC_CONTINUE1");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+}
+
+void action_arc_continue2_fast(struct Status *sta) {
   INFO("ACTION_4_ARC_CONTINUE1");
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
@@ -256,9 +285,25 @@ void action_semicircle_enter1(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
 }
+void action_semicircle_enter1_fast(struct Status *sta) {
+  INFO("ACTION_2_SEMICIRCLE_ENTER_FAST");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
+}
 void update_semicircle_enter1(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+
+  if (sta->sensor.follow_gw == ROAD_NO)
+    return;
+
+  int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
+  sta->wheels[FONT_LEFT].target += delta;
+  sta->wheels[FONT_RIGHT].target -= delta;
+}
+void update_semicircle_enter1_fast(struct Status *sta) {
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
 
   if (sta->sensor.follow_gw == ROAD_NO)
     return;
@@ -272,9 +317,25 @@ void action_semicircle_enter2(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
 }
+void action_semicircle_enter2_fast(struct Status *sta) {
+  INFO("ACTION_2_SEMICIRCLE_ENTER_FAST");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
+}
 void update_semicircle_enter2(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+
+  if (sta->sensor.follow_gw == ROAD_NO)
+    return;
+
+  int delta = pid_compute(&sta->pid.follow_gw, 0, sta->sensor.follow_gw);
+  sta->wheels[FONT_LEFT].target += delta;
+  sta->wheels[FONT_RIGHT].target -= delta;
+}
+void update_semicircle_enter2_fast(struct Status *sta) {
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
 
   if (sta->sensor.follow_gw == ROAD_NO)
     return;
@@ -322,9 +383,25 @@ void action_semicircle_match1(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
 }
+void action_semicircle_match1_fast(struct Status *sta) {
+  INFO("ACTION_2_SEMICIRCLE_MATCH_FAST");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
+}
 void update_semicircle_match1(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+
+  if (sta->sensor.follow_ms == ROAD_NO)
+    return;
+
+  int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
+  sta->wheels[FONT_LEFT].target += delta;
+  sta->wheels[FONT_RIGHT].target -= delta;
+}
+void update_semicircle_match1_fast(struct Status *sta) {
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
 
   if (sta->sensor.follow_ms == ROAD_NO)
     return;
@@ -338,9 +415,25 @@ void action_semicircle_match2(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
 }
+void action_semicircle_match2_fast(struct Status *sta) {
+  INFO("ACTION_2_SEMICIRCLE_MATCH_FAST");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
+}
 void update_semicircle_match2(struct Status *sta) {
   sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
   sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+
+  if (sta->sensor.follow_ms == ROAD_NO)
+    return;
+
+  int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
+  sta->wheels[FONT_LEFT].target += delta;
+  sta->wheels[FONT_RIGHT].target -= delta;
+}
+void update_semicircle_match2_fast(struct Status *sta) {
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedFast].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedFast].right;
 
   if (sta->sensor.follow_ms == ROAD_NO)
     return;

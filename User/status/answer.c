@@ -19,6 +19,8 @@ void answer_select(unsigned short which) {
   case 4:
     answer4(&status);
     break;
+  case 5:
+    answer4_fast(&status);
   default:
     answer_do_nothing(&status);
     break;
@@ -116,8 +118,8 @@ void answer3(struct Status *sta) {
   step_push(&sta->step, action_stop, condition_never);
 }
 
-bool condition_gw_read_road(struct Status * sta){
-      return sta->sensor.follow_gw != ROAD_NO;
+bool condition_gw_read_road(struct Status *sta) {
+  return sta->sensor.follow_gw != ROAD_NO;
 }
 
 void answer4(struct Status *sta) {
@@ -126,23 +128,26 @@ void answer4(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // test circle
-    // step_push_with_update(&sta->step, action_semicircle_start,
-    //                     update_semicircle_start, condition_semicircle_start);
-    //                     for(int i = 0; i < 30 ; i++){  
-    //                         step_push(&sta->step, action_arc_continue1, condition_gw_read_road);
-    //                             step_push_with_update(&sta->step, action_semicircle_enter2,
-    //                       update_semicircle_enter2, condition_semicircle_enter);
-    // step_push_with_update(&sta->step, action_semicircle_match2,                          update_semicircle_match2, condition_semicircle_match);
+  // step_push_with_update(&sta->step, action_semicircle_start,
+  //                     update_semicircle_start, condition_semicircle_start);
+  //                     for(int i = 0; i < 30 ; i++){
+  //                         step_push(&sta->step, action_arc_continue1,
+  //                         condition_gw_read_road);
+  //                             step_push_with_update(&sta->step,
+  //                             action_semicircle_enter2,
+  //                       update_semicircle_enter2,
+  //                       condition_semicircle_enter);
+  // step_push_with_update(&sta->step, action_semicircle_match2,
+  // update_semicircle_match2, condition_semicircle_match);
 
-
-    //                     }
-    //                       step_push(&sta->step, action_stop, condition_never);
+  //                     }
+  //                       step_push(&sta->step, action_stop, condition_never);
 
   // A -> C
   step_push_with_update(&sta->step, action_semicircle_start,
                         update_semicircle_start, condition_semicircle_start);
   step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
-//   step_push(&sta->step, action_stop, condition_never);
+  //   step_push(&sta->step, action_stop, condition_never);
   step_push(&sta->step, action_forward_normal, condition_forward1_limit);
   step_push(&sta->step, action_arc_enter1, condition_arc_enter1);
   step_push(&sta->step, action_led_blink, condition_always);
@@ -193,6 +198,78 @@ void answer4(struct Status *sta) {
                         update_semicircle_enter2, condition_semicircle_enter);
   step_push_with_update(&sta->step, action_semicircle_match2,
                         update_semicircle_match2, condition_semicircle_match);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  step_push(&sta->step, action_stop, condition_never);
+}
+
+void answer4_fast(struct Status *sta) {
+  INFO("ANSWER4");
+  step_clear(&sta->step);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // A -> C
+  step_push_with_update(&sta->step, action_semicircle_start,
+                        update_semicircle_start, condition_semicircle_start);
+  step_push(&sta->step, action_arc_continue1_fast, condition_arc_continue1);
+  step_push(&sta->step, action_forward_fast, condition_forward1_limit);
+  step_push(&sta->step, action_arc_enter1_fast, condition_arc_enter1);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  for (int i = 0; i < 3; i++) {
+    // C -> B
+    step_push_with_update(&sta->step, action_semicircle_enter1_fast,
+                          update_semicircle_enter1_fast,
+                          condition_semicircle_enter);
+    step_push_with_update(&sta->step, action_semicircle_match1_fast,
+                          update_semicircle_match1_fast,
+                          condition_semicircle_match);
+    step_push(&sta->step, action_led_blink, condition_always);
+
+    // B -> D
+    step_push(&sta->step, action_arc_continue2_fast, condition_arc_continue2);
+    step_push(&sta->step, action_forward_fast, condition_forward2_limit);
+    step_push(&sta->step, action_arc_enter2_fast, condition_arc_enter2);
+    step_push(&sta->step, action_led_blink, condition_always);
+
+    // D -> A
+    step_push_with_update(&sta->step, action_semicircle_enter2_fast,
+                          update_semicircle_enter2_fast,
+                          condition_semicircle_enter);
+    step_push_with_update(&sta->step, action_semicircle_match2_fast,
+                          update_semicircle_match2_fast,
+                          condition_semicircle_match);
+    step_push(&sta->step, action_led_blink, condition_always);
+
+    // A -> C
+    step_push(&sta->step, action_arc_continue1_fast, condition_arc_continue1);
+    step_push(&sta->step, action_forward_fast, condition_forward1_limit);
+    step_push(&sta->step, action_arc_enter1_fast, condition_arc_enter1);
+    step_push(&sta->step, action_led_blink, condition_always);
+  }
+
+  // C -> B
+  step_push_with_update(&sta->step, action_semicircle_enter1_fast,
+                        update_semicircle_enter1_fast,
+                        condition_semicircle_enter);
+  step_push_with_update(&sta->step, action_semicircle_match1_fast,
+                        update_semicircle_match1_fast,
+                        condition_semicircle_match);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // B -> D
+  step_push(&sta->step, action_arc_continue2_fast, condition_arc_continue2);
+  step_push(&sta->step, action_forward_fast, condition_forward2_limit);
+  step_push(&sta->step, action_arc_enter2_fast, condition_arc_enter2);
+  step_push(&sta->step, action_led_blink, condition_always);
+
+  // D -> A
+  step_push_with_update(&sta->step, action_semicircle_enter2_fast,
+                        update_semicircle_enter2_fast,
+                        condition_semicircle_enter);
+  step_push_with_update(&sta->step, action_semicircle_match2_fast,
+                        update_semicircle_match2_fast,
+                        condition_semicircle_match);
   step_push(&sta->step, action_led_blink, condition_always);
 
   step_push(&sta->step, action_stop, condition_never);
