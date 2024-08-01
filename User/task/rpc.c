@@ -162,16 +162,16 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(70, status.dir.origin);
   RPC_DECLARE_GET_VAR(71, status.sensor.gyro);
 
-  RPC_DECLARE_SET_VAR(81, status.pid.follow_ms.kp);
-  RPC_DECLARE_SET_VAR(82, status.pid.follow_ms.ki);
-  RPC_DECLARE_SET_VAR(83, status.pid.follow_ms.kd);
-  rpc_register(rpc, 84, "status.cheat_sheet.forward1", set_int_1000_times,
+  RPC_DECLARE_SET_VAR(129, status.pid.follow_ms.kp);
+  RPC_DECLARE_SET_VAR(130, status.pid.follow_ms.ki);
+  RPC_DECLARE_SET_VAR(131, status.pid.follow_ms.kd);
+  rpc_register(rpc, 132, "status.cheat_sheet.forward1", set_int_1000_times,
                &status.cheat_sheet.forward1);
-  rpc_register(rpc, 85, "status.cheat_sheet.forward2", set_int_1000_times,
+  rpc_register(rpc, 133, "status.cheat_sheet.forward2", set_int_1000_times,
                &status.cheat_sheet.forward2);
-  rpc_register(rpc, 86, "status.cheat_sheet.arc_continue1", set_int_1000_times,
+  rpc_register(rpc, 134, "status.cheat_sheet.arc_continue1", set_int_1000_times,
                &status.cheat_sheet.arc_continue1);
-  rpc_register(rpc, 87, "status.cheat_sheet.arc_continue2", set_int_1000_times,
+  rpc_register(rpc, 135, "status.cheat_sheet.arc_continue2", set_int_1000_times,
                &status.cheat_sheet.arc_continue2);
   RPC_DECLARE_CALL_FN(88, cheat_sheet_rpc_recover, NULL);
 

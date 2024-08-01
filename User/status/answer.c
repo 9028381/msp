@@ -206,9 +206,17 @@ void answer4(struct Status *sta) {
 }
 
 void answer4_fast(struct Status *sta) {
-  INFO("ANSWER4");
+  INFO("ANSWER4_FAST");
   step_clear(&sta->step);
   step_push(&sta->step, action_led_blink, condition_always);
+
+    // for(int i = 0; i < 30 ; i++){
+    //     step_push(&sta->step, action_arc_continue1, condition_gw_read_road);
+    //     step_push_with_update(&sta->step, action_semicircle_enter2_fast, update_semicircle_enter2_fast, condition_semicircle_enter);
+    //     step_push_with_update(&sta->step, action_semicircle_match2_fast, update_semicircle_match2_fast, condition_semicircle_match);
+    // }
+    // step_push(&sta->step, action_stop, condition_never);
+
 
   // A -> C
   step_push(&sta->step, action_arc_start, condition_arc_start);

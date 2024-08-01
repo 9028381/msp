@@ -13,26 +13,26 @@ struct CheatSheet cheat_sheet_default() {
   // forward speed
   ret.forward_speed[SpeedSlow] = 200;
   ret.forward_speed[SpeedNorm] = 500;
-  ret.forward_speed[SpeedFast] = 800;
+  ret.forward_speed[SpeedFast] = 540;
 
   // turn speed
   ret.turn_speed[SpeedSlow].left = 200;
   ret.turn_speed[SpeedSlow].right = 144;
   ret.turn_speed[SpeedNorm].left = 500;
   ret.turn_speed[SpeedNorm].right = 356;
-  ret.turn_speed[SpeedFast].left = 600;
-  ret.turn_speed[SpeedFast].right = 432;
+  ret.turn_speed[SpeedFast].left = 500;
+  ret.turn_speed[SpeedFast].right = 359;
 
   ret.arc_continue1 = 52000;
   ret.arc_continue2 = 52000;
   ret.forward1 = 78000;
   ret.forward2 = 78000;
   ret.arc_enter1.min = 42000;
-  ret.arc_enter1.max = 45000;
+  ret.arc_enter1.max = 48000;
   ret.arc_enter2.min = 42000;
-  ret.arc_enter2.max = 45000;
+  ret.arc_enter2.max = 48000;
 
-  ret.arc_start = 46000;
+  ret.arc_start = 49000;
 
   return ret;
 }
