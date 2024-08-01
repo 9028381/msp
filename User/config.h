@@ -3,7 +3,7 @@
 
 #include "drive/uart.h"
 
-// #define DEV
+#define DEV
 
 #define BASE_SPEED 500
 #define KEEP_ANGLE_SPEED 700
@@ -48,7 +48,7 @@
 #define PID_DATA_LOOP_LENGTH_MAX 40
 
 /******** LOG ********/
-#define LOG_UART uart2
+#define LOG_UART uart1
 #define LOG_FORMAT_BUF_LENGTH 256
 
 /****** GW_GRAY ******/

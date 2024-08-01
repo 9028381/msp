@@ -7,6 +7,10 @@
 
 void log_uprintf(enum Uart uart, const char *format, ...);
 
+#define SCREEN_UART uart2
+#define SCREEN_PRINT(fmt, ...)                                                 \
+  log_uprintf(SCREEN_UART, fmt "\xff\xff\xff", ##__VA_ARGS__);
+
 #define PRINTF(fmt, ...) log_uprintf(LOG_UART, fmt, ##__VA_ARGS__);
 #define PRINTLN(fmt, ...) PRINTF(fmt "\r\n", ##__VA_ARGS__)
 

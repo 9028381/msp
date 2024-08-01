@@ -1,18 +1,18 @@
 #include "rpc.h"
+#include "../status/answer.h"
 #include "../utils/log.h"
+#include "User/device/gw_gray.h"
 #include "User/device/wheel.h"
+#include "User/status/cheat_sheet.h"
 #include "User/status/record.h"
 #include "User/status/status.h"
-#include "User/device/gw_gray.h"
 #include "stdlib.h"
-#include "../status/answer.h"
-#include "User/status/cheat_sheet.h"
 
 void rpc_register(RPC rpc, uint8_t id, const char *describe,
                   void fn(uint16_t, void *), void *para);
 void rpc_declare(RPC rpc);
 
-void set_bool(uint16_t var, void *p) {*(bool *)p = (bool)var; }
+void set_bool(uint16_t var, void *p) { *(bool *)p = (bool)var; }
 void set_int(uint16_t var, void *p) { *(int *)p = (int16_t)var; }
 void set_uint(uint16_t var, void *p) { *(unsigned int *)p = (uint16_t)var; }
 void set_short(uint16_t var, void *p) { *(short *)p = (int16_t)var; }
@@ -21,14 +21,18 @@ void set_float(uint16_t var, void *p) {
   *(float *)p = (float)(int16_t)var / 100;
 }
 
-void get_int(uint16_t var, void *p) { PRINTLN("%d", *(int *)p); }
-void get_uint(uint16_t var, void *p) { PRINTLN("%u", *(unsigned int *)p); }
-void get_short(uint16_t var, void *p) { PRINTLN("%hd", *(short *)p); }
+/* #define TO_DEVICE INFO */
+#define TO_DEVICE SCREEN_PRINT
+void get_int(uint16_t var, void *p) { TO_DEVICE("%d", *(int *)p); }
+void get_uint(uint16_t var, void *p) { TO_DEVICE("%u", *(unsigned int *)p); }
+void get_short(uint16_t var, void *p) { TO_DEVICE("%hd", *(short *)p); }
 void get_ushort(uint16_t var, void *p) {
-  PRINTLN("%hu", *(unsigned short *)p);
+  TO_DEVICE("%hu", *(unsigned short *)p);
 }
-void get_bool(uint16_t var, void *p) { PRINTLN("%s", *(bool *)p ? "true" : "false"); }
-void get_float(uint16_t var, void *p) { PRINTLN("%f", *(float *)p); }
+void get_bool(uint16_t var, void *p) {
+  TO_DEVICE("%s", *(bool *)p ? "true" : "false");
+}
+void get_float(uint16_t var, void *p) { TO_DEVICE("%f", *(float *)p); }
 
 void echo(uint16_t var, void *p) { INFO("ECHO %hx %s", var, p) }
 
@@ -108,7 +112,9 @@ void task_rpc_call_id(RPC rpc, uint8_t id, uint16_t var) {
   rpc_call(&rpc[id], var);
 }
 
-void set_int_1000_times(uint16_t var, void *p) {*(int *)p = (int)(int16_t)var * 1000; }
+void set_int_1000_times(uint16_t var, void *p) {
+  *(int *)p = (int)(int16_t)var * 1000;
+}
 
 void rpc_declare(RPC rpc) {
   /// rpc register var in there.
@@ -117,7 +123,7 @@ void rpc_declare(RPC rpc) {
   /// RPC_DECLARE_GET_VAR(1, a);
   /// RPC_DECLARE_CALL_FN(2, echo, "Hello World!");
   /* RPC_DECLARE_SET_VAR(0, status.wheels[FONT_LEFT].target); */
-  /* RPC_DECLARE_SET_VAR(1, status.wheels[FONT_RIGHT].target); */  
+  /* RPC_DECLARE_SET_VAR(1, status.wheels[FONT_RIGHT].target); */
   RPC_DECLARE_SET_VAR(0, status.remote_position.forward);
   RPC_DECLARE_SET_VAR(1, status.remote_position.theta);
   RPC_DECLARE_SET_VAR(2, status.dir.target);
@@ -134,7 +140,7 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_SET_VAR(20, status.pid.turn.kp);
   RPC_DECLARE_SET_VAR(21, status.pid.turn.ki);
   RPC_DECLARE_SET_VAR(22, status.pid.turn.kd);
-  
+
   RPC_DECLARE_GET_VAR(50, status.wheels[FONT_LEFT].history);
   RPC_DECLARE_GET_VAR(51, status.wheels[FONT_RIGHT].history);
   RPC_DECLARE_GET_VAR(52, status.dir.target);
@@ -153,17 +159,20 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(116, status.cheat_sheet.arc_continue1);
   RPC_DECLARE_GET_VAR(117, status.cheat_sheet.arc_continue2);
 
-
   RPC_DECLARE_GET_VAR(70, status.dir.origin);
   RPC_DECLARE_GET_VAR(71, status.sensor.gyro);
 
   RPC_DECLARE_SET_VAR(81, status.pid.follow_ms.kp);
   RPC_DECLARE_SET_VAR(82, status.pid.follow_ms.ki);
   RPC_DECLARE_SET_VAR(83, status.pid.follow_ms.kd);
-  rpc_register(rpc, 84, "status.cheat_sheet.forward1", set_int_1000_times, &status.cheat_sheet.forward1);
-  rpc_register(rpc, 85, "status.cheat_sheet.forward2", set_int_1000_times, &status.cheat_sheet.forward2);
-  rpc_register(rpc, 86, "status.cheat_sheet.arc_continue1", set_int_1000_times, &status.cheat_sheet.arc_continue1);
-  rpc_register(rpc, 87, "status.cheat_sheet.arc_continue2", set_int_1000_times, &status.cheat_sheet.arc_continue2);
+  rpc_register(rpc, 84, "status.cheat_sheet.forward1", set_int_1000_times,
+               &status.cheat_sheet.forward1);
+  rpc_register(rpc, 85, "status.cheat_sheet.forward2", set_int_1000_times,
+               &status.cheat_sheet.forward2);
+  rpc_register(rpc, 86, "status.cheat_sheet.arc_continue1", set_int_1000_times,
+               &status.cheat_sheet.arc_continue1);
+  rpc_register(rpc, 87, "status.cheat_sheet.arc_continue2", set_int_1000_times,
+               &status.cheat_sheet.arc_continue2);
   RPC_DECLARE_CALL_FN(88, cheat_sheet_rpc_recover, NULL);
 
   RPC_DECLARE_CALL_FN(100, echo, "hello");
