@@ -71,8 +71,8 @@ void answer2(struct Status *sta) {
   step_push_with_update(&sta->step, action_2_semicircle_enter,
                         update_2_semicircle_enter,
                         condition_2_semicircle_enter);
-  step_push_with_update(&sta->step, action_2_semicircle_match,
-                        update_2_semicircle_match,
+  step_push_with_update(&sta->step, action_2_semicircle_match2,
+                        update_2_semicircle_match2,
                         condition_2_semicircle_match);
   step_push(&sta->step, action_led_blink, condition_always);
 

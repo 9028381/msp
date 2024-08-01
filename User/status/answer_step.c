@@ -2,6 +2,7 @@
 #include "../device/led.h"
 #include "../utils/log.h"
 #include "User/device/wheel.h"
+#include "User/status/cheat_sheet.h"
 #include "status.h"
 
 struct DurationHistory {
@@ -368,6 +369,22 @@ bool condition_semicircle_enter(struct Status *sta) {
 
   last = have_road;
   return false;
+}
+void action_2_semicircle_match2(struct Status *sta) {
+  INFO("ACTION_2_SEMICIRCLE_MATCH");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedSlow].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedSlow].right;
+}
+void update_2_semicircle_match2(struct Status *sta) {
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedSlow].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedSlow].right;
+
+  if (sta->sensor.follow_ms == ROAD_NO)
+    return;
+
+  int delta = pid_compute(&sta->pid.follow_ms, 0, sta->sensor.follow_ms);
+  sta->wheels[FONT_LEFT].target += delta;
+  sta->wheels[FONT_RIGHT].target -= delta;
 }
 
 void action_2_semicircle_match(struct Status *sta) {
