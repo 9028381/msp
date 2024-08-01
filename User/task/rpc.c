@@ -21,14 +21,14 @@ void set_float(uint16_t var, void *p) {
   *(float *)p = (float)(int16_t)var / 100;
 }
 
-void get_int(uint16_t var, void *p) { INFO("GET %d", *(int *)p); }
-void get_uint(uint16_t var, void *p) { INFO("GET %u", *(unsigned int *)p); }
-void get_short(uint16_t var, void *p) { INFO("GET %hd", *(short *)p); }
+void get_int(uint16_t var, void *p) { PRINTLN("%d", *(int *)p); }
+void get_uint(uint16_t var, void *p) { PRINTLN("%u", *(unsigned int *)p); }
+void get_short(uint16_t var, void *p) { PRINTLN("%hd", *(short *)p); }
 void get_ushort(uint16_t var, void *p) {
-  INFO("GET %hu", *(unsigned short *)p);
+  PRINTLN("%hu", *(unsigned short *)p);
 }
-void get_bool(uint16_t var, void *p) { INFO("GET %s", *(bool *)p ? "true" : "false"); }
-void get_float(uint16_t var, void *p) { INFO("GET %f", *(float *)p); }
+void get_bool(uint16_t var, void *p) { PRINTLN("%s", *(bool *)p ? "true" : "false"); }
+void get_float(uint16_t var, void *p) { PRINTLN("%f", *(float *)p); }
 
 void echo(uint16_t var, void *p) { INFO("ECHO %hx %s", var, p) }
 
@@ -145,9 +145,13 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(63, status.pid.turn.kp);
   RPC_DECLARE_GET_VAR(64, status.pid.turn.ki);
   RPC_DECLARE_GET_VAR(65, status.pid.turn.kd);
-  RPC_DECLARE_GET_VAR(66, status.pid.follow_ms.kp);
-  RPC_DECLARE_GET_VAR(67, status.pid.follow_ms.ki);
-  RPC_DECLARE_GET_VAR(68, status.pid.follow_ms.kd);
+  RPC_DECLARE_GET_VAR(111, status.pid.follow_ms.kp);
+  RPC_DECLARE_GET_VAR(112, status.pid.follow_ms.ki);
+  RPC_DECLARE_GET_VAR(113, status.pid.follow_ms.kd);
+  RPC_DECLARE_GET_VAR(114, status.cheat_sheet.forward1);
+  RPC_DECLARE_GET_VAR(115, status.cheat_sheet.forward2);
+  RPC_DECLARE_GET_VAR(116, status.cheat_sheet.arc_continue1);
+  RPC_DECLARE_GET_VAR(117, status.cheat_sheet.arc_continue2);
 
 
   RPC_DECLARE_GET_VAR(70, status.dir.origin);
