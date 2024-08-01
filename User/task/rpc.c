@@ -150,6 +150,10 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(70, status.dir.origin);
   RPC_DECLARE_GET_VAR(71, status.sensor.gyro);
 
+  RPC_DECLARE_SET_VAR(81, status.pid.follow_ms.kp);
+  RPC_DECLARE_SET_VAR(81, status.pid.follow_ms.kp);
+
+
   RPC_DECLARE_CALL_FN(100, echo, "hello");
   RPC_DECLARE_CALL_FN(101, record_once_switch, NULL);
   RPC_DECLARE_CALL_FN(102, repeat_open, NULL);

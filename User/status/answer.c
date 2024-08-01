@@ -116,26 +116,33 @@ void answer3(struct Status *sta) {
   step_push(&sta->step, action_stop, condition_never);
 }
 
+bool condition_gw_read_road(struct Status * sta){
+      return sta->sensor.follow_gw != ROAD_NO;
+}
+
 void answer4(struct Status *sta) {
   INFO("ANSWER4");
   step_clear(&sta->step);
   step_push(&sta->step, action_led_blink, condition_always);
 
   // test circle
-  // STEP_PUSH(semicircle_enter);
-  /* STEP_PUSH(semicircle_match); */
-  /* step_push(&sta->step, action_stop, condition_never); */
-  /* for (int i = 0; i < 40; i++) { */
-  /*   STEP_PUSH(semicircle_enter); */
-  /*   STEP_PUSH(semicircle_match); */
-  /* STEP_PUSH(arc_enter); */
-  /* } */
-  /* step_push(&sta->step, action_stop, condition_never); */
+    // step_push_with_update(&sta->step, action_semicircle_start,
+    //                     update_semicircle_start, condition_semicircle_start);
+    //                     for(int i = 0; i < 30 ; i++){  
+    //                         step_push(&sta->step, action_arc_continue1, condition_gw_read_road);
+    //                             step_push_with_update(&sta->step, action_semicircle_enter2,
+    //                       update_semicircle_enter2, condition_semicircle_enter);
+    // step_push_with_update(&sta->step, action_semicircle_match2,                          update_semicircle_match2, condition_semicircle_match);
+
+
+    //                     }
+    //                       step_push(&sta->step, action_stop, condition_never);
 
   // A -> C
   step_push_with_update(&sta->step, action_semicircle_start,
                         update_semicircle_start, condition_semicircle_start);
   step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
+//   step_push(&sta->step, action_stop, condition_never);
   step_push(&sta->step, action_forward_normal, condition_forward1_limit);
   step_push(&sta->step, action_arc_enter1, condition_arc_enter1);
   step_push(&sta->step, action_led_blink, condition_always);

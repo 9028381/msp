@@ -132,7 +132,6 @@ void status_next(struct Status *sta) {
   // mode next
   step_try_next(&sta->step, sta);
 
-
   // update wheel target speed based on sensor
   /* if (sta->mode.turn) { */
   /*   float diff = sta->dir.target + sta->dir.origin - sta->sensor.gyro; */
