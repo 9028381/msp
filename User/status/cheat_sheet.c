@@ -32,7 +32,7 @@ struct CheatSheet cheat_sheet_default() {
   ret.arc_enter2.min = 42000;
   ret.arc_enter2.max = 45000;
 
-  ret.arc_start = 50000;
+  ret.arc_start = 46000;
 
   return ret;
 }
