@@ -1,4 +1,5 @@
 #include "cheat_sheet.h"
+#include "status.h"
 
 struct CheatSheet cheat_sheet_default() {
   struct CheatSheet ret;
@@ -32,4 +33,9 @@ struct CheatSheet cheat_sheet_default() {
   ret.arc_enter2.max  = 99999;
 
   return ret;
+}
+
+void cheat_sheet_rpc_recover(uint16_t var, void *p)
+{
+    status.cheat_sheet = cheat_sheet_default();
 }

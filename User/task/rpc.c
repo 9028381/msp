@@ -6,6 +6,7 @@
 #include "User/device/gw_gray.h"
 #include "stdlib.h"
 #include "../status/answer.h"
+#include "User/status/cheat_sheet.h"
 
 void rpc_register(RPC rpc, uint8_t id, const char *describe,
                   void fn(uint16_t, void *), void *para);
@@ -107,6 +108,8 @@ void task_rpc_call_id(RPC rpc, uint8_t id, uint16_t var) {
   rpc_call(&rpc[id], var);
 }
 
+void set_int_1000_times(uint16_t var, void *p) {*(int *)p = (int)(int16_t)var * 1000; }
+
 void rpc_declare(RPC rpc) {
   /// rpc register var in there.
   /// rpc_register(rpc, 0, "a", store_float, &a);
@@ -151,8 +154,13 @@ void rpc_declare(RPC rpc) {
   RPC_DECLARE_GET_VAR(71, status.sensor.gyro);
 
   RPC_DECLARE_SET_VAR(81, status.pid.follow_ms.kp);
-  RPC_DECLARE_SET_VAR(81, status.pid.follow_ms.kp);
-
+  RPC_DECLARE_SET_VAR(82, status.pid.follow_ms.ki);
+  RPC_DECLARE_SET_VAR(83, status.pid.follow_ms.kd);
+  rpc_register(rpc, 84, "status.cheat_sheet.forward1", set_int_1000_times, &status.cheat_sheet.forward1);
+  rpc_register(rpc, 85, "status.cheat_sheet.forward2", set_int_1000_times, &status.cheat_sheet.forward2);
+  rpc_register(rpc, 86, "status.cheat_sheet.arc_continue1", set_int_1000_times, &status.cheat_sheet.arc_continue1);
+  rpc_register(rpc, 87, "status.cheat_sheet.arc_continue2", set_int_1000_times, &status.cheat_sheet.arc_continue2);
+  RPC_DECLARE_CALL_FN(88, cheat_sheet_rpc_recover, NULL);
 
   RPC_DECLARE_CALL_FN(100, echo, "hello");
   RPC_DECLARE_CALL_FN(101, record_once_switch, NULL);
