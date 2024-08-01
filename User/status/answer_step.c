@@ -151,9 +151,9 @@ bool condition_arc_enter1(struct Status *sta) {
     return true;
 
   if (sum > sta->cheat_sheet.arc_enter1.max)
-    return true;
+    // try to recover
+    sta->wheels[FONT_LEFT].target -= 10;
 
-  // try to recover
   return false;
 }
 
@@ -179,9 +179,9 @@ bool condition_arc_enter2(struct Status *sta) {
     return true;
 
   if (sum > sta->cheat_sheet.arc_enter2.max)
-    return true;
+    // try to recover
+    sta->wheels[FONT_RIGHT].target -= 10;
 
-  // try to recover
   return false;
 }
 
