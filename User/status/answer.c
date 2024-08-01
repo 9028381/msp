@@ -29,8 +29,6 @@ void answer_select(unsigned short which) {
 }
 
 void answer_select_rpc(unsigned short var, void *para) {
-  if (ABS(status.sensor.follow_ms) > 30)
-    return;
   unsigned char which = var & 0xff;
   answer_select(which);
 }
