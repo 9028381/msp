@@ -21,6 +21,7 @@ void answer_select(unsigned short which) {
     break;
   case 5:
     answer4_fast(&status);
+    break;
   default:
     answer_do_nothing(&status);
     break;
@@ -28,6 +29,8 @@ void answer_select(unsigned short which) {
 }
 
 void answer_select_rpc(unsigned short var, void *para) {
+  if (ABS(status.sensor.follow_ms) > 30)
+    return;
   unsigned char which = var & 0xff;
   answer_select(which);
 }
@@ -147,7 +150,6 @@ void answer4(struct Status *sta) {
   step_push_with_update(&sta->step, action_semicircle_start,
                         update_semicircle_start, condition_semicircle_start);
   step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
-  //   step_push(&sta->step, action_stop, condition_never);
   step_push(&sta->step, action_forward_normal, condition_forward1_limit);
   step_push(&sta->step, action_arc_enter1, condition_arc_enter1);
   step_push(&sta->step, action_led_blink, condition_always);
