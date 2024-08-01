@@ -40,6 +40,18 @@ void speed_cache_store(struct Status *sta) {
   speed_cache.right = sta->wheels[FONT_RIGHT].target;
 }
 
+/// arc start
+void action_arc_start(struct Status *sta) {
+  INFO("ACTION_ARC_START");
+  sta->wheels[FONT_LEFT].target = sta->cheat_sheet.turn_speed[SpeedNorm].left;
+  sta->wheels[FONT_RIGHT].target = sta->cheat_sheet.turn_speed[SpeedNorm].right;
+}
+
+bool condition_arc_start(struct Status *sta) {
+  struct DurationHistory history = duration_history_get(sta);
+  return history.left + history.right > sta->cheat_sheet.arc_start;
+}
+
 /// semicircle_start
 void action_semicircle_start(struct Status *sta) {
   INFO("ACTION_4_SEMICIRCLE_START");

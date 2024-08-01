@@ -27,14 +27,16 @@ struct CheatSheet cheat_sheet_default() {
   ret.arc_continue2 = 52000;
   ret.forward1 = 78000;
   ret.forward2 = 78000;
-  ret.arc_enter1.min  = 42000;
-  ret.arc_enter1.max  = 45000;
-  ret.arc_enter2.min  = 42000;
-  ret.arc_enter2.max  = 45000;
+  ret.arc_enter1.min = 42000;
+  ret.arc_enter1.max = 45000;
+  ret.arc_enter2.min = 42000;
+  ret.arc_enter2.max = 45000;
+
+  ret.arc_start = 50000;
 
   return ret;
 }
 
-void cheat_sheet_rpc_recover(uint16_t var, void *p){
+void cheat_sheet_rpc_recover(uint16_t var, void *p) {
   status.cheat_sheet = cheat_sheet_default();
 }

@@ -29,6 +29,7 @@ struct CheatSheet {
   int arc_continue2;
   int forward1;
   int forward2;
+  int arc_start;
   struct RangeMinMax arc_enter1;
   struct RangeMinMax arc_enter2;
 };

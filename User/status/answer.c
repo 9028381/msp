@@ -91,9 +91,8 @@ void answer3(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // A -> C
-  step_push_with_update(&sta->step, action_semicircle_start,
-                        update_semicircle_start, condition_semicircle_start);
-  step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
+  step_push(&sta->step, action_arc_start, condition_arc_start);
+  /* step_push(&sta->step, action_arc_continue1, condition_arc_continue1); */
   step_push(&sta->step, action_forward_normal, condition_forward1_limit);
   step_push(&sta->step, action_arc_enter1, condition_arc_enter1);
   step_push(&sta->step, action_led_blink, condition_always);
@@ -131,25 +130,28 @@ void answer4(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // test circle
-//   step_push_with_update(&sta->step, action_semicircle_start,
-//                       update_semicircle_start, condition_semicircle_start);
-//                       for(int i = 0; i < 30 ; i++){
-//                           step_push(&sta->step, action_arc_continue1,
-//                           condition_gw_read_road);
-//                               step_push_with_update(&sta->step,
-//                               action_semicircle_enter2,
-//                         update_semicircle_enter2,
-//                         condition_semicircle_enter);
-//   step_push_with_update(&sta->step, action_semicircle_match2,
-//   update_semicircle_match2, condition_semicircle_match);
+  //   step_push_with_update(&sta->step, action_semicircle_start,
+  //                       update_semicircle_start, condition_semicircle_start);
+  //                       for(int i = 0; i < 30 ; i++){
+  //                           step_push(&sta->step, action_arc_continue1,
+  //                           condition_gw_read_road);
+  //                               step_push_with_update(&sta->step,
+  //                               action_semicircle_enter2,
+  //                         update_semicircle_enter2,
+  //                         condition_semicircle_enter);
+  //   step_push_with_update(&sta->step, action_semicircle_match2,
+  //   update_semicircle_match2, condition_semicircle_match);
 
-//                       }
-//                         step_push(&sta->step, action_stop, condition_never);
+  //                       }
+  //                         step_push(&sta->step, action_stop,
+  //                         condition_never);
 
   // A -> C
-  step_push_with_update(&sta->step, action_semicircle_start,
-                        update_semicircle_start, condition_semicircle_start);
-  step_push(&sta->step, action_arc_continue1, condition_arc_continue1);
+  step_push(&sta->step, action_arc_start, condition_arc_start);
+  /* step_push_with_update(&sta->step, action_semicircle_start, */
+  /*                       update_semicircle_start, condition_semicircle_start);
+   */
+  /* step_push(&sta->step, action_arc_continue1, condition_arc_continue1); */
   step_push(&sta->step, action_forward_normal, condition_forward1_limit);
   step_push(&sta->step, action_arc_enter1, condition_arc_enter1);
   step_push(&sta->step, action_led_blink, condition_always);
@@ -211,9 +213,12 @@ void answer4_fast(struct Status *sta) {
   step_push(&sta->step, action_led_blink, condition_always);
 
   // A -> C
-  step_push_with_update(&sta->step, action_semicircle_start,
-                        update_semicircle_start, condition_semicircle_start);
-  step_push(&sta->step, action_arc_continue1_fast, condition_arc_continue1);
+  step_push(&sta->step, action_arc_start, condition_arc_start);
+  /* step_push_with_update(&sta->step, action_semicircle_start, */
+  /*                       update_semicircle_start, condition_semicircle_start);
+   */
+  /* step_push(&sta->step, action_arc_continue1_fast, condition_arc_continue1);
+   */
   step_push(&sta->step, action_forward_fast, condition_forward1_limit);
   step_push(&sta->step, action_arc_enter1_fast, condition_arc_enter1);
   step_push(&sta->step, action_led_blink, condition_always);

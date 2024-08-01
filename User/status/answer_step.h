@@ -12,6 +12,9 @@ bool condition_forward_stop_B_100cm(struct Status *sta);
 bool condition_forward1_limit(struct Status *sta);
 bool condition_forward2_limit(struct Status *sta);
 
+void action_arc_start(struct Status *sta);
+bool condition_arc_start(struct Status *sta);
+
 void action_semicircle_start(struct Status *sta);
 void update_semicircle_start(struct Status *sta);
 bool condition_semicircle_start(struct Status *sta);
